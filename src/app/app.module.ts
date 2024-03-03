@@ -11,8 +11,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CopyButtonComponent } from './copy-button/copy-button.component';
 
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDivider } from '@angular/material/divider';
+import { MatIcon } from '@angular/material/icon';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatOption } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -26,12 +33,20 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     MarkdownModule.forRoot({loader: HttpClient}),
     BrowserAnimationsModule,
-    MatIconModule,
-    MatButtonModule
+    MatIcon,
+    MatButtonModule,
+    MatDivider,
+    MatCheckbox,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    MatSelectModule
   ],
   providers: [
     provideMarkdown(),
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}

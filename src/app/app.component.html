@@ -1,10 +1,6 @@
+<div class="dark-theme">
 <router-outlet>
-  <button mat-raised-button>Basic</button>
-  <button mat-raised-button color="primary">Primary</button>
-  <button mat-raised-button color="accent">Accent</button>
-  <button mat-raised-button color="warn">Warn</button>
-  <button mat-raised-button disabled>Disabled</button>
-  <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
-  <markdown mermaid emoji katex clipboard [clipboardButtonComponent]="copyComponent" src="../assets/Markdown ex.md">
-  </markdown>
-</router-outlet>
+    <markdown mermaid lineNumbers="" [mermaidOptions]="mermaidOptions" emoji katex clipboard [clipboardButtonComponent]="copyComponent" src="../assets/Markdown ex.md">
+    </markdown>
+  </router-outlet>
+</div>

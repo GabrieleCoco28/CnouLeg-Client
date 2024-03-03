@@ -5,7 +5,11 @@
   "projects": {
     "CnouLeg-Client": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -27,7 +31,7 @@
             "styles": [
               "src/styles.scss",
               "node_modules/katex/dist/katex.min.css",
-              "node_modules/prismjs/themes/prism-okaidia.css",
+              "src/assets/prism-vsc-dark-plus.css",
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
               "node_modules/prismjs/plugins/command-line/prism-command-line.css"
@@ -84,10 +88,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "CnouLeg-Client:build:production"
+              "buildTarget": "CnouLeg-Client:build:production"
             },
             "development": {
-              "browserTarget": "CnouLeg-Client:build:development"
+              "buildTarget": "CnouLeg-Client:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -95,7 +99,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "CnouLeg-Client:build"
+            "buildTarget": "CnouLeg-Client:build"
           }
         },
         "test": {
@@ -113,7 +117,7 @@
             "styles": [
               "src/styles.scss",
               "node_modules/katex/dist/katex.min.css",
-              "node_modules/prismjs/themes/prism-okaidia.css",
+              "src/assets/prism-vsc-dark-plus.css",
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
               "node_modules/prismjs/plugins/command-line/prism-command-line.css"
