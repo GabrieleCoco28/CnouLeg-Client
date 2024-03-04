@@ -58,11 +58,36 @@ table {
   margin: auto;
 }
 
-img {
-  width: 100%;
+markdown img {
+  display: block;
+  width: min(100%, 512px);
+  margin: auto;
 }
 
 mat-card {
   margin-bottom: 1em;
   margin-top: 1em;
+}
+
+.comment-avatar {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.toolbar-avatar {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  margin-bottom: 0 !important;
+  margin-left: 8px;
+}
+
+.user-comment-avatar {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+  margin-right: 16px;
+}
+
+.comment-button {
+  width: 100%;
+  text-align: right;
 }

@@ -28,28 +28,34 @@
     <mat-divider></mat-divider>
     <p style="text-align: center;">Valuta questo appunto</p>
     <div id="starRating" style="text-align: center;">
-      <mat-icon class="material-symbols-rounded">star</mat-icon>
-      <mat-icon class="material-symbols-rounded">star</mat-icon>
-      <mat-icon class="material-symbols-rounded">star</mat-icon>
-      <mat-icon class="material-symbols-rounded">star</mat-icon>
-      <mat-icon class="material-symbols-rounded">star</mat-icon>
+      <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
+      <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
+      <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
+      <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
+      <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
       <h1>4,3/5</h1>
       <div id="users">
         <p><mat-icon class="material-symbols-rounded" style="vertical-align: middle;">person</mat-icon>30.000.000</p>
       </div>
     </div>
-    <h2>Commenti • 30.000.000</h2>
+    <h3>Commenti • 30.000.000</h3>
     <form action="#">
-      <mat-form-field style="width: 50%;">
-        <mat-label>Lascia un commento</mat-label>
-        <textarea matInput placeholder="Commento..."></textarea>
-      </mat-form-field><br>
-      <button mat-stroked-button color="primary">Commenta</button>
+      <mat-card-header>
+        <div mat-card-avatar class="user-comment-avatar"></div>
+        <mat-form-field style="width: 100%;">
+          <mat-label>Lascia un commento</mat-label>
+          <textarea matInput placeholder="Commento..."></textarea>
+        </mat-form-field><br>
+      </mat-card-header>
+      <div class="comment-button">
+        <button mat-stroked-button color="primary">Commenta</button>
+      </div>
     </form>
     <br>
     <mat-divider></mat-divider>
-    <mat-card class="example-card">
+    <mat-card class="comment-card">
       <mat-card-header>
+        <div mat-card-avatar class="comment-avatar"></div>
         <mat-card-title>Giovannino il magnifico</mat-card-title>
       </mat-card-header>
       <mat-card-content>
