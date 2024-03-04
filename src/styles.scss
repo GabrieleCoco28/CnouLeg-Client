@@ -3,33 +3,66 @@
 
 @include mat.core();
 
-$theme: matx.define-theme((
+$light-theme: matx.define-theme((
   color: (
-    theme-type: dark,
+    theme-type: light,
     primary: matx.$m3-azure-palette
+  ),
+  density: (
+    scale: -1
   )
 ));
 
+$dark-theme: matx.define-theme((
+  color: (
+    theme-type: dark,
+    primary: matx.$m3-azure-palette
+  ),
+  density: (
+    scale: -1
+  )
+));
+
+
+.light-theme {
+  @include mat.all-component-themes($light-theme);
+}
 .dark-theme {
-    @include mat.all-component-themes($theme);
+  @include mat.all-component-themes($dark-theme);
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 body { 
   margin: 0; 
-  font-family: "Varela Round"; 
-  background-color: rgb(24, 24, 24);
-  color: gainsboro;
+  padding: 1em;
+  font-family: "Varela Round";
+  background-color: rgb(253,251,255);
+  color: rgb(36,34,35);
 }
 
 table,
 th,
 td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 1rem;
+  border: 1px solid rgb(36,34,35);
+  border-collapse: collapse;
+  padding: 0.5rem;
+  font-size:min(2vw, 1em);
+  white-space: nowrap;
+}
+
+table {
+  margin: auto;
+}
+
+img {
+  width: 100%;
+}
+
+mat-card {
+  margin-bottom: 1em;
+  margin-top: 1em;
 }

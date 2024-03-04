@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterRenderPhase, Component } from '@angular/core';
 import { CopyButtonComponent } from './copy-button/copy-button.component'
 import { MermaidAPI } from 'ngx-markdown';
 

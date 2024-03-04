@@ -1,6 +1,67 @@
-<div class="dark-theme">
-<router-outlet>
-    <markdown mermaid lineNumbers="" [mermaidOptions]="mermaidOptions" emoji katex clipboard [clipboardButtonComponent]="copyComponent" src="../assets/Markdown ex.md">
-    </markdown>
+<div class="light-theme">
+  <router-outlet>
+    <app-notes-header></app-notes-header>
+    <div id="title">
+      <h1>Limite Notevole</h1>
+      <p>Di Michele Lorusso • 04/03/2024</p>
+      <mat-chip-set class="tags">
+        <mat-chip class="tag">Matematica</mat-chip>
+        <mat-chip class="tag">Quinto superiore</mat-chip>
+      </mat-chip-set>
+    </div>
+    <mat-card>
+      <mat-card-content>
+        <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard
+          [clipboardButtonComponent]="copyComponent" src="../assets/limit.md">
+        </markdown>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>Immagini</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>Video</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>Documenti</mat-card-content>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <p style="text-align: center;">Valuta questo appunto</p>
+    <div id="starRating" style="text-align: center;">
+      <mat-icon class="material-symbols-rounded">star</mat-icon>
+      <mat-icon class="material-symbols-rounded">star</mat-icon>
+      <mat-icon class="material-symbols-rounded">star</mat-icon>
+      <mat-icon class="material-symbols-rounded">star</mat-icon>
+      <mat-icon class="material-symbols-rounded">star</mat-icon>
+      <h1>4,3/5</h1>
+      <div id="users">
+        <p><mat-icon class="material-symbols-rounded" style="vertical-align: middle;">person</mat-icon>30.000.000</p>
+      </div>
+    </div>
+    <h2>Commenti • 30.000.000</h2>
+    <form action="#">
+      <mat-form-field style="width: 50%;">
+        <mat-label>Lascia un commento</mat-label>
+        <textarea matInput placeholder="Commento..."></textarea>
+      </mat-form-field><br>
+      <button mat-stroked-button color="primary">Commenta</button>
+    </form>
+    <br>
+    <mat-divider></mat-divider>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Giovannino il magnifico</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Che schifo di appunti amma me ma che veramè
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
+        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
+    <br>
   </router-outlet>
 </div>
