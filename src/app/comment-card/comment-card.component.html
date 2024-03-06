@@ -1,0 +1,48 @@
+<mat-card class="comment-card">
+    <mat-card-header>
+        <div mat-card-avatar class="comment-avatar"></div>
+        <mat-card-title>Giovannino il magnifico</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            Che schifo di appunti amma me ma che veramè
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
+        <p>104</p>
+        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
+        <button mat-button color="primary">Rispondi</button>
+    </mat-card-actions>
+    <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+            style="box-shadow: none;" *ngIf="arr.length != 0">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{arr.length}} risposte
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="subcomment-cards" *ngFor="let x of arr">
+                <mat-card class="subcomment-card"
+                    style="box-shadow: none; border-left: 1px solid darkgray; border-radius: 0; padding-left: 1em;">
+                    <mat-card-header>
+                        <div mat-card-avatar class="comment-avatar"></div>
+                        <mat-card-title>Giovannino il magnifico</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="content">
+                        <p>
+                            Che schifo di appunti amma me ma che veramè
+                            Che schifo di appunti amma me ma che veramè
+                            Che schifo di appunti amma me ma che veramè
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
+                        <p>69</p>
+                        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>

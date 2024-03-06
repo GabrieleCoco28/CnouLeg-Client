@@ -53,21 +53,8 @@
     </form>
     <br>
     <mat-divider></mat-divider>
-    <mat-card class="comment-card">
-      <mat-card-header>
-        <div mat-card-avatar class="comment-avatar"></div>
-        <mat-card-title>Giovannino il magnifico</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          Che schifo di appunti amma me ma che veramè
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
-      </mat-card-actions>
-    </mat-card>
-    <br>
+    <div *ngFor=" let x of [1, 2, 3, 4, 5, 6]">
+      <app-comment-card></app-comment-card>
+    </div>
   </router-outlet>
 </div>

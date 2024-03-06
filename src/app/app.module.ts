@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CopyButtonComponent } from './copy-button/copy-button.component';
 import { NotesHeaderComponent } from './notes-header/notes-header.component';
+import { CommentCardComponent } from './comment-card/comment-card.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
@@ -23,14 +24,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { Ng2FittextModule } from 'ng2-fittext';
 
 @NgModule({
-  declarations: [AppComponent, CopyButtonComponent, NotesHeaderComponent],
+  declarations: [AppComponent, CopyButtonComponent, NotesHeaderComponent, CommentCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,6 +53,7 @@ import { Ng2FittextModule } from 'ng2-fittext';
     MatTooltipModule,
     MatChipsModule,
     MatInputModule,
+    MatExpansionModule,
     Ng2FittextModule,
   ],
   providers: [provideMarkdown(), provideAnimationsAsync()],
