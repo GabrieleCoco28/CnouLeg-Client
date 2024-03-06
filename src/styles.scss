@@ -23,8 +23,6 @@ $dark-theme: matx.define-theme((
   )
 ));
 
-@include mat.typography-hierarchy($light-theme, $back-compat: true);
-
 .light-theme {
   @include mat.all-component-themes($light-theme);
   @include matx.color-variants-back-compat($light-theme);
