@@ -23,13 +23,17 @@ $dark-theme: matx.define-theme((
   )
 ));
 
+@include mat.typography-hierarchy($light-theme, $back-compat: true);
 
 .light-theme {
   @include mat.all-component-themes($light-theme);
+  @include matx.color-variants-back-compat($light-theme);
 }
 .dark-theme {
   @include mat.all-component-themes($dark-theme);
 }
+
+
 
 html,
 body {
@@ -75,14 +79,14 @@ mat-card {
 }
 
 .toolbar-avatar {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-image: url('https://pics.craiyon.com/2023-09-29/e3718ae350e040279a38f806ae66dae2.webp');
   background-size: cover;
   margin-bottom: 0 !important;
   margin-left: 8px;
 }
 
 .user-comment-avatar {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-image: url('https://pics.craiyon.com/2023-09-29/e3718ae350e040279a38f806ae66dae2.webp');
   background-size: cover;
   margin-right: 16px;
 }
