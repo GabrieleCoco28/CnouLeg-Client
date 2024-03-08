@@ -6,8 +6,8 @@ import { MarkdownModule } from 'ngx-markdown';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { CopyButtonComponent } from './copy-button/copy-button.component';
 import { NotesHeaderComponent } from './notes-header/notes-header.component';
@@ -25,14 +25,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { Ng2FittextModule } from 'ng2-fittext';
+import { NoteComponent } from './note/note.component';
 
 @NgModule({
-  declarations: [AppComponent, CopyButtonComponent, NotesHeaderComponent, CommentCardComponent],
+  declarations: [AppComponent, CopyButtonComponent, NotesHeaderComponent, CommentCardComponent, NoteComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -55,6 +56,7 @@ import { Ng2FittextModule } from 'ng2-fittext';
     MatInputModule,
     MatExpansionModule,
     Ng2FittextModule,
+    HttpClientModule
   ],
   providers: [provideMarkdown(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

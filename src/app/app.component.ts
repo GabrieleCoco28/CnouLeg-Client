@@ -1,6 +1,4 @@
 import { AfterRenderPhase, Component } from '@angular/core';
-import { CopyButtonComponent } from './copy-button/copy-button.component'
-import { MermaidAPI } from 'ngx-markdown';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +7,4 @@ import { MermaidAPI } from 'ngx-markdown';
 })
 export class AppComponent {
   title = 'CnouLeg-Client';
-  readonly copyComponent = CopyButtonComponent;
-  public mermaidOptions: MermaidAPI.Config = {
-    theme: MermaidAPI.Theme.Dark,
-  };
 }

@@ -1,0 +1,47 @@
+markdown::ng-deep table {
+    border: 1px solid rgb(36, 34, 35);
+    border-collapse: collapse;
+    padding: 0.5rem;
+    font-size: min(2vw, 1em);
+    white-space: nowrap;
+}
+markdown::ng-deep th {
+    border: 1px solid rgb(36, 34, 35);
+    border-collapse: collapse;
+    padding: 0.5rem;
+    font-size: min(2vw, 1em);
+    white-space: nowrap;
+}
+markdown::ng-deep td {
+    border: 1px solid rgb(36, 34, 35);
+    border-collapse: collapse;
+    padding: 0.5rem;
+    font-size: min(2vw, 1em);
+    white-space: nowrap;
+}
+
+markdown::ng-deep table {
+    margin: auto;
+}
+
+markdown::ng-deep img {
+    display: block;
+    width: min(100%, 512px);
+    margin: auto;
+}
+
+mat-card {
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.comment-button {
+    width: 100%;
+    text-align: right;
+}
+
+.user-comment-avatar {
+    background-image: url('https://pics.craiyon.com/2023-09-29/e3718ae350e040279a38f806ae66dae2.webp');
+    background-size: cover;
+    margin-right: 16px;
+}

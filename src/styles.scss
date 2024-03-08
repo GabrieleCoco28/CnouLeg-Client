@@ -31,8 +31,6 @@ $dark-theme: matx.define-theme((
   @include mat.all-component-themes($dark-theme);
 }
 
-
-
 html,
 body {
   height: 100%;
@@ -44,52 +42,4 @@ body {
   font-family: "Varela Round";
   background-color: rgb(253,251,255);
   color: rgb(36,34,35);
-}
-
-table,
-th,
-td {
-  border: 1px solid rgb(36,34,35);
-  border-collapse: collapse;
-  padding: 0.5rem;
-  font-size:min(2vw, 1em);
-  white-space: nowrap;
-}
-
-table {
-  margin: auto;
-}
-
-markdown img {
-  display: block;
-  width: min(100%, 512px);
-  margin: auto;
-}
-
-mat-card {
-  margin-bottom: 1em;
-  margin-top: 1em;
-}
-
-.comment-avatar {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-}
-
-.toolbar-avatar {
-  background-image: url('https://pics.craiyon.com/2023-09-29/e3718ae350e040279a38f806ae66dae2.webp');
-  background-size: cover;
-  margin-bottom: 0 !important;
-  margin-left: 8px;
-}
-
-.user-comment-avatar {
-  background-image: url('https://pics.craiyon.com/2023-09-29/e3718ae350e040279a38f806ae66dae2.webp');
-  background-size: cover;
-  margin-right: 16px;
-}
-
-.comment-button {
-  width: 100%;
-  text-align: right;
 }
