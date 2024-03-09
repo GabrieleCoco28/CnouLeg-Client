@@ -25,7 +25,7 @@ export class CnouLegAPIService {
   constructor(private http: HttpClient) {}
 
   public getArticles(): Observable<any> {
-    const url = 'http://151.26.45.121:8080/api/articles';
+    const url = 'http://cochome.ddns.net/api/articles';
     return this.http.get<Note>(url);
   }
 }
