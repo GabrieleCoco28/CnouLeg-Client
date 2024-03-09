@@ -12,12 +12,15 @@ import { CnouLegAPIService, Note } from '../cnou-leg-api.service';
 export class NoteComponent {
   readonly copyComponent = CopyButtonComponent;
   public noteInfo: Note = {} as Note;
+  public onlyDate = 0;
   public mermaidOptions: MermaidAPI.Config = {
     theme: MermaidAPI.Theme.Dark,
   };
   constructor(public cnoulegAPIService: CnouLegAPIService) {
     cnoulegAPIService.getArticles().subscribe(response => {
       this.noteInfo = response[0];
-    })
+      console.log(this.noteInfo.data_last_modified.split(" ")[0].split("-").join(","))
+      this.onlyDate = Date.parse(this.noteInfo.data_last_modified.split(" ")[0]);
+    });
   }
 }

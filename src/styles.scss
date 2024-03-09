@@ -26,9 +26,12 @@ $dark-theme: matx.define-theme((
 .light-theme {
   @include mat.all-component-themes($light-theme);
   @include matx.color-variants-back-compat($light-theme);
+  
 }
 .dark-theme {
   @include mat.all-component-themes($dark-theme);
+  @include matx.color-variants-back-compat($dark-theme);
+  
 }
 
 html,
@@ -36,10 +39,26 @@ body {
   height: 100%;
 }
 
-body { 
+body.light-theme { 
   margin: 0; 
   padding: 1em;
   font-family: "Varela Round";
-  background-color: rgb(253,251,255);
-  color: rgb(36,34,35);
+  background-color: gainsboro;
+  color: #1a1b1f;
+}
+
+body.dark-theme {
+  margin: 0; 
+  padding: 1em;
+  font-family: "Varela Round";
+  background-color: #1a1b1f;
+  color: gainsboro;
+}
+
+body.light-theme img {
+  filter: brightness(100%);
+}
+
+body.dark-theme img {
+  filter: brightness(90%);
 }

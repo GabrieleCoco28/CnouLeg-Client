@@ -1,7 +1,7 @@
 <app-notes-header></app-notes-header>
 <div id="title">
     <h1>{{noteInfo.title}}</h1>
-    <p>Di {{noteInfo.author_id}} • {{noteInfo.data_last_modified}}</p>
+    <p>Di {{noteInfo.author_id}} • {{onlyDate | date:"dd/MM/YYYY"}}</p>
     <mat-chip-set class="tags">
         <mat-chip class="tag">{{noteInfo.subject}}</mat-chip>
         <mat-chip class="tag">{{noteInfo.class}}</mat-chip>
