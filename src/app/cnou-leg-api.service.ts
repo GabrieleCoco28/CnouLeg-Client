@@ -28,4 +28,9 @@ export class CnouLegAPIService {
     const url = 'https://cochome.ddns.net/api/articles';
     return this.http.get<Note>(url);
   }
+
+  public getArticleByID(id: string) {
+    const url = 'https://cochome.ddns.net/api/articles?id=' + id;
+    return this.http.get<Note>(url);
+  }
 }

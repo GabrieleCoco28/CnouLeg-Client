@@ -61,7 +61,7 @@ import { SearchComponent } from './search/search.component';
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: SearchComponent },
-      { path: 'note', component: NoteComponent},
+      { path: 'note/:id', component: NoteComponent},
     ]),
   ],
   providers: [provideMarkdown(), provideAnimationsAsync()],

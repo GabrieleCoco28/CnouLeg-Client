@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CopyButtonComponent } from '../copy-button/copy-button.component'
 import { MermaidAPI } from 'ngx-markdown';
 import { CnouLegAPIService, Note } from '../cnou-leg-api.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -16,10 +17,12 @@ export class NoteComponent {
   public mermaidOptions: MermaidAPI.Config = {
     theme: MermaidAPI.Theme.Dark,
   };
-  constructor(public cnoulegAPIService: CnouLegAPIService) {
-    cnoulegAPIService.getArticles().subscribe(response => {
-      this.noteInfo = response[0];
-      this.onlyDate = Date.parse(this.noteInfo.data_last_modified.split(" ")[0]);
-    });
+  constructor(public cnoulegAPIService: CnouLegAPIService, public route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      cnoulegAPIService.getArticleByID(params['id']).subscribe(response => {
+        this.noteInfo = response;
+        console.log(response)
+      });
+    })
   }
 }

@@ -1,4 +1,4 @@
-<a *ngFor="let note of noteInfo" routerLink="note" style="text-decoration: none; color: inherit;">
+<a *ngFor="let note of noteInfo" [routerLink]="'note/' + note._id" style="text-decoration: none; color: inherit;">
     <mat-card class="hover" style="margin: 1em;">
         <mat-card-header>
             <mat-card-title>{{note.title}}</mat-card-title>
