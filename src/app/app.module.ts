@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideMarkdown } from 'ngx-markdown';
 import { MarkdownModule } from 'ngx-markdown';
@@ -31,9 +32,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { Ng2FittextModule } from 'ng2-fittext';
 import { NoteComponent } from './note/note.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
-  declarations: [AppComponent, CopyButtonComponent, NotesHeaderComponent, CommentCardComponent, NoteComponent],
+  declarations: [AppComponent, CopyButtonComponent, NotesHeaderComponent, CommentCardComponent, NoteComponent, SearchComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -56,7 +58,11 @@ import { NoteComponent } from './note/note.component';
     MatInputModule,
     MatExpansionModule,
     Ng2FittextModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: SearchComponent },
+      { path: 'note', component: NoteComponent},
+    ]),
   ],
   providers: [provideMarkdown(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

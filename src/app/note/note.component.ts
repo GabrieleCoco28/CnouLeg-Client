@@ -19,7 +19,6 @@ export class NoteComponent {
   constructor(public cnoulegAPIService: CnouLegAPIService) {
     cnoulegAPIService.getArticles().subscribe(response => {
       this.noteInfo = response[0];
-      console.log(this.noteInfo.data_last_modified.split(" ")[0].split("-").join(","))
       this.onlyDate = Date.parse(this.noteInfo.data_last_modified.split(" ")[0]);
     });
   }

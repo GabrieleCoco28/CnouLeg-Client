@@ -7,4 +7,4 @@ import { AfterRenderPhase, Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'CnouLeg-Client';
-}
+} 
