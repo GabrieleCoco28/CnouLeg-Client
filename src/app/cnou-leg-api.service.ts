@@ -18,6 +18,10 @@ export interface Note {
   contents: []
 }
 
+export interface Notes {
+  notes: Array<Note>
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,12 +29,12 @@ export class CnouLegAPIService {
   constructor(private http: HttpClient) {}
 
   public getArticles(): Observable<any> {
-    const url = 'https://cochome.ddns.net/api/articles';
-    return this.http.get<Note>(url);
+    const url = 'https://cochome.ddns.net/api/notes';
+    return this.http.get<Notes>(url);
   }
 
   public getArticleByID(id: string) {
-    const url = 'https://cochome.ddns.net/api/articles?id=' + id;
+    const url = 'https://cochome.ddns.net/api/notes?id=' + id;
     return this.http.get<Note>(url);
   }
 }

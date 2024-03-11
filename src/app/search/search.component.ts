@@ -10,7 +10,7 @@ export class SearchComponent {
   public noteInfo: Note[] = [{} as Note];
   constructor(private cnoulegAPIService: CnouLegAPIService) {
     cnoulegAPIService.getArticles().subscribe(response => {
-      this.noteInfo = response;
+      this.noteInfo = response.notes;
     });
   }
 }

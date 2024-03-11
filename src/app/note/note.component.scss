@@ -10,18 +10,20 @@ markdown::ng-deep th {
     border-collapse: collapse;
     padding: 0.5rem;
     font-size: min(2vw, 1em);
-    white-space: nowrap;
 }
 markdown::ng-deep td {
     border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
     font-size: min(2vw, 1em);
-    white-space: nowrap;
+    word-wrap: break-word;
+    white-space:normal;
 }
 
 markdown::ng-deep table {
     margin: auto;
+    width: 100%;
+    table-layout: fixed;
 }
 
 markdown::ng-deep img {
