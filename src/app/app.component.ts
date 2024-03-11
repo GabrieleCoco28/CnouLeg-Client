@@ -1,4 +1,6 @@
-import { AfterRenderPhase, Component } from '@angular/core';
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { Component } from '@angular/core';
+import { fromLeftEasing, fromRightEasing, moveFromLeft, moveFromRight } from 'ngx-router-animations';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,4 @@ import { AfterRenderPhase, Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'CnouLeg-Client';
-} 
+}

@@ -59,10 +59,7 @@ import { SearchComponent } from './search/search.component';
     MatExpansionModule,
     Ng2FittextModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      { path: '', component: SearchComponent },
-      { path: 'note/:id', component: NoteComponent},
-    ]),
+    RouterModule.forRoot([]),
   ],
   providers: [provideMarkdown(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

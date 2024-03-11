@@ -29,6 +29,7 @@
     "mermaid": "^10.6.0",
     "ng2-fittext": "^1.4.3",
     "ngx-markdown": "^17.1.1",
+    "ngx-router-animations": "^13.0.0",
     "prismjs": "^1.29.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
