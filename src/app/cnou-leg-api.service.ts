@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface Note {
+  [x: string]: any;
   _id: string,
   title: string, 
-  author_id: string,
+  author_id: number,
   subject: string,
   class: string,
   tags: Array<string>,
@@ -15,11 +16,22 @@ export interface Note {
   avg_rating: number,
   no_of_ratings: number,
   markdown: string,
-  contents: []
+  contents: [],
+  author_name?: string
 }
 
 export interface Notes {
   notes: Array<Note>
+}
+
+export interface User {
+  id: number,
+  name: string,
+  profile_pic_url: string
+}
+
+export interface Users {
+  users: Array<User>
 }
 
 @Injectable({
@@ -36,5 +48,18 @@ export class CnouLegAPIService {
   public getArticleByID(id: string) {
     const url = 'https://cochome.ddns.net/api/notes?id=' + id;
     return this.http.get<Note>(url);
+  }
+
+  public getUsers(): Observable<any> {
+    const url = "https://cochome.ddns.net/api/users";
+    return this.http.get<Users>(url);
+  }
+
+  public getUsersById(ids: number[]): Observable<any> {
+    let url = "https://cochome.ddns.net/api/users?";
+    ids.map((v) => {
+      url += "include_id[]=" + v + "&";
+    })
+    return this.http.get<Users>(url);
   }
 }
