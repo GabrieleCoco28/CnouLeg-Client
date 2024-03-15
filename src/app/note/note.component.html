@@ -21,9 +21,22 @@
     </mat-card>
     <mat-card>
         <mat-card-content>Immagini</mat-card-content>
+        <div class="scroll-container" style="overflow: auto">
+            <div *ngFor="let item of items">
+                <img [src]="item" alt="img"
+                    style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px;">
+            </div>
+        </div>
     </mat-card>
     <mat-card>
         <mat-card-content>Video</mat-card-content>
+        <div class="scroll-container" style="overflow: auto">
+            <div *ngFor="let item of itemsVideo">
+                <video width="128" height="128" style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px;">
+                    <source [src]="item" type="video/mp4" />
+                </video>
+            </div>
+        </div>
     </mat-card>
     <mat-card>
         <mat-card-content>Documenti</mat-card-content>

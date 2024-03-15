@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CnouLegAPIService, Note, User, Users } from '../cnou-leg-api.service';
 
 @Component({
@@ -6,10 +6,10 @@ import { CnouLegAPIService, Note, User, Users } from '../cnou-leg-api.service';
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
 })
-export class SearchComponent {
+export class SearchComponent{
   public noteInfo: Note[] = [{} as Note];
   public idsLoaded: number[] = [];
-  constructor(private cnoulegAPIService: CnouLegAPIService, private el: ElementRef) {
+  constructor(private cnoulegAPIService: CnouLegAPIService, private el: ElementRef ) {
     cnoulegAPIService.getArticles().subscribe(response => {
       this.noteInfo = response.notes;
       this.noteInfo.map((v) => {

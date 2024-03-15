@@ -5,19 +5,21 @@ markdown::ng-deep table {
     font-size: min(2vw, 1em);
     white-space: nowrap;
 }
+
 markdown::ng-deep th {
     border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
     font-size: min(2vw, 1em);
 }
+
 markdown::ng-deep td {
     border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
     font-size: min(2vw, 1em);
     word-wrap: break-word;
-    white-space:normal;
+    white-space: normal;
 }
 
 markdown::ng-deep table {
@@ -53,4 +55,42 @@ mat-card {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
     margin-top: 4px;
+}
+
+.scroll-container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    &.hide-scrollbar {
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &.show-scroll {
+        overflow: auto;
+    }
+
+    div {
+        white-space: nowrap;
+        margin: .1rem;
+        padding: 1em;
+        transition: box-shadow 0.3s;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    img, video {
+        transition: box-shadow 0.3s;
+        &:hover {
+            cursor: pointer;
+            border-color: #111;
+            box-shadow: 5px 5px 10px 0 gray;
+        }
+    }
 }

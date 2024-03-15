@@ -12,10 +12,13 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 export class NoteComponent implements OnInit {
   readonly copyComponent = CopyButtonComponent;
   public noteInfo: Note = {} as Note;
-  public onlyDate = 0;
   public mermaidOptions: MermaidAPI.Config = {
     theme: MermaidAPI.Theme.Dark,
   };
+
+  public items = new Array(10).fill("https://picsum.photos/1280/720", 0, 10);
+  public itemsVideo = new Array(5).fill("https://www.shutterstock.com/shutterstock/videos/1091801169/preview/stock-footage-interior-design-studio-designers-with-architects-and-clients-select-solutions-and-combinations-of.webm#t=1", 0, 5);
+
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
     public route: ActivatedRoute,
