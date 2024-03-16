@@ -22,24 +22,32 @@
     <mat-card>
         <mat-card-content>Immagini</mat-card-content>
         <div class="scroll-container" style="overflow: auto">
-            <div *ngFor="let item of items">
-                <img [src]="item" alt="img"
+            <div *ngFor="let item of imagesPath">
+                <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img"
                     style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px;">
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length > 13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
             </div>
         </div>
     </mat-card>
     <mat-card>
         <mat-card-content>Video</mat-card-content>
         <div class="scroll-container" style="overflow: auto">
-            <div *ngFor="let item of itemsVideo">
-                <video width="128" height="128" style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px;">
-                    <source [src]="item" type="video/mp4" />
-                </video>
+            <div *ngFor="let item of videosPath">
+                <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128"
+                    style="overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length > 13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
             </div>
         </div>
     </mat-card>
     <mat-card>
         <mat-card-content>Documenti</mat-card-content>
+        <div class="scroll-container" style="overflow: auto">
+            <div *ngFor="let item of documentsPath">
+                <img src="assets/notes-placeholder/file.svg" alt="img"
+                    style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length > 13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+            </div>
+        </div>
     </mat-card>
     <mat-divider></mat-divider>
     <p style="text-align: center;">Valuta questo appunto</p>

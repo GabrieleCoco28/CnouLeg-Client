@@ -16,8 +16,13 @@ export interface Note {
   avg_rating: number,
   no_of_ratings: number,
   markdown: string,
-  contents: [],
+  contents: Array<Content>,
   author_name?: string
+}
+
+export interface Content {
+  type: string,
+  path: string
 }
 
 export interface Notes {
