@@ -24,7 +24,8 @@
             <mat-card-content>Immagini</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of imagesPath; index as i">
-                    <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img" (click)="openSlider(i)"
+                    <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img"
+                        (click)="openImageSlider(i)"
                         style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px;">
                     <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
                         13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
@@ -38,6 +39,7 @@
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of videosPath; index as i">
                     <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128"
+                        (click)="openVideoSlider(i)"
                         style="overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
                     <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
                         13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
@@ -92,23 +94,51 @@
     </div>
     <mat-divider></mat-divider>
 </div>
-<div class="navigation-wrapper sliderElementRoot" style="display: none;">
-    <button mat-icon-button style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;" (click)="closeSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
-    <div class="keen-slider keen-slider--vertical" #sliderRef>
+
+<div class="navigation-wrapper imageSliderElementRoot" style="display: none;">
+    <button mat-icon-button
+        style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;"
+        (click)="closeImageSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
+    <div class="keen-slider keen-slider--vertical" #imageSliderRef>
         <img *ngFor="let item of imagesCompletePath; index as i" class="keen-slider__slide number-slide{{i}}"
-            [src]="item" [alt]="item" style="object-fit: contain; user-select: none;" (load)="updateSlider(imagesCompletePath.length, i)">
+            [src]="item" [alt]="item" style="object-fit: contain; user-select: none;"
+            (load)="updateSlider(imagesCompletePath.length, i, 'image')">
     </div>
     <svg [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
-      " (click)="slider?.prev()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      " (click)="imageSlider?.prev()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
     </svg>
-    <svg *ngIf="slider" [ngClass]="
+    <svg *ngIf="imageSlider" [ngClass]="
         'arrow arrow--right ' +
-        (slider.track.details.slides.length - 1 === currentSlide
+        (imageSlider.track.details.slides.length - 1 === currentSlide
           ? 'arrow--disabled'
           : '')
-      " (click)="slider.next()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      " (click)="imageSlider.next()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+    </svg>
+</div>
+
+<div class="navigation-wrapper videoSliderElementRoot" style="display: none;">
+    <button mat-icon-button
+        style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;"
+        (click)="closeVideoSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
+    <div class="keen-slider keen-slider--vertical" #videoSliderRef>
+        <video *ngFor="let item of videosCompletePath; index as i" class="keen-slider__slide number-slide{{i}} video-slide"
+            [src]="item" style="object-fit: contain; user-select: none;" controls
+            (load)="updateSlider(imagesCompletePath.length, i, 'video')"></video>
+    </div>
+    <svg [ngClass]="
+        'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
+      " (click)="videoSlider?.prev()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+    </svg>
+    <svg *ngIf="videoSlider" [ngClass]="
+        'arrow arrow--right ' +
+        (videoSlider.track.details.slides.length - 1 === currentSlide
+          ? 'arrow--disabled'
+          : '')
+      " (click)="videoSlider.next()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
     </svg>
 </div>

@@ -3,12 +3,15 @@ import { CopyButtonComponent } from '../copy-button/copy-button.component';
 import { MermaidAPI } from 'ngx-markdown';
 import { CnouLegAPIService, Note, Users } from '../cnou-leg-api.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import KeenSlider, { KeenSliderInstance } from "keen-slider"
+import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
-  styleUrls: ['./note.component.scss', "../../../node_modules/keen-slider/keen-slider.min.css",],
+  styleUrls: [
+    './note.component.scss',
+    '../../../node_modules/keen-slider/keen-slider.min.css',
+  ],
 })
 export class NoteComponent implements OnInit {
   readonly copyComponent = CopyButtonComponent;
@@ -19,14 +22,18 @@ export class NoteComponent implements OnInit {
 
   public imagesPath: string[] = [];
   public imagesCompletePath: string[] = [];
+
   public videosPath: string[] = [];
+  public videosCompletePath: string[] = [];
+
   public documentsPath: string[] = [];
 
-  @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
+  @ViewChild('imageSliderRef') imageSliderRef!: ElementRef<HTMLElement>;
+  @ViewChild('videoSliderRef') videoSliderRef!: ElementRef<HTMLElement>;
 
   currentSlide: number = 0;
-  dotHelper: Array<Number> = [];
-  slider: KeenSliderInstance|null = null;
+  imageSlider: KeenSliderInstance | null = null;
+  videoSlider: KeenSliderInstance | null = null;
 
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
@@ -50,6 +57,12 @@ export class NoteComponent implements OnInit {
               break;
             case 'video':
               this.videosPath.push(v.path);
+              this.videosCompletePath.push(
+                'https://cochome.ddns.net/content/' +
+                  this.noteInfo._id +
+                  '/' +
+                  v.path
+              );
               break;
             case 'document':
               this.documentsPath.push(v.path);
@@ -78,36 +91,75 @@ export class NoteComponent implements OnInit {
       window.scrollTo(0, 0);
     });
   }
-  
+
   ngAfterViewInit() {
     setTimeout(() => {
-      this.slider = new KeenSlider(this.sliderRef.nativeElement, {
+      this.imageSlider = new KeenSlider(this.imageSliderRef.nativeElement, {
         initial: this.currentSlide,
         slideChanged: (s) => {
           this.currentSlide = s.track.details.rel;
         },
       });
-      this.dotHelper = [
-        ...Array(this.slider?.track.details.slides.length).keys(),
-      ];
+
+      this.videoSlider = new KeenSlider(this.videoSliderRef.nativeElement, {
+        initial: this.currentSlide,
+        slideChanged: (s) => {
+          this.currentSlide = s.track.details.rel;
+          this.pauseAllVideos();
+        },
+      });
     });
   }
-  
-  updateSlider(len: number, i: number) {
-    if(i === len - 1) {
-      this.slider?.update();
+
+  updateSlider(len: number, i: number, type: string) {
+    if (i === len - 1) {
+      if (type === 'image') this.imageSlider?.update();
+      if (type === 'video') this.videoSlider?.update();
     }
   }
 
-  closeSlider() {
-    this.el.nativeElement.querySelector(".noteElementRoot").style.display = "block";
-    this.el.nativeElement.querySelector(".sliderElementRoot").style.display = "none";
+  closeImageSlider() {
+    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
+      'block';
+    this.el.nativeElement.querySelector(
+      '.imageSliderElementRoot'
+    ).style.display = 'none';
   }
 
-  openSlider(i: number) {
-    this.el.nativeElement.querySelector(".noteElementRoot").style.display = "none";
-    this.el.nativeElement.querySelector(".sliderElementRoot").style.display = "block";
-    this.slider?.update();
-    this.slider?.moveToIdx(i);
+  closeVideoSlider() {
+    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
+      'block';
+    this.el.nativeElement.querySelector(
+      '.videoSliderElementRoot'
+    ).style.display = 'none';
+    this.pauseAllVideos();
+  }
+
+  openImageSlider(i: number) {
+    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
+      'none';
+    this.el.nativeElement.querySelector(
+      '.imageSliderElementRoot'
+    ).style.display = 'block';
+    this.imageSlider?.update();
+    this.imageSlider?.moveToIdx(i);
+  }
+
+  openVideoSlider(i: number) {
+    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
+      'none';
+    this.el.nativeElement.querySelector(
+      '.videoSliderElementRoot'
+    ).style.display = 'block';
+    this.videoSlider?.update();
+    this.videoSlider?.moveToIdx(i);
+  }
+
+  pauseAllVideos() {
+    const videoElements: HTMLVideoElement[] =
+      this.el.nativeElement.querySelectorAll('.video-slide');
+    videoElements.forEach((v) => {
+      v.pause();
+    });
   }
 }
