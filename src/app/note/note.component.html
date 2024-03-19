@@ -1,4 +1,4 @@
-<div style="width: 100%; height: 100vh; display: block;">
+<div style="padding: 0 1em 0 1em; display: block;" class="noteElementRoot">
     <app-notes-header></app-notes-header>
     <div id="title">
         <h1>{{noteInfo.title}}</h1>
@@ -20,32 +20,41 @@
         </mat-card-content>
     </mat-card>
     <mat-card>
-        <mat-card-content>Immagini</mat-card-content>
-        <div class="scroll-container" style="overflow: auto">
-            <div *ngFor="let item of imagesPath">
-                <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img"
-                    style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px;">
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length > 13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+        <div *ngIf="imagesPath.length > 0">
+            <mat-card-content>Immagini</mat-card-content>
+            <div class="scroll-container" style="overflow: auto">
+                <div *ngFor="let item of imagesPath; index as i">
+                    <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img" (click)="openSlider(i)"
+                        style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px;">
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
+                        13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+                </div>
             </div>
         </div>
     </mat-card>
     <mat-card>
-        <mat-card-content>Video</mat-card-content>
-        <div class="scroll-container" style="overflow: auto">
-            <div *ngFor="let item of videosPath">
-                <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128"
-                    style="overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length > 13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+        <div *ngIf="videosPath.length > 0">
+            <mat-card-content>Video</mat-card-content>
+            <div class="scroll-container" style="overflow: auto">
+                <div *ngFor="let item of videosPath; index as i">
+                    <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128"
+                        style="overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
+                        13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+                </div>
             </div>
         </div>
     </mat-card>
     <mat-card>
-        <mat-card-content>Documenti</mat-card-content>
-        <div class="scroll-container" style="overflow: auto">
-            <div *ngFor="let item of documentsPath">
-                <img src="assets/notes-placeholder/file.svg" alt="img"
-                    style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length > 13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+        <div *ngIf="documentsPath.length > 0">
+            <mat-card-content>Documenti</mat-card-content>
+            <div class="scroll-container" style="overflow: auto">
+                <div *ngFor="let item of documentsPath; index as i">
+                    <img src="assets/notes-placeholder/file.svg" alt="img"
+                        style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
+                        13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+                </div>
             </div>
         </div>
     </mat-card>
@@ -82,4 +91,24 @@
         <app-comment-card *ngFor=" let x of [1, 2, 3, 4, 5, 6]"></app-comment-card>
     </div>
     <mat-divider></mat-divider>
+</div>
+<div class="navigation-wrapper sliderElementRoot" style="display: none;">
+    <button mat-icon-button style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;" (click)="closeSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
+    <div class="keen-slider keen-slider--vertical" #sliderRef>
+        <img *ngFor="let item of imagesCompletePath; index as i" class="keen-slider__slide number-slide{{i}}"
+            [src]="item" [alt]="item" style="object-fit: contain; user-select: none;" (load)="updateSlider(imagesCompletePath.length, i)">
+    </div>
+    <svg [ngClass]="
+        'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
+      " (click)="slider?.prev()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+    </svg>
+    <svg *ngIf="slider" [ngClass]="
+        'arrow arrow--right ' +
+        (slider.track.details.slides.length - 1 === currentSlide
+          ? 'arrow--disabled'
+          : '')
+      " (click)="slider.next()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+    </svg>
 </div>

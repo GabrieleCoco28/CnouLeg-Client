@@ -34,7 +34,8 @@
               "src/assets/prism-vsc-dark-plus.css",
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
-              "node_modules/prismjs/plugins/command-line/prism-command-line.css"
+              "node_modules/prismjs/plugins/command-line/prism-command-line.css",
+              "node_modules/keen-slider/keen-slider.min.css"
             ],
             "scripts": [
               "node_modules/katex/dist/katex.min.js",
@@ -120,7 +121,8 @@
               "src/assets/prism-vsc-dark-plus.css",
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
-              "node_modules/prismjs/plugins/command-line/prism-command-line.css"
+              "node_modules/prismjs/plugins/command-line/prism-command-line.css",
+              "node_modules/keen-slider/keen-slider.min.css"
             ],
             "scripts": [
               "node_modules/katex/dist/katex.min.js",

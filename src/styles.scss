@@ -1,26 +1,28 @@
 @use '@angular/material' as mat;
 @use '@angular/material-experimental' as matx;
 
+@import url(~fullpage.js/dist/fullpage.min.css);
+
 @include mat.core();
 
-$light-theme: matx.define-theme((color: (theme-type: light,
-        primary: matx.$m3-azure-palette ),
-      density: (scale: -1)));
+$light-theme: matx.define-theme((
+  color: (theme-type: light,
+    primary: matx.$m3-azure-palette ),
+    density: (scale: -1)
+));
 
-$dark-theme: matx.define-theme((color: (theme-type: dark,
-        primary: matx.$m3-azure-palette ),
-      density: (scale: -1)));
-
+  $dark-theme: matx.define-theme((color: (theme-type: dark,
+  primary: matx.$m3-azure-palette ),
+  density: (scale: -1)));
+        
 .light-theme {
   @include mat.all-component-themes($light-theme);
   @include matx.color-variants-back-compat($light-theme);
-
 }
 
 .dark-theme {
   @include mat.all-component-themes($dark-theme);
   @include matx.color-variants-back-compat($dark-theme);
-
 }
 
 html,
@@ -30,21 +32,21 @@ body {
 
 body.light-theme {
   margin: 0;
-  padding: 1em;
+  padding: 0em;
   font-family: "Varela Round";
   background-color: #fdfbff;
   color: #1a1b1f;
-
+  
   mat-card {
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
-      0 1px 1px 0 rgba(0, 0, 0, 0.2),
-      0 1px 3px 0 rgba(0, 0, 0, 0.2) !important;
+    0 1px 1px 0 rgba(0, 0, 0, 0.2),
+    0 1px 3px 0 rgba(0, 0, 0, 0.2) !important;
     transition: box-shadow 0.5s;
   }
-
+  
   mat-card.hover:hover {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
-      0 1px 4px 0 rgba(0, 0, 0, 0.2),
+    0 1px 4px 0 rgba(0, 0, 0, 0.2),
       0 1px 6px 0 rgba(0, 0, 0, 0.2) !important;
   }
 }

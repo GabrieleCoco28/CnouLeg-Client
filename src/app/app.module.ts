@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { CopyButtonComponent } from './copy-button/copy-button.component';
 import { NotesHeaderComponent } from './notes-header/notes-header.component';
@@ -35,7 +36,14 @@ import { NoteComponent } from './note/note.component';
 import { SearchComponent } from './search/search.component';
 
 @NgModule({
-  declarations: [AppComponent, CopyButtonComponent, NotesHeaderComponent, CommentCardComponent, NoteComponent, SearchComponent],
+  declarations: [
+    AppComponent,
+    CopyButtonComponent,
+    NotesHeaderComponent,
+    CommentCardComponent,
+    NoteComponent,
+    SearchComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -59,9 +67,9 @@ import { SearchComponent } from './search/search.component';
     MatExpansionModule,
     Ng2FittextModule,
     HttpClientModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([])
   ],
-  providers: [provideMarkdown(), provideAnimationsAsync()],
+  providers: [provideMarkdown(), provideAnimationsAsync(), provideAnimations()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
