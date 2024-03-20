@@ -83,6 +83,7 @@ export class NoteComponent implements OnInit {
               );
           });
       });
+      window.scrollTo(0, 0);
     });
   }
   ngOnInit(): void {
@@ -95,21 +96,26 @@ export class NoteComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    window.scrollTo(0, 0);
     setTimeout(() => {
-      this.imageSlider = new KeenSlider(this.imageSliderRef.nativeElement, {
-        initial: this.currentSlide,
-        slideChanged: (s) => {
-          this.currentSlide = s.track.details.rel;
-        },
-      });
+      if (this.imagesPath.length > 0) {
+        this.imageSlider = new KeenSlider(this.imageSliderRef.nativeElement, {
+          initial: this.currentSlide,
+          slideChanged: (s) => {
+            this.currentSlide = s.track.details.rel;
+          },
+        });
+      }
 
-      this.videoSlider = new KeenSlider(this.videoSliderRef.nativeElement, {
-        initial: this.currentSlide,
-        slideChanged: (s) => {
-          this.currentSlide = s.track.details.rel;
-          this.pauseAllVideos();
-        },
-      });
+      if (this.videosPath.length > 0) {
+        this.videoSlider = new KeenSlider(this.videoSliderRef.nativeElement, {
+          initial: this.currentSlide,
+          slideChanged: (s) => {
+            this.currentSlide = s.track.details.rel;
+            this.pauseAllVideos();
+          },
+        });
+      }
     });
   }
 

@@ -100,7 +100,7 @@
     <mat-divider></mat-divider>
 </div>
 
-<div class="navigation-wrapper imageSliderElementRoot" style="display: none;">
+<div class="navigation-wrapper imageSliderElementRoot" style="display: none;" *ngIf="imagesPath.length > 0">
     <button mat-icon-button
         style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;"
         (click)="closeImageSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
@@ -124,7 +124,7 @@
     </svg>
 </div>
 
-<div class="navigation-wrapper videoSliderElementRoot" style="display: none;">
+<div class="navigation-wrapper videoSliderElementRoot" style="display: none;" *ngIf="videosPath.length > 0">
     <button mat-icon-button
         style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;"
         (click)="closeVideoSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
