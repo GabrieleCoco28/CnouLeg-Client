@@ -165,11 +165,11 @@ export class NoteComponent implements OnInit {
     });
   }
 
-  translateSubject(sub: string, lang: string) {
-    return this.translator.translateSubject(sub, lang);
+  translateSubject(sub: string) {
+    return this.translator.translateSubject(sub);
   }
 
-  translateSchool(school: string, lang: string) {
-    return this.translator.translateSchool(school, lang);
+  translateSchool(school: string) {
+    return this.translator.translateSchool(school);
   }
 }

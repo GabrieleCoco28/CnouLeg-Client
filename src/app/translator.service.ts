@@ -2,74 +2,74 @@ import { Injectable } from '@angular/core';
 
 const subjects: any = {
   math: {
-    italian: 'Matematica',
-    english: 'Math',
+    'it-IT': 'Matematica',
+    'en': 'Math',
   },
   ict: {
-    italian: 'Informatica',
-    english: 'ICT',
+    'it-IT': 'Informatica',
+    'en': 'ICT',
   },
   economy: {
-    italian: 'Economia',
-    english: 'Economy',
+    'it-IT': 'Economia',
+    'en': 'Economy',
   },
   italian_literature: {
-    italian: 'Letteratura italiana',
-    english: 'Italian literature',
+    'it-IT': 'Letteratura italiana',
+    'en': 'Italian literature',
   },
   italian_grammar: {
-    italian: 'Grammatica italiana',
-    english: 'Italian grammar',
+    'it-IT': 'Grammatica italiana',
+    'en': 'Italian grammar',
   },
   english_grammar: {
-    italian: 'Grammatica inglese',
-    english: 'English grammar',
+    'it-IT': 'Grammatica inglese',
+    'en': 'English grammar',
   },
   english_literature: {
-    italian: 'Letteratura inglese',
-    english: 'English literature',
+    'it-IT': 'Letteratura inglese',
+    'en': 'English literature',
   },
   history: {
-    italian: 'Storia',
-    english: 'History',
+    'it-IT': 'Storia',
+    'en': 'History',
   },
   chemistry: {
-    italian: 'Chimica',
-    english: 'Chemistry',
+    'it-IT': 'Chimica',
+    'en': 'Chemistry',
   },
   physics: {
-    italian: 'Fisica',
-    english: 'Physics',
+    'it-IT': 'Fisica',
+    'en': 'Physics',
   },
   science: {
-    italian: 'Scienze',
-    english: 'Science',
+    'it-IT': 'Scienze',
+    'en': 'Science',
   },
   biology: {
-    italian: 'Biologia',
-    english: 'Biology',
+    'it-IT': 'Biologia',
+    'en': 'Biology',
   },
   law: {
-    italian: 'Diritto',
-    english: 'Law',
+    'it-IT': 'Diritto',
+    'en': 'Law',
   },
 };
 
 const schools: any = {
   high_school: {
-    italian: 'Scuola superiore',
-    english: 'High school',
+    'it-IT': 'Scuola superiore',
+    'en': 'High school',
   },
   middle_school: {
-    italian: 'Scuola media',
-    english: 'Middle school',
+    'it-IT': 'Scuola media',
+    'en': 'Middle school',
   },
   elementary_school: {
-    italian: 'Scuola elementare',
+    'it-IT': 'Scuola elementare',
     english: 'Elementary school',
   },
   university: {
-    italian: 'Università',
+    'it-IT': 'Università',
     english: 'University',
   },
 };
@@ -79,12 +79,12 @@ const schools: any = {
 })
 export class TranslatorService {
   constructor() {}
-  public translateSubject(sub: string, lang: string): string {
-    if (subjects[sub]) return subjects[sub][lang];
+  public translateSubject(sub: string): string {
+    if (subjects[sub]) return subjects[sub][navigator.language];
     return 'no such subject';
   }
-  public translateSchool(school: string, lang: string): string {
-    if (schools[school]) return schools[school][lang];
+  public translateSchool(school: string): string {
+    if (schools[school]) return schools[school][navigator.language];
     return 'no such school';
   }
 }
