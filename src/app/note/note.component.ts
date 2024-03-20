@@ -172,4 +172,8 @@ export class NoteComponent implements OnInit {
   translateSchool(school: string) {
     return this.translator.translateSchool(school);
   }
+
+  getSubjectIcon(sub: string) {
+    return this.translator.getSubjectIcon(sub);
+  }
 }

@@ -7,7 +7,10 @@
             <p>Di {{noteInfo.author_name}} • {{noteInfo.data_last_modified| date:"dd/MM/YYYY"}}</p>
         </div>
         <mat-chip-set class="tags">
-            <mat-chip class="tag">{{translateSubject(noteInfo.subject)}}</mat-chip>
+            <mat-chip class="tag">
+                <mat-icon class="material-symbols-rounded" matChipAvatar style="scale: 1.3;">{{getSubjectIcon(noteInfo.subject)}}</mat-icon>
+                {{translateSubject(noteInfo.subject)}}
+            </mat-chip>
             <mat-chip class="tag">{{translateSchool(noteInfo.class)}}</mat-chip>
             <mat-chip class="tag" *ngFor="let tag of noteInfo.tags">{{tag}}</mat-chip>
         </mat-chip-set>
