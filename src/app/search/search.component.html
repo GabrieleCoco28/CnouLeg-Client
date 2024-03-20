@@ -9,8 +9,8 @@
             </mat-card-header>
             <mat-card-content>
                 <mat-chip-set class="tags">
-                    <mat-chip class="tag">{{note.subject}}</mat-chip>
-                    <mat-chip class="tag">{{note.class}}</mat-chip>
+                    <mat-chip class="tag">{{translateSubject(note.subject, "italian")}}</mat-chip>
+                    <mat-chip class="tag">{{translateSchool(note.class, "italian")}}</mat-chip>
                 </mat-chip-set>
                 <p>{{ note.description }}</p>
             </mat-card-content>

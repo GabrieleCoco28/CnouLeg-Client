@@ -4,6 +4,7 @@ import { MermaidAPI } from 'ngx-markdown';
 import { CnouLegAPIService, Note, Users } from '../cnou-leg-api.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
+import { TranslatorService } from '../translator.service';
 
 @Component({
   selector: 'app-note',
@@ -39,7 +40,8 @@ export class NoteComponent implements OnInit {
     public cnoulegAPIService: CnouLegAPIService,
     public route: ActivatedRoute,
     private router: Router,
-    private el: ElementRef
+    private el: ElementRef,
+    private translator: TranslatorService
   ) {
     this.route.params.subscribe((params) => {
       cnoulegAPIService.getArticleByID(params['id']).subscribe((response) => {
@@ -161,5 +163,13 @@ export class NoteComponent implements OnInit {
     videoElements.forEach((v) => {
       v.pause();
     });
+  }
+
+  translateSubject(sub: string, lang: string) {
+    return this.translator.translateSubject(sub, lang);
+  }
+
+  translateSchool(school: string, lang: string) {
+    return this.translator.translateSchool(school, lang);
   }
 }
