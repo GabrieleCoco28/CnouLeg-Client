@@ -32,6 +32,9 @@ export class NoteComponent implements OnInit {
   @ViewChild('imageSliderRef') imageSliderRef!: ElementRef<HTMLElement>;
   @ViewChild('videoSliderRef') videoSliderRef!: ElementRef<HTMLElement>;
 
+  isImageSliderOpened = false;
+  isVideoSliderOpened = false;
+
   currentSlide: number = 0;
   imageSlider: KeenSliderInstance | null = null;
   videoSlider: KeenSliderInstance | null = null;
@@ -85,6 +88,20 @@ export class NoteComponent implements OnInit {
       });
       window.scrollTo(0, 0);
     });
+    addEventListener("keydown", (e: KeyboardEvent) => {
+      if(this.router.url.includes('/note') && e.key == 'Escape') {
+        this.closeImageSlider();
+        this.closeVideoSlider();
+      }
+      if(this.isImageSliderOpened) {
+        if(e.key === 'ArrowRight') this.imageSlider?.next();
+        if(e.key === 'ArrowLeft') this.imageSlider?.prev();
+      }
+      if(this.isVideoSliderOpened) {
+        if(e.key === 'ArrowRight') this.videoSlider?.next();
+        if(e.key === 'ArrowLeft') this.videoSlider?.prev();
+      }
+    })
   }
   ngOnInit(): void {
     this.router.events.subscribe((evt) => {
@@ -132,6 +149,7 @@ export class NoteComponent implements OnInit {
     this.el.nativeElement.querySelector(
       '.imageSliderElementRoot'
     ).style.display = 'none';
+    this.isImageSliderOpened = false;
   }
 
   closeVideoSlider() {
@@ -141,6 +159,7 @@ export class NoteComponent implements OnInit {
       '.videoSliderElementRoot'
     ).style.display = 'none';
     this.pauseAllVideos();
+    this.isVideoSliderOpened = false;
   }
 
   openImageSlider(i: number) {
@@ -151,6 +170,7 @@ export class NoteComponent implements OnInit {
     ).style.display = 'block';
     this.imageSlider?.update();
     this.imageSlider?.moveToIdx(i);
+    this.isImageSliderOpened = true;
   }
 
   openVideoSlider(i: number) {
@@ -161,6 +181,7 @@ export class NoteComponent implements OnInit {
     ).style.display = 'block';
     this.videoSlider?.update();
     this.videoSlider?.moveToIdx(i);
+    this.isVideoSliderOpened = true;
   }
 
   pauseAllVideos() {
