@@ -18,12 +18,11 @@ import { filter } from 'rxjs';
 export class AppComponent {
   public title = 'CnouLeg-Client';
   constructor() {
-    addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 't' || e.key === 'T') {
-        if (document.body.className.includes('light-theme'))
-          document.body.className = 'mat-typography dark-theme';
-        else document.body.className = 'mat-typography light-theme';
-      }
-    });
+    if(localStorage.getItem("cnouleg-theme")) {
+      document.body.className = 'mat-typography ' + localStorage.getItem("cnouleg-theme");
+    } else {
+      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
+      document.body.className = darkThemeMq.matches ? 'mat-typography dark-theme' : 'mat-typography light-theme';
+    }
   }
 }

@@ -2,7 +2,6 @@ markdown::ng-deep table {
     border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
-    font-size: min(2vw, 1em);
     white-space: nowrap;
 }
 
@@ -10,14 +9,14 @@ markdown::ng-deep th {
     border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
-    font-size: min(2vw, 1em);
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 markdown::ng-deep td {
     border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
-    font-size: min(2vw, 1em);
     word-wrap: break-word;
     white-space: normal;
 }
@@ -32,7 +31,7 @@ markdown::ng-deep img {
     display: block;
     width: min(100%, 512px);
     margin: auto;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 mat-card {
@@ -82,17 +81,6 @@ mat-card {
 
         &:hover {
             cursor: pointer;
-        }
-    }
-
-    img,
-    video {
-        transition: box-shadow 0.3s;
-
-        &:hover {
-            cursor: pointer;
-            border-color: #111;
-            box-shadow: 5px 5px 10px 0 #c0bec5;
         }
     }
 }

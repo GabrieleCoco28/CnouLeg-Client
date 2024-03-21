@@ -88,20 +88,20 @@ export class NoteComponent implements OnInit {
       });
       window.scrollTo(0, 0);
     });
-    addEventListener("keydown", (e: KeyboardEvent) => {
-      if(this.router.url.includes('/note') && e.key == 'Escape') {
+    addEventListener('keydown', (e: KeyboardEvent) => {
+      if (this.router.url.includes('/note') && e.key == 'Escape') {
         this.closeImageSlider();
         this.closeVideoSlider();
       }
-      if(this.isImageSliderOpened) {
-        if(e.key === 'ArrowRight') this.imageSlider?.next();
-        if(e.key === 'ArrowLeft') this.imageSlider?.prev();
+      if (this.isImageSliderOpened) {
+        if (e.key === 'ArrowRight') this.imageSlider?.next();
+        if (e.key === 'ArrowLeft') this.imageSlider?.prev();
       }
-      if(this.isVideoSliderOpened) {
-        if(e.key === 'ArrowRight') this.videoSlider?.next();
-        if(e.key === 'ArrowLeft') this.videoSlider?.prev();
+      if (this.isVideoSliderOpened) {
+        if (e.key === 'ArrowRight') this.videoSlider?.next();
+        if (e.key === 'ArrowLeft') this.videoSlider?.prev();
       }
-    })
+    });
   }
   ngOnInit(): void {
     this.router.events.subscribe((evt) => {
@@ -136,10 +136,10 @@ export class NoteComponent implements OnInit {
     });
   }
 
-  updateSlider(len: number, i: number, type: string) {
+  updateSlider(len: number, i: number) {
     if (i === len - 1) {
-      if (type === 'image') this.imageSlider?.update();
-      if (type === 'video') this.videoSlider?.update();
+      this.imageSlider?.update();
+      this.videoSlider?.update();
     }
   }
 
@@ -163,6 +163,7 @@ export class NoteComponent implements OnInit {
   }
 
   openImageSlider(i: number) {
+    this.updateSlider(0, 1);
     this.el.nativeElement.querySelector('.noteElementRoot').style.display =
       'none';
     this.el.nativeElement.querySelector(
@@ -174,6 +175,7 @@ export class NoteComponent implements OnInit {
   }
 
   openVideoSlider(i: number) {
+    this.updateSlider(0, 1);
     this.el.nativeElement.querySelector('.noteElementRoot').style.display =
       'none';
     this.el.nativeElement.querySelector(

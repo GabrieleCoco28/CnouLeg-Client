@@ -42,8 +42,8 @@
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of videosPath; index as i">
                     <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128"
-                        (click)="openVideoSlider(i)"
-                        style="overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
+                        (click)="openVideoSlider(i)" class="content-icon"
+                        style="overflow: hidden; object-fit: none; border-radius: 15px;">
                     <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
                         13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
                 </div>
@@ -56,8 +56,8 @@
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of documentsPath; index as i">
                     <a [href]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item">
-                        <img src="assets/notes-placeholder/file.svg" alt="img"
-                            style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; background-color: #eeedf1;">
+                        <img src="assets/notes-placeholder/file.svg" alt="img" class="content-icon"
+                            style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px;">
                     </a>
                     <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
                         13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
@@ -107,7 +107,7 @@
     <div class="keen-slider keen-slider--vertical" #imageSliderRef>
         <img *ngFor="let item of imagesCompletePath; index as i" class="keen-slider__slide number-slide{{i}}"
             [src]="item" [alt]="item" style="object-fit: contain; user-select: none;"
-            (load)="updateSlider(imagesCompletePath.length, i, 'image')">
+            (load)="updateSlider(imagesCompletePath.length, i)">
     </div>
     <svg [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
@@ -132,7 +132,7 @@
         <video *ngFor="let item of videosCompletePath; index as i"
             class="keen-slider__slide number-slide{{i}} video-slide" [src]="item"
             style="object-fit: contain; user-select: none;" controls
-            (load)="updateSlider(imagesCompletePath.length, i, 'video')"></video>
+            (load)="updateSlider(imagesCompletePath.length, i)"></video>
     </div>
     <svg [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')

@@ -5,16 +5,14 @@
 
 @include mat.core();
 
-$light-theme: matx.define-theme((
-  color: (theme-type: light,
-    primary: matx.$m3-azure-palette ),
-    density: (scale: -1)
-));
+$light-theme: matx.define-theme((color: (theme-type: light,
+        primary: matx.$m3-azure-palette ),
+      density: (scale: -1)));
 
-  $dark-theme: matx.define-theme((color: (theme-type: dark,
-  primary: matx.$m3-azure-palette ),
-  density: (scale: -1)));
-        
+$dark-theme: matx.define-theme((color: (theme-type: dark,
+        primary: matx.$m3-azure-palette ),
+      density: (scale: -1)));
+
 .light-theme {
   @include mat.all-component-themes($light-theme);
   @include matx.color-variants-back-compat($light-theme);
@@ -36,18 +34,29 @@ body.light-theme {
   font-family: "Varela Round";
   background-color: #fdfbff;
   color: #1a1b1f;
-  
+
   mat-card {
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0 1px 1px 0 rgba(0, 0, 0, 0.2),
-    0 1px 3px 0 rgba(0, 0, 0, 0.2) !important;
+      0 1px 1px 0 rgba(0, 0, 0, 0.2),
+      0 1px 3px 0 rgba(0, 0, 0, 0.2) !important;
     transition: box-shadow 0.5s;
   }
-  
+
   mat-card.hover:hover {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0 1px 4px 0 rgba(0, 0, 0, 0.2),
+      0 1px 4px 0 rgba(0, 0, 0, 0.2),
       0 1px 6px 0 rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .content-icon {
+    background-color: #eeedf1;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      border-color: #111;
+      box-shadow: 5px 5px 10px 0 #c0bec5;
+    }
   }
 }
 
@@ -69,6 +78,16 @@ body.dark-theme {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 1),
       0 1px 4px 0 rgba(0, 0, 0, 1),
       0 1px 6px 0 rgba(0, 0, 0, 1) !important;
+  }
+  .content-icon {
+    background-color: #9178db;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      border-color: #111;
+      box-shadow: 5px 5px 10px 0 black;
+    }
   }
 }
 

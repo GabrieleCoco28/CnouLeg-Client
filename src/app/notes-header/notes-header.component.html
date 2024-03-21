@@ -7,8 +7,11 @@
     <button mat-icon-button class="save-button">
         <mat-icon class="material-symbols-rounded">bookmark</mat-icon>
     </button>
-    <button mat-icon-button class="sahre-button">
+    <button mat-icon-button class="share-button">
         <mat-icon class="material-symbols-rounded">share</mat-icon>
+    </button>
+    <button mat-icon-button class="theme-button" (click)="toggleTheme()">
+        <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>
     </button>
     <div mat-card-avatar class="toolbar-avatar"></div>
 </mat-toolbar>
