@@ -1,4 +1,4 @@
-<div style="padding: 0 1em 0 1em;" #root>
+<div style="padding: 0 1em 0 1em;" #root style="display: none;" class="search-root">
     <a *ngFor="let note of noteInfo" [routerLink]="'note/' + note._id" [class]="'_id' + note._id" (click)="saveElementID(note._id)">
         <mat-card class="hover">
             <mat-card-header>
@@ -17,3 +17,4 @@
         </mat-card>
     </a>
 </div>
+<mat-spinner class="spinner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></mat-spinner>

@@ -28,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -67,7 +68,8 @@ import { SearchComponent } from './search/search.component';
     MatExpansionModule,
     Ng2FittextModule,
     HttpClientModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    MatProgressSpinnerModule
   ],
   providers: [provideMarkdown(), provideAnimationsAsync(), provideAnimations()],
   bootstrap: [AppComponent],
