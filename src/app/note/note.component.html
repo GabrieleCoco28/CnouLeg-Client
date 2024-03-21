@@ -130,7 +130,7 @@
         (click)="closeVideoSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
     <div class="keen-slider keen-slider--vertical" #videoSliderRef>
         <video *ngFor="let item of videosCompletePath; index as i"
-            class="keen-slider__slide number-slide{{i}} video-slide" [src]="item"
+            class="keen-slider__slide number-slide{{i}} video-slide{{i}} video-slide" [src]="item"
             style="object-fit: contain; user-select: none;" controls
             (load)="updateSlider(imagesCompletePath.length, i)"></video>
     </div>

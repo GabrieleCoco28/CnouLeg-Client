@@ -130,6 +130,7 @@ export class NoteComponent implements OnInit {
           slideChanged: (s) => {
             this.currentSlide = s.track.details.rel;
             this.pauseAllVideos();
+            (s.slides[this.currentSlide] as HTMLVideoElement).play();
           },
         });
       }
@@ -184,6 +185,7 @@ export class NoteComponent implements OnInit {
     this.videoSlider?.update();
     this.videoSlider?.moveToIdx(i);
     this.isVideoSliderOpened = true;
+    this.el.nativeElement.querySelector(".video-slide" + i).play();
   }
 
   pauseAllVideos() {
