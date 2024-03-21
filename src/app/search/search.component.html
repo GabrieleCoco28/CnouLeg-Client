@@ -1,4 +1,4 @@
-<div style="padding: 0 1em 0 1em;" #root style="display: none;" class="search-root">
+<div style="display: none;padding: 0 1em 0 1em;" #root class="search-root">
     <a *ngFor="let note of noteInfo" [routerLink]="'note/' + note._id" [class]="'_id' + note._id" (click)="saveElementID(note._id)">
         <mat-card class="hover">
             <mat-card-header>
