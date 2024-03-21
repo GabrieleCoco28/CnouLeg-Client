@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, provideRouter, withInMemoryScrolling } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideMarkdown } from 'ngx-markdown';
 import { MarkdownModule } from 'ngx-markdown';

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Host, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-comment-card',
@@ -8,7 +8,7 @@ import { Component, ElementRef, Host, Input } from '@angular/core';
 export class CommentCardComponent {
   public arr: number[] = [];
   panelOpenState = false;
-  
+
   constructor() {
     this.arr.length = this.getRandomValue(0, 5);
   }
