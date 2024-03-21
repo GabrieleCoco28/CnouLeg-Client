@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, provideRouter, withInMemoryScrolling } from '@angular/router';
 import { SearchComponent } from './search/search.component';
 import { NoteComponent } from './note/note.component';
 

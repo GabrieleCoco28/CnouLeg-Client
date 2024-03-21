@@ -1,6 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CnouLegAPIService, Note, User, Users } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
+import { Router } from '@angular/router';
+import { PositionSaver } from '../position-saver';
 
 @Component({
   selector: 'app-search',
@@ -39,6 +47,9 @@ export class SearchComponent {
               );
             });
           });
+          if(PositionSaver.elementID != "") {
+            el.nativeElement.querySelector("._id" + PositionSaver.elementID).scrollIntoView();
+          }
         });
     });
   }
@@ -48,5 +59,8 @@ export class SearchComponent {
   }
   translateSchool(school: string) {
     return this.translator.translateSchool(school);
+  }
+  saveElementID(id: string) {
+    PositionSaver.elementID = id;
   }
 }
