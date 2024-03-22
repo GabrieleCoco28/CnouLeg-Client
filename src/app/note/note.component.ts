@@ -96,6 +96,8 @@ export class NoteComponent implements OnInit {
                 },
                 created: (s) => {
                   s.update();
+                  if(this.videosPath.length <= 0)
+                    this.load();
                 },
               }
             );
@@ -117,6 +119,9 @@ export class NoteComponent implements OnInit {
                 },
               }
             );
+          }
+          if(this.videosPath.length <= 0 && this.imagesPath.length <= 0) {
+            this.load();
           }
         });
       });
