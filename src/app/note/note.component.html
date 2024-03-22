@@ -1,4 +1,4 @@
-<div style="padding: 0 1em 0 1em; display: block;" class="noteElementRoot">
+<div style="padding: 0 1em 0 1em; display: none;" class="noteElementRoot">
     <app-notes-header></app-notes-header>
     <div id="title">
         <h1>{{noteInfo.title}}</h1>
@@ -107,7 +107,7 @@
     <div class="keen-slider keen-slider--vertical" #imageSliderRef>
         <img *ngFor="let item of imagesCompletePath; index as i" class="keen-slider__slide number-slide{{i}}"
             [src]="item" [alt]="item" style="object-fit: contain; user-select: none;"
-            (load)="updateSlider(imagesCompletePath.length, i)">
+            (load)="updateSlider(imagesCompletePath.length, i, 'image')">
     </div>
     <svg [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
@@ -131,8 +131,8 @@
     <div class="keen-slider keen-slider--vertical" #videoSliderRef>
         <video *ngFor="let item of videosCompletePath; index as i"
             class="keen-slider__slide number-slide{{i}} video-slide{{i}} video-slide" [src]="item"
-            style="object-fit: contain; user-select: none;" controls
-            (load)="updateSlider(imagesCompletePath.length, i)"></video>
+            style="object-fit: contain; user-select: none;" controls preload="auto"
+            (load)="updateSlider(videosCompletePath.length, i, 'video')"></video>
     </div>
     <svg [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
@@ -148,3 +148,5 @@
         <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
     </svg>
 </div>
+
+<mat-spinner class="spinner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></mat-spinner>

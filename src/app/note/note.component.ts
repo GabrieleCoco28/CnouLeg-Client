@@ -85,6 +85,41 @@ export class NoteComponent implements OnInit {
                 `background-image: url(https://cochome.ddns.net/profile_pics/${response.users[0].profile_pic_url})`
               );
           });
+        setTimeout(() => {
+          if (this.imagesPath.length > 0) {
+            console.log('siu');
+            this.imageSlider = new KeenSlider(
+              this.imageSliderRef.nativeElement,
+              {
+                initial: this.currentSlide,
+                slideChanged: (s) => {
+                  this.currentSlide = s.track.details.rel;
+                },
+                created: (s) => {
+                  s.update();
+                },
+              }
+            );
+          }
+
+          if (this.videosPath.length > 0) {
+            this.videoSlider = new KeenSlider(
+              this.videoSliderRef.nativeElement,
+              {
+                initial: this.currentSlide,
+                slideChanged: (s) => {
+                  this.currentSlide = s.track.details.rel;
+                  this.pauseAllVideos();
+                  (s.slides[this.currentSlide] as HTMLVideoElement).play();
+                },
+                created: (s) => {
+                  s.update();
+                  this.load();
+                },
+              }
+            );
+          }
+        });
       });
       window.scrollTo(0, 0);
     });
@@ -114,33 +149,12 @@ export class NoteComponent implements OnInit {
 
   ngAfterViewInit() {
     window.scrollTo(0, 0);
-    setTimeout(() => {
-      if (this.imagesPath.length > 0) {
-        this.imageSlider = new KeenSlider(this.imageSliderRef.nativeElement, {
-          initial: this.currentSlide,
-          slideChanged: (s) => {
-            this.currentSlide = s.track.details.rel;
-          },
-        });
-      }
-
-      if (this.videosPath.length > 0) {
-        this.videoSlider = new KeenSlider(this.videoSliderRef.nativeElement, {
-          initial: this.currentSlide,
-          slideChanged: (s) => {
-            this.currentSlide = s.track.details.rel;
-            this.pauseAllVideos();
-            (s.slides[this.currentSlide] as HTMLVideoElement).play();
-          },
-        });
-      }
-    });
   }
 
-  updateSlider(len: number, i: number) {
+  updateSlider(len: number, i: number, type: string) {
     if (i === len - 1) {
-      this.imageSlider?.update();
-      this.videoSlider?.update();
+      if (type === 'image') this.imageSlider?.update();
+      if (type === 'video') this.videoSlider?.update();
     }
   }
 
@@ -164,28 +178,28 @@ export class NoteComponent implements OnInit {
   }
 
   openImageSlider(i: number) {
-    this.updateSlider(0, 1);
+    this.updateSlider(1, 0, 'image');
     this.el.nativeElement.querySelector('.noteElementRoot').style.display =
       'none';
     this.el.nativeElement.querySelector(
       '.imageSliderElementRoot'
     ).style.display = 'block';
-    this.imageSlider?.update();
     this.imageSlider?.moveToIdx(i);
     this.isImageSliderOpened = true;
+    this.updateSlider(1, 0, 'image');
   }
 
   openVideoSlider(i: number) {
-    this.updateSlider(0, 1);
+    this.updateSlider(1, 0, 'video');
     this.el.nativeElement.querySelector('.noteElementRoot').style.display =
       'none';
     this.el.nativeElement.querySelector(
       '.videoSliderElementRoot'
     ).style.display = 'block';
-    this.videoSlider?.update();
     this.videoSlider?.moveToIdx(i);
     this.isVideoSliderOpened = true;
-    this.el.nativeElement.querySelector(".video-slide" + i).play();
+    this.el.nativeElement.querySelector('.video-slide' + i).play();
+    this.updateSlider(1, 0, 'video');
   }
 
   pauseAllVideos() {
@@ -206,5 +220,11 @@ export class NoteComponent implements OnInit {
 
   getSubjectIcon(sub: string) {
     return this.translator.getSubjectIcon(sub);
+  }
+
+  load() {
+    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
+      'block';
+    this.el.nativeElement.querySelector('.spinner').style.display = 'none';
   }
 }
