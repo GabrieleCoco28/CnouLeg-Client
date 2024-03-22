@@ -87,7 +87,6 @@ export class NoteComponent implements OnInit {
           });
         setTimeout(() => {
           if (this.imagesPath.length > 0) {
-            console.log('siu');
             this.imageSlider = new KeenSlider(
               this.imageSliderRef.nativeElement,
               {
@@ -178,28 +177,26 @@ export class NoteComponent implements OnInit {
   }
 
   openImageSlider(i: number) {
-    this.updateSlider(1, 0, 'image');
     this.el.nativeElement.querySelector('.noteElementRoot').style.display =
       'none';
     this.el.nativeElement.querySelector(
       '.imageSliderElementRoot'
     ).style.display = 'block';
+    this.updateSlider(1, 0, 'image');
     this.imageSlider?.moveToIdx(i);
     this.isImageSliderOpened = true;
-    this.updateSlider(1, 0, 'image');
   }
 
   openVideoSlider(i: number) {
-    this.updateSlider(1, 0, 'video');
     this.el.nativeElement.querySelector('.noteElementRoot').style.display =
       'none';
     this.el.nativeElement.querySelector(
       '.videoSliderElementRoot'
     ).style.display = 'block';
+    this.updateSlider(1, 0, 'video');
     this.videoSlider?.moveToIdx(i);
     this.isVideoSliderOpened = true;
     this.el.nativeElement.querySelector('.video-slide' + i).play();
-    this.updateSlider(1, 0, 'video');
   }
 
   pauseAllVideos() {
