@@ -129,8 +129,10 @@ export class NoteComponent implements OnInit {
     });
     addEventListener('keydown', (e: KeyboardEvent) => {
       if (this.router.url.includes('/note') && e.key == 'Escape') {
-        this.closeImageSlider();
-        this.closeVideoSlider();
+        if(this.imageSlider)
+          this.closeImageSlider();
+        if(this.videoSlider)
+          this.closeVideoSlider();
       }
       if (this.isImageSliderOpened) {
         if (e.key === 'ArrowRight') this.imageSlider?.next();
