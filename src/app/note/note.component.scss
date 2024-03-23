@@ -1,12 +1,4 @@
-markdown::ng-deep table {
-    border: 1px solid rgb(36, 34, 35);
-    border-collapse: collapse;
-    padding: 0.5rem;
-    white-space: nowrap;
-}
-
 markdown::ng-deep th {
-    border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
     word-wrap: break-word;
@@ -14,7 +6,6 @@ markdown::ng-deep th {
 }
 
 markdown::ng-deep td {
-    border: 1px solid rgb(36, 34, 35);
     border-collapse: collapse;
     padding: 0.5rem;
     word-wrap: break-word;
@@ -22,6 +13,9 @@ markdown::ng-deep td {
 }
 
 markdown::ng-deep table {
+    border-collapse: collapse;
+    padding: 0.5rem;
+    white-space: nowrap;
     margin: auto;
     width: 100%;
     table-layout: fixed;

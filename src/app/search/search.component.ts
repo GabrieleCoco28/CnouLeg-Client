@@ -46,7 +46,7 @@ export class SearchComponent {
           if (PositionSaver.elementID != '') {
             el.nativeElement
               .querySelector('._id' + PositionSaver.elementID)
-              .scrollIntoView();
+              .scrollIntoView({block: "center"});
           }
         });
     });

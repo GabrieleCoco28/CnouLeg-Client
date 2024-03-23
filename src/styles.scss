@@ -58,6 +58,18 @@ body.light-theme {
       box-shadow: 5px 5px 10px 0 #c0bec5;
     }
   }
+
+  markdown table {
+    border: 1px solid rgb(36, 34, 35);
+  }
+
+  markdown th {
+    border: 1px solid rgb(36, 34, 35);
+  }
+
+  markdown td {
+    border: 1px solid rgb(36, 34, 35);
+  }
 }
 
 body.dark-theme {
@@ -79,6 +91,7 @@ body.dark-theme {
       0 1px 4px 0 rgba(0, 0, 0, 1),
       0 1px 6px 0 rgba(0, 0, 0, 1) !important;
   }
+
   .content-icon {
     background-color: #9178db;
     transition: box-shadow 0.3s;
@@ -88,6 +101,18 @@ body.dark-theme {
       border-color: #111;
       box-shadow: 5px 5px 10px 0 black;
     }
+  }
+
+  markdown table {
+    border: 1px solid gainsboro;
+  }
+
+  markdown th {
+    border: 1px solid gainsboro;
+  }
+
+  markdown td {
+    border: 1px solid gainsboro;
   }
 }
 

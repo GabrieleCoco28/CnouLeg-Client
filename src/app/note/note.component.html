@@ -23,7 +23,7 @@
         </mat-card-content>
     </mat-card>
     <mat-card>
-        <div *ngIf="imagesPath.length > 0">
+        <div *ngIf="imagesPath.length > 0" class="imagesList">
             <mat-card-content>Immagini</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of imagesPath; index as i">
@@ -37,7 +37,7 @@
         </div>
     </mat-card>
     <mat-card>
-        <div *ngIf="videosPath.length > 0">
+        <div *ngIf="videosPath.length > 0" class="videosList">
             <mat-card-content>Video</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of videosPath; index as i">

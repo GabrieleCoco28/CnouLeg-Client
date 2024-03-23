@@ -129,9 +129,9 @@ export class NoteComponent implements OnInit {
     });
     addEventListener('keydown', (e: KeyboardEvent) => {
       if (this.router.url.includes('/note') && e.key == 'Escape') {
-        if(this.imageSlider)
+        if(this.imageSlider && this.isImageSliderOpened)
           this.closeImageSlider();
-        if(this.videoSlider)
+        if(this.videoSlider && this.isVideoSliderOpened)
           this.closeVideoSlider();
       }
       if (this.isImageSliderOpened) {
@@ -171,6 +171,7 @@ export class NoteComponent implements OnInit {
       '.imageSliderElementRoot'
     ).style.display = 'none';
     this.isImageSliderOpened = false;
+    this.el.nativeElement.querySelector(".imagesList").scrollIntoView({block: "center"});
   }
 
   closeVideoSlider() {
@@ -181,6 +182,7 @@ export class NoteComponent implements OnInit {
     ).style.display = 'none';
     this.pauseAllVideos();
     this.isVideoSliderOpened = false;
+    this.el.nativeElement.querySelector(".videosList").scrollIntoView({block: "center"});
   }
 
   openImageSlider(i: number) {
@@ -231,4 +233,5 @@ export class NoteComponent implements OnInit {
       'block';
     this.el.nativeElement.querySelector('.spinner').style.display = 'none';
   }
+
 }
