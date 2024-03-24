@@ -1,0 +1,24 @@
+<div class="navigation-wrapper videoSliderElementRoot" *ngIf="videosPath.length > 0">
+    <button mat-icon-button
+        style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;"
+        (click)="closeVideoSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
+    <div class="keen-slider keen-slider--vertical" #videoSliderRef>
+        <video *ngFor="let item of videosCompletePath; index as i"
+            class="keen-slider__slide number-slide{{i}} video-slide{{i}} video-slide" [src]="item"
+            style="object-fit: contain; user-select: none;" controls
+            (loadeddata)="updateSlider(this.videosCompletePath.length, i, 'video')"></video>
+    </div>
+    <svg [ngClass]="
+        'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
+      " (click)="videoSlider?.prev()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+    </svg>
+    <svg *ngIf="videoSlider" [ngClass]="
+        'arrow arrow--right ' +
+        (videoSlider.track.details.slides.length - 1 === currentSlide
+          ? 'arrow--disabled'
+          : '')
+      " (click)="videoSlider.next()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+    </svg>
+</div>

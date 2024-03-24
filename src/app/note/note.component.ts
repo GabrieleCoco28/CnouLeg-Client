@@ -3,8 +3,8 @@ import { CopyButtonComponent } from '../copy-button/copy-button.component';
 import { MermaidAPI } from 'ngx-markdown';
 import { CnouLegAPIService, Note, Users } from '../cnou-leg-api.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { TranslatorService } from '../translator.service';
+import { StaticVariables } from '../static-variables';
 
 @Component({
   selector: 'app-note',
@@ -22,22 +22,10 @@ export class NoteComponent implements OnInit {
   };
 
   public imagesPath: string[] = [];
-  public imagesCompletePath: string[] = [];
 
   public videosPath: string[] = [];
-  public videosCompletePath: string[] = [];
 
   public documentsPath: string[] = [];
-
-  @ViewChild('imageSliderRef') imageSliderRef!: ElementRef<HTMLElement>;
-  @ViewChild('videoSliderRef') videoSliderRef!: ElementRef<HTMLElement>;
-
-  isImageSliderOpened = false;
-  isVideoSliderOpened = false;
-
-  currentSlide: number = 0;
-  imageSlider: KeenSliderInstance | null = null;
-  videoSlider: KeenSliderInstance | null = null;
 
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
@@ -53,21 +41,9 @@ export class NoteComponent implements OnInit {
           switch (v.type) {
             case 'image':
               this.imagesPath.push(v.path);
-              this.imagesCompletePath.push(
-                'https://cochome.ddns.net/content/' +
-                  this.noteInfo._id +
-                  '/' +
-                  v.path
-              );
               break;
             case 'video':
               this.videosPath.push(v.path);
-              this.videosCompletePath.push(
-                'https://cochome.ddns.net/content/' +
-                  this.noteInfo._id +
-                  '/' +
-                  v.path
-              );
               break;
             case 'document':
               this.documentsPath.push(v.path);
@@ -85,63 +61,7 @@ export class NoteComponent implements OnInit {
                 `background-image: url(https://cochome.ddns.net/profile_pics/${response.users[0].profile_pic_url})`
               );
           });
-        setTimeout(() => {
-          if (this.imagesPath.length > 0) {
-            this.imageSlider = new KeenSlider(
-              this.imageSliderRef.nativeElement,
-              {
-                initial: this.currentSlide,
-                slideChanged: (s) => {
-                  this.currentSlide = s.track.details.rel;
-                },
-                created: (s) => {
-                  s.update();
-                  if(this.videosPath.length <= 0)
-                    this.load();
-                },
-              }
-            );
-          }
-
-          if (this.videosPath.length > 0) {
-            this.videoSlider = new KeenSlider(
-              this.videoSliderRef.nativeElement,
-              {
-                initial: this.currentSlide,
-                slideChanged: (s) => {
-                  this.currentSlide = s.track.details.rel;
-                  this.pauseAllVideos();
-                  (s.slides[this.currentSlide] as HTMLVideoElement).play();
-                },
-                created: (s) => {
-                  s.update();
-                  this.load();
-                },
-              }
-            );
-          }
-          if(this.videosPath.length <= 0 && this.imagesPath.length <= 0) {
-            this.load();
-          }
-        });
       });
-      window.scrollTo(0, 0);
-    });
-    addEventListener('keydown', (e: KeyboardEvent) => {
-      if (this.router.url.includes('/note') && e.key == 'Escape') {
-        if(this.imageSlider && this.isImageSliderOpened)
-          this.closeImageSlider();
-        if(this.videoSlider && this.isVideoSliderOpened)
-          this.closeVideoSlider();
-      }
-      if (this.isImageSliderOpened) {
-        if (e.key === 'ArrowRight') this.imageSlider?.next();
-        if (e.key === 'ArrowLeft') this.imageSlider?.prev();
-      }
-      if (this.isVideoSliderOpened) {
-        if (e.key === 'ArrowRight') this.videoSlider?.next();
-        if (e.key === 'ArrowLeft') this.videoSlider?.prev();
-      }
     });
   }
   ngOnInit(): void {
@@ -149,71 +69,23 @@ export class NoteComponent implements OnInit {
       if (!(evt instanceof NavigationEnd)) {
         return;
       }
-      window.scrollTo(0, 0);
     });
   }
 
   ngAfterViewInit() {
-    window.scrollTo(0, 0);
-  }
-
-  updateSlider(len: number, i: number, type: string) {
-    if (i === len - 1) {
-      if (type === 'image') this.imageSlider?.update();
-      if (type === 'video') this.videoSlider?.update();
+    if (this.imagesPath.length <= 0) {
+      this.load(1, 0);
     }
   }
 
-  closeImageSlider() {
-    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
-      'block';
-    this.el.nativeElement.querySelector(
-      '.imageSliderElementRoot'
-    ).style.display = 'none';
-    this.isImageSliderOpened = false;
-    this.el.nativeElement.querySelector(".imagesList").scrollIntoView({block: "center"});
-  }
-
-  closeVideoSlider() {
-    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
-      'block';
-    this.el.nativeElement.querySelector(
-      '.videoSliderElementRoot'
-    ).style.display = 'none';
-    this.pauseAllVideos();
-    this.isVideoSliderOpened = false;
-    this.el.nativeElement.querySelector(".videosList").scrollIntoView({block: "center"});
-  }
-
   openImageSlider(i: number) {
-    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
-      'none';
-    this.el.nativeElement.querySelector(
-      '.imageSliderElementRoot'
-    ).style.display = 'block';
-    this.updateSlider(1, 0, 'image');
-    this.imageSlider?.moveToIdx(i);
-    this.isImageSliderOpened = true;
+    StaticVariables.indexToLoad = i;
+    StaticVariables.lastContent = 'imagesList';
   }
 
   openVideoSlider(i: number) {
-    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
-      'none';
-    this.el.nativeElement.querySelector(
-      '.videoSliderElementRoot'
-    ).style.display = 'block';
-    this.updateSlider(1, 0, 'video');
-    this.videoSlider?.moveToIdx(i);
-    this.isVideoSliderOpened = true;
-    this.el.nativeElement.querySelector('.video-slide' + i).play();
-  }
-
-  pauseAllVideos() {
-    const videoElements: HTMLVideoElement[] =
-      this.el.nativeElement.querySelectorAll('.video-slide');
-    videoElements.forEach((v) => {
-      v.pause();
-    });
+    StaticVariables.indexToLoad = i;
+    StaticVariables.lastContent = 'videosList';
   }
 
   translateSubject(sub: string) {
@@ -228,10 +100,22 @@ export class NoteComponent implements OnInit {
     return this.translator.getSubjectIcon(sub);
   }
 
-  load() {
-    this.el.nativeElement.querySelector('.noteElementRoot').style.display =
-      'block';
-    this.el.nativeElement.querySelector('.spinner').style.display = 'none';
+  load(len: number, i: number) {
+    if (i === len - 1) {
+      this.el.nativeElement.querySelector('.noteElementRoot').style.display =
+        'block';
+      this.el.nativeElement.querySelector('.spinner').style.display = 'none';
+      if (
+        StaticVariables.lastContent != '' &&
+        this.el.nativeElement.querySelector('.' + StaticVariables.lastContent)
+      ) {
+        this.el.nativeElement
+          .querySelector('.' + StaticVariables.lastContent)
+          .scrollIntoView({ block: 'center' });
+        StaticVariables.lastContent = '';
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
   }
-
 }

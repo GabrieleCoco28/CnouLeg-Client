@@ -1,7 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { CnouLegAPIService, Note, User, Users } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
-import { PositionSaver } from '../position-saver';
+import { StaticVariables } from '../static-variables';
 
 @Component({
   selector: 'app-search',
@@ -43,9 +43,9 @@ export class SearchComponent {
           el.nativeElement.querySelector('.search-root').style.display =
           'block';
           el.nativeElement.querySelector('.spinner').style.display = 'none';
-          if (PositionSaver.elementID != '') {
+          if (StaticVariables.elementID != '') {
             el.nativeElement
-              .querySelector('._id' + PositionSaver.elementID)
+              .querySelector('._id' + StaticVariables.elementID)
               .scrollIntoView({block: "center"});
           }
         });
@@ -59,6 +59,6 @@ export class SearchComponent {
     return this.translator.translateSchool(school);
   }
   saveElementID(id: string) {
-    PositionSaver.elementID = id;
+    StaticVariables.elementID = id;
   }
 }
