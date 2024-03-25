@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { StaticVariables } from '../static-variables';
@@ -18,6 +24,7 @@ export class ImageSliderComponent {
   currentSlide: number = 0;
   imagesPath: string[] = [];
   imagesCompletePath: string[] = [];
+  parameters: any;
   constructor(
     private el: ElementRef,
     private router: Router,
@@ -25,52 +32,76 @@ export class ImageSliderComponent {
     private cnoulegAPIService: CnouLegAPIService
   ) {
     this.route.params.subscribe((params) => {
-      cnoulegAPIService.getArticleByID(params['id']).subscribe((response) => {
-        response.contents.map((v) => {
-          switch (v.type) {
-            case 'image':
-              this.imagesPath.push(v.path);
-              this.imagesCompletePath.push(
-                'https://cochome.ddns.net/content/' +
-                  response._id +
-                  '/' +
-                  v.path
-              );
-          }
-        });
-        setTimeout(() => {
-          this.imageSlider = new KeenSlider(this.imageSliderRef.nativeElement, {
-            initial: this.currentSlide,
-            slideChanged: (s) => {
-              this.currentSlide = s.track.details.rel;
-            },
-            created: (s) => {
-              s.update();
-            },
-          });
-          addEventListener('keydown', (e: KeyboardEvent) => {
-            if (this.router.url.includes('/images') && e.key == 'Escape') {
-              if (this.imageSlider) this.closeImageSlider();
-            }
-            if (this.imageSlider) {
-              if (e.key === 'ArrowRight') this.imageSlider?.next();
-              if (e.key === 'ArrowLeft') this.imageSlider?.prev();
+      this.parameters = params;
+      cnoulegAPIService.getArticleByID(params['id']).subscribe({
+        next: (response) => {
+          response.contents.map((v) => {
+            switch (v.type) {
+              case 'image':
+                this.imagesPath.push(v.path);
+                this.imagesCompletePath.push(
+                  'https://cochome.ddns.net/content/' +
+                    response._id +
+                    '/' +
+                    v.path
+                );
             }
           });
-        });
+          setTimeout(() => {
+            if (!this.imageSliderRef) return;
+            this.imageSlider = new KeenSlider(
+              this.imageSliderRef.nativeElement,
+              {
+                initial: this.currentSlide,
+                slideChanged: (s) => {
+                  this.currentSlide = s.track.details.rel;
+                },
+                created: (s) => {
+                  s.update();
+                  this.imageSliderRef.nativeElement.addEventListener(
+                    'keydown',
+                    (e: KeyboardEvent) => {
+                      if (
+                        this.router.url.includes('/images') &&
+                        e.key == 'Escape'
+                      ) {
+                        if (this.imageSlider) this.closeImageSlider();
+                      }
+                      if (this.imageSlider) {
+                        if (e.key === 'ArrowRight') this.imageSlider?.next();
+                        if (e.key === 'ArrowLeft') this.imageSlider?.prev();
+                      }
+                    }
+                  );
+                  this.imageSliderRef.nativeElement.focus();
+                },
+                defaultAnimation: {
+                  duration: 0,
+                },
+              }
+            );
+          });
+        },
+        error: (e) => {
+          this.router.navigateByUrl('/noteNotFound');
+        },
       });
     });
   }
 
-  updateSlider(len: number, i: number, type: string) {
+  updateSlider(len: number, i: number) {
     if (i === len - 1) {
-      if (type === 'image') this.imageSlider?.update();
-      this.imageSlider?.moveToIdx(StaticVariables.indexToLoad);
+      this.imageSlider?.update();
+      if (
+        this.parameters['index'] &&
+        +this.parameters['index'] < this.imagesPath.length
+      ) {
+        this.imageSlider?.moveToIdx(+this.parameters['index']);
+      }
     }
   }
 
   closeImageSlider() {
-    this.router.navigate(['..'], { relativeTo: this.route });
     history.back();
   }
 }

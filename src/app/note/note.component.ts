@@ -20,6 +20,7 @@ export class NoteComponent implements OnInit {
   public mermaidOptions: MermaidAPI.Config = {
     theme: MermaidAPI.Theme.Dark,
   };
+  public readyCalls = 0;
 
   public imagesPath: string[] = [];
 
@@ -34,35 +35,49 @@ export class NoteComponent implements OnInit {
     private el: ElementRef,
     private translator: TranslatorService
   ) {
-    this.route.params.subscribe((params) => {
-      cnoulegAPIService.getArticleByID(params['id']).subscribe((response) => {
-        this.noteInfo = response;
-        this.noteInfo.contents.map((v) => {
-          switch (v.type) {
-            case 'image':
-              this.imagesPath.push(v.path);
-              break;
-            case 'video':
-              this.videosPath.push(v.path);
-              break;
-            case 'document':
-              this.documentsPath.push(v.path);
-              break;
-          }
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        cnoulegAPIService.getArticleByID(params['id']).subscribe({
+          next: (response) => {
+            this.noteInfo = response;
+            el.nativeElement.setAttribute('tabindex', 1);
+            el.nativeElement.focus();
+            this.noteInfo.contents.map((v) => {
+              switch (v.type) {
+                case 'image':
+                  this.imagesPath.push(v.path);
+                  break;
+                case 'video':
+                  this.videosPath.push(v.path);
+                  break;
+                case 'document':
+                  this.documentsPath.push(v.path);
+                  break;
+              }
+            });
+            cnoulegAPIService
+              .getUsersById([this.noteInfo.author_id])
+              .subscribe((response: Users) => {
+                this.noteInfo.author_name = response.users[0].name;
+                (<HTMLElement>el.nativeElement)
+                  .querySelector('.user-subtitle-avatar')
+                  ?.setAttribute(
+                    'style',
+                    `background-image: url(https://cochome.ddns.net/profile_pics/${response.users[0].profile_pic_url})`
+                  );
+              });
+            el.nativeElement.addEventListener('keydown', (e: KeyboardEvent) => {
+              if (e.key === 'Escape') {
+                history.back();
+              }
+            });
+          },
+          error: (e) => {
+            this.router.navigateByUrl('/noteNotFound');
+          },
         });
-        cnoulegAPIService
-          .getUsersById([this.noteInfo.author_id])
-          .subscribe((response: Users) => {
-            this.noteInfo.author_name = response.users[0].name;
-            (<HTMLElement>el.nativeElement)
-              .querySelector('.user-subtitle-avatar')
-              ?.setAttribute(
-                'style',
-                `background-image: url(https://cochome.ddns.net/profile_pics/${response.users[0].profile_pic_url})`
-              );
-          });
       });
-    });
+    })
   }
   ngOnInit(): void {
     this.router.events.subscribe((evt) => {
@@ -72,19 +87,11 @@ export class NoteComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-    if (this.imagesPath.length <= 0) {
-      this.load(1, 0);
-    }
-  }
-
   openImageSlider(i: number) {
-    StaticVariables.indexToLoad = i;
     StaticVariables.lastContent = 'imagesList';
   }
 
   openVideoSlider(i: number) {
-    StaticVariables.indexToLoad = i;
     StaticVariables.lastContent = 'videosList';
   }
 
@@ -100,8 +107,9 @@ export class NoteComponent implements OnInit {
     return this.translator.getSubjectIcon(sub);
   }
 
-  load(len: number, i: number) {
-    if (i === len - 1) {
+  load() {
+    this.readyCalls++;
+    if (this.readyCalls >= 2) {
       this.el.nativeElement.querySelector('.noteElementRoot').style.display =
         'block';
       this.el.nativeElement.querySelector('.spinner').style.display = 'none';

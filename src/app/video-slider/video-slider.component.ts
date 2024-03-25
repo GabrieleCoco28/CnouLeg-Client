@@ -18,6 +18,7 @@ export class VideoSliderComponent {
   @ViewChild('videoSliderRef') videoSliderRef!: ElementRef<HTMLElement>;
   currentSlide: number = 0;
   videoSlider: KeenSliderInstance | null = null;
+  parameters: any;
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
     public route: ActivatedRoute,
@@ -25,36 +26,83 @@ export class VideoSliderComponent {
     private el: ElementRef
   ) {
     this.route.params.subscribe((params) => {
-      cnoulegAPIService.getArticleByID(params['id']).subscribe((response) => {
-        response.contents.map((v) => {
-          switch (v.type) {
-            case 'video':
-              this.videosPath.push(v.path);
-              this.videosCompletePath.push(
-                'https://cochome.ddns.net/content/' +
-                  response._id +
-                  '/' +
-                  v.path
-              );
-              break;
-          }
-        });
-        setTimeout(() => {
-          this.videoSlider = new KeenSlider(this.videoSliderRef.nativeElement, {
-            initial: this.currentSlide,
-            slideChanged: (s) => {
-              this.currentSlide = s.track.details.rel;
-              this.pauseAllVideos();
-              (s.slides[this.currentSlide] as HTMLVideoElement).play();
-            },
-            created: (s) => {
-              s.update();
-            },
-            defaultAnimation: {
-              duration: 0
+      this.parameters = params;
+      cnoulegAPIService.getArticleByID(params['id']).subscribe({
+        next: (response) => {
+          response.contents.map((v) => {
+            switch (v.type) {
+              case 'video':
+                this.videosPath.push(v.path);
+                this.videosCompletePath.push(
+                  'https://cochome.ddns.net/content/' +
+                    response._id +
+                    '/' +
+                    v.path
+                );
+                break;
             }
           });
-        });
+          setTimeout(() => {
+            if (!this.videoSliderRef) return;
+            this.videoSlider = new KeenSlider(
+              this.videoSliderRef.nativeElement,
+              {
+                initial: this.currentSlide,
+                slideChanged: (s) => {
+                  this.currentSlide = s.track.details.rel;
+                  this.pauseAllVideos();
+                  (s.slides[this.currentSlide] as HTMLVideoElement).play();
+                },
+                created: (s) => {
+                  s.update();
+                  this.videoSliderRef.nativeElement.addEventListener(
+                    'keydown',
+                    (e: KeyboardEvent) => {
+                      if (
+                        this.router.url.includes('/videos') &&
+                        e.key == 'Escape'
+                      ) {
+                        let canClose = false;
+                        const videoElements: HTMLVideoElement[] =
+                          this.el.nativeElement.querySelectorAll(
+                            '.video-slide'
+                          );
+                        videoElements.forEach((v) => {
+                          canClose = canClose
+                            ? true
+                            : v.currentTime > 0.1 && v.readyState > 2;
+                        });
+                        if (canClose) this.closeVideoSlider();
+                      }
+                      if (
+                        this.router.url.includes('/videos') &&
+                        this.videoSlider
+                      ) {
+                        if (e.key === 'ArrowRight') this.videoSlider?.next();
+                        if (e.key === 'ArrowLeft') this.videoSlider?.prev();
+                      }
+                    }
+                  );
+                  if (
+                    this.parameters['index'] &&
+                    +this.parameters['index'] < this.videosPath.length &&
+                    !isNaN(parseFloat(this.parameters['index']))
+                  ) {
+                    this.el.nativeElement
+                      .querySelector('.video-slide' + this.parameters['index'])
+                      .focus();
+                  }
+                },
+                defaultAnimation: {
+                  duration: 0,
+                },
+              }
+            );
+          });
+        },
+        error: (e) => {
+          this.router.navigateByUrl('/noteNotFound');
+        },
       });
     });
   }
@@ -63,35 +111,20 @@ export class VideoSliderComponent {
     this.el.nativeElement.remove();
   }
 
-  ngAfterViewInit() {
-    addEventListener('keydown', (e: KeyboardEvent) => {
-      if (this.router.url.includes('/videos') && e.key == 'Escape') {
-        if (this.videoSlider) {
-          const videoElements: HTMLVideoElement[] =
-            this.el.nativeElement.querySelectorAll('.video-slide');
-          videoElements.forEach((v) => {
-            if (v.currentTime > 0.1 && v.readyState > 2) {
-              this.videoSliderRef.nativeElement.remove();
-              this.closeVideoSlider();
-            }
-          });
-        }
-      }
-      if (this.router.url.includes('/videos') && this.videoSlider) {
-        if (e.key === 'ArrowRight') this.videoSlider?.next();
-        if (e.key === 'ArrowLeft') this.videoSlider?.prev();
-      }
-    });
-  }
-
-  updateSlider(len: number, i: number, type: string) {
+  updateSlider(len: number, i: number) {
     if (i === len - 1) {
       this.videoSlider?.update();
-      this.videoSlider?.moveToIdx(StaticVariables.indexToLoad);
-      this.pauseAllVideos();
-      this.el.nativeElement
-        .querySelector('.video-slide' + StaticVariables.indexToLoad)
-        .play();
+      if (
+        this.parameters['index'] &&
+        +this.parameters['index'] < this.videosPath.length &&
+        !isNaN(parseFloat(this.parameters['index']))
+      ) {
+        this.videoSlider?.moveToIdx(+this.parameters['index']);
+        this.pauseAllVideos();
+        this.el.nativeElement
+          .querySelector('.video-slide' + this.parameters['index'])
+          .play();
+      }
     }
   }
 
@@ -106,6 +139,5 @@ export class VideoSliderComponent {
   closeVideoSlider() {
     this.pauseAllVideos();
     history.back();
-    this.router.navigate(['..'], { relativeTo: this.route });
   }
 }

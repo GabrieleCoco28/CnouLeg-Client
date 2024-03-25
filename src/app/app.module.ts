@@ -16,6 +16,7 @@ import { NotesHeaderComponent } from './notes-header/notes-header.component';
 import { CommentCardComponent } from './comment-card/comment-card.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { VideoSliderComponent } from './video-slider/video-slider.component';
+import { NoteNotFoundComponent } from './note-not-found/note-not-found.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
@@ -47,7 +48,8 @@ import { SearchComponent } from './search/search.component';
     NoteComponent,
     SearchComponent,
     ImageSliderComponent,
-    VideoSliderComponent
+    VideoSliderComponent,
+    NoteNotFoundComponent
   ],
   imports: [
     BrowserModule,

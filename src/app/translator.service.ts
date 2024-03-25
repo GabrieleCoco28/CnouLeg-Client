@@ -15,7 +15,7 @@ const subjects: any = {
   },
   economy: {
     'it-IT': 'Economia',
-    'iit': 'Economia',
+    'it': 'Economia',
     'en': 'Economy',
     icon: 'account_balance'
   },

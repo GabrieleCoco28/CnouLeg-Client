@@ -2,10 +2,10 @@
     <button mat-icon-button
         style="position: absolute; filter: invert(); z-index: 2; left: calc(100% - 64px); top: 12px;"
         (click)="closeImageSlider()"><mat-icon class="material-symbols-rounded">close</mat-icon></button>
-    <div class="keen-slider keen-slider--vertical" #imageSliderRef>
+    <div class="keen-slider keen-slider--vertical" #imageSliderRef tabindex="0">
         <img *ngFor="let item of this.imagesCompletePath; index as i" class="keen-slider__slide number-slide{{i}}" [src]="item"
             [alt]="item" style="object-fit: contain; user-select: none;"
-            (load)="updateSlider(this.imagesCompletePath.length, i, 'image')">
+            (load)="updateSlider(this.imagesCompletePath.length, i)">
     </div>
     <svg [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')

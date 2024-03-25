@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/cnou-leg-client",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

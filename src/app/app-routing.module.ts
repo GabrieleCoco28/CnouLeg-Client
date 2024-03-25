@@ -4,27 +4,48 @@ import { SearchComponent } from './search/search.component';
 import { NoteComponent } from './note/note.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { VideoSliderComponent } from './video-slider/video-slider.component';
+import { NoteNotFoundComponent } from './note-not-found/note-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: SearchComponent, data: {state: 'search'}},
-  { path: 'note', children: [
-    {
-      path: ":id",
-      component: NoteComponent
-    },
-    {
-      path: ":id/images",
-      component: ImageSliderComponent
-    },
-    {
-      path: ":id/videos",
-      component: VideoSliderComponent
-    }
-  ]}
+  { path: '', component: SearchComponent, data: { state: 'search' } },
+  {
+    path: 'note',
+    children: [
+      {
+        path: ':id',
+        component: NoteComponent,
+      },
+      {
+        path: '',
+        redirectTo: '/noteNotFound',
+        pathMatch: 'full',
+      },
+      {
+        path: ':id/images',
+        component: ImageSliderComponent,
+      },
+      {
+        path: ':id/videos',
+        component: VideoSliderComponent,
+      },
+      {
+        path: ':id/images/:index',
+        component: ImageSliderComponent,
+      },
+      {
+        path: ':id/videos/:index',
+        component: VideoSliderComponent,
+      },
+    ],
+  },
+  { path: 'noteNotFound', component: NoteNotFoundComponent },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -6,7 +6,7 @@
         <video *ngFor="let item of videosCompletePath; index as i"
             class="keen-slider__slide number-slide{{i}} video-slide{{i}} video-slide" [src]="item"
             style="object-fit: contain; user-select: none;" controls
-            (loadeddata)="updateSlider(this.videosCompletePath.length, i, 'video')"></video>
+            (loadeddata)="updateSlider(this.videosCompletePath.length, i)"></video>
     </div>
     <svg [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
