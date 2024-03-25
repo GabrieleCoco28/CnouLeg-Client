@@ -35,7 +35,8 @@
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
               "node_modules/prismjs/plugins/command-line/prism-command-line.css",
-              "node_modules/keen-slider/keen-slider.min.css"
+              "node_modules/keen-slider/keen-slider.min.css",
+              "node_modules/ngx-spinner/animations/ball-atom.css"
             ],
             "scripts": [
               "node_modules/katex/dist/katex.min.js",
@@ -122,7 +123,8 @@
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
               "node_modules/prismjs/plugins/command-line/prism-command-line.css",
-              "node_modules/keen-slider/keen-slider.min.css"
+              "node_modules/keen-slider/keen-slider.min.css",
+              "node_modules/ngx-spinner/animations/ball-atom.css"
             ],
             "scripts": [
               "node_modules/katex/dist/katex.min.js",

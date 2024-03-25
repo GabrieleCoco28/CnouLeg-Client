@@ -5,6 +5,7 @@ import { CnouLegAPIService, Note, Users } from '../cnou-leg-api.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslatorService } from '../translator.service';
 import { StaticVariables } from '../static-variables';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-note',
@@ -33,7 +34,8 @@ export class NoteComponent implements OnInit {
     public route: ActivatedRoute,
     private router: Router,
     private el: ElementRef,
-    private translator: TranslatorService
+    private translator: TranslatorService,
+    private spinner: NgxSpinnerService
   ) {
     setTimeout(() => {
       this.route.params.subscribe((params) => {
@@ -107,12 +109,16 @@ export class NoteComponent implements OnInit {
     return this.translator.getSubjectIcon(sub);
   }
 
+  ngAfterViewInit() {
+    this.spinner.show();
+  }
+
   load() {
     this.readyCalls++;
     if (this.readyCalls >= 2) {
       this.el.nativeElement.querySelector('.noteElementRoot').style.display =
         'block';
-      this.el.nativeElement.querySelector('.spinner').style.display = 'none';
+      this.spinner.hide();
       if (
         StaticVariables.lastContent != '' &&
         this.el.nativeElement.querySelector('.' + StaticVariables.lastContent)

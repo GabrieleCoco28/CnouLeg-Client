@@ -1,6 +1,7 @@
-<mat-spinner class="spinner" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></mat-spinner>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.2)" size = "large" color = "#fff" type = "ball-atom" [fullScreen] = "true"></ngx-spinner>
 <div style="display: none;padding: 0 1em 0 1em;" #root class="search-root">
-    <a *ngFor="let note of noteInfo" [routerLink]="'note/' + note._id" [class]="'_id' + note._id" (click)="saveElementID(note._id)">
+    <a *ngFor="let note of noteInfo" [routerLink]="'note/' + note._id" [class]="'_id' + note._id"
+        (click)="saveElementID(note._id)">
         <mat-card class="hover">
             <mat-card-header>
                 <mat-card-title>{{note.title}}</mat-card-title>

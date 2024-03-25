@@ -45,6 +45,7 @@
     "ng2-fittext": "^1.4.3",
     "ngx-markdown": "^17.1.1",
     "ngx-router-animations": "^13.0.0",
+    "ngx-spinner": "^16.0.2",
     "primeng": "^17.11.0",
     "prismjs": "^1.29.0",
     "rxjs": "~7.8.0",

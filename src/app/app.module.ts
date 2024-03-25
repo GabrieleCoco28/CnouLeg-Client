@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideMarkdown } from 'ngx-markdown';
@@ -32,6 +32,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -75,9 +76,11 @@ import { SearchComponent } from './search/search.component';
     Ng2FittextModule,
     HttpClientModule,
     RouterModule.forRoot([]),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxSpinnerModule
   ],
   providers: [provideMarkdown(), provideAnimationsAsync(), provideAnimations()],
   bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

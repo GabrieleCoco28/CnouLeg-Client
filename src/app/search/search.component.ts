@@ -2,6 +2,7 @@ import { Component, ElementRef } from '@angular/core';
 import { CnouLegAPIService, Note, User, Users } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
 import { StaticVariables } from '../static-variables';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-search',
@@ -14,7 +15,8 @@ export class SearchComponent {
   constructor(
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
-    private translator: TranslatorService
+    private translator: TranslatorService,
+    private spinner: NgxSpinnerService
   ) {
     cnoulegAPIService.getArticles().subscribe((response) => {
       this.noteInfo = response.notes;
@@ -40,16 +42,21 @@ export class SearchComponent {
               );
             });
           });
+          // this.spinner.hide();
           el.nativeElement.querySelector('.search-root').style.display =
-          'block';
-          el.nativeElement.querySelector('.spinner').style.display = 'none';
+            'block';
+          this.spinner.hide();
           if (StaticVariables.elementID != '') {
             el.nativeElement
               .querySelector('._id' + StaticVariables.elementID)
-              .scrollIntoView({block: "center"});
+              .scrollIntoView({ block: 'center' });
           }
         });
     });
+  }
+
+  ngAfterViewInit() {
+    this.spinner.show();
   }
 
   translateSubject(sub: string) {
