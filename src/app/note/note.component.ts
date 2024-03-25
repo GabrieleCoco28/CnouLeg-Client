@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { CopyButtonComponent } from '../copy-button/copy-button.component';
 import { MermaidAPI } from 'ngx-markdown';
 import { CnouLegAPIService, Note, Users } from '../cnou-leg-api.service';
@@ -132,4 +132,5 @@ export class NoteComponent implements OnInit {
       }
     }
   }
+  
 }

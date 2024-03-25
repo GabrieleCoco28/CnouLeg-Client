@@ -31,8 +31,7 @@
                     <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img"
                         (click)="openImageSlider(i)" routerLink="images/{{i}}" class="content-icon"
                         style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px; -webkit-user-drag: none;">
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
-                        13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item | truncate}}</mat-card-subtitle>
                 </div>
             </div>
         </div>
@@ -45,8 +44,7 @@
                     <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128"
                         (click)="openVideoSlider(i)" class="content-icon" routerLink="videos/{{i}}"
                         style="overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
-                        13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item | truncate}}</mat-card-subtitle>
                 </div>
             </div>
         </div>
@@ -60,8 +58,7 @@
                         <img src="assets/notes-placeholder/file.svg" alt="img" class="content-icon"
                             style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
                     </a>
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.length >
-                        13 ? item.slice(0, 12) + "…" : item}}</mat-card-subtitle>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item | truncate}}</mat-card-subtitle>
                 </div>
             </div>
         </div>
