@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { CopyButtonComponent } from '../copy-button/copy-button.component';
 import { MermaidAPI } from 'ngx-markdown';
-import { CnouLegAPIService, Note, Users } from '../cnou-leg-api.service';
+import { CnouLegAPIService, Note, Users, Comment } from '../cnou-leg-api.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslatorService } from '../translator.service';
 import { StaticVariables } from '../static-variables';
@@ -29,6 +29,8 @@ export class NoteComponent implements OnInit {
 
   public documentsPath: string[] = [];
 
+  public comments: Comment[] = [];
+
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
     public route: ActivatedRoute,
@@ -42,7 +44,7 @@ export class NoteComponent implements OnInit {
         cnoulegAPIService.getArticleByID(params['id']).subscribe({
           next: (response) => {
             this.noteInfo = response;
-            el.nativeElement.setAttribute('tabindex', 1);
+            el.nativeElement.setAttribute('tabindex', 0);
             el.nativeElement.focus();
             this.noteInfo.contents.map((v) => {
               switch (v.type) {
@@ -78,6 +80,16 @@ export class NoteComponent implements OnInit {
             this.router.navigateByUrl('/noteNotFound');
           },
         });
+        cnoulegAPIService.getComments(params['id'], 'note').subscribe({
+          next: (response) => {
+            response.comments.map((e) => {
+              this.comments.push(e);
+            });
+          },
+          error: (e) => {
+            console.log(e);
+          }
+        })
       });
     })
   }
@@ -131,6 +143,10 @@ export class NoteComponent implements OnInit {
         window.scrollTo(0, 0);
       }
     }
+  }
+
+  comment(e: Event) {
+    e.preventDefault();
   }
   
 }

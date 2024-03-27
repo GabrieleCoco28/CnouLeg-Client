@@ -77,7 +77,7 @@
                     style="vertical-align: middle;">person</mat-icon>{{noteInfo.no_of_ratings}}</p>
         </div>
     </div>
-    <h3>Commenti • 30.000.000</h3>
+    <h3>Commenti • {{comments.length}}</h3>
     <form action="#">
         <mat-card-header>
             <div mat-card-avatar class="user-comment-avatar"></div>
@@ -87,13 +87,13 @@
             </mat-form-field><br>
         </mat-card-header>
         <div class="comment-button">
-            <button mat-stroked-button color="primary">Commenta</button>
+            <button mat-stroked-button color="primary" (click)="comment($event)">Commenta</button>
         </div>
     </form>
     <br>
-    <mat-divider></mat-divider>
-    <div>
-        <app-comment-card *ngFor=" let x of [1, 2, 3, 4, 5, 6]"></app-comment-card>
+    <mat-divider *ngIf="comments.length > 0"></mat-divider>
+    <div *ngIf="comments.length > 0">
+        <app-comment-card *ngFor=" let comment of comments" [data]="comment"></app-comment-card>
     </div>
-    <mat-divider></mat-divider>
+    <br>
 </div>

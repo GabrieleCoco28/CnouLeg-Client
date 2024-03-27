@@ -1,43 +1,46 @@
 <mat-card class="comment-card">
     <mat-card-header>
-        <div mat-card-avatar class="comment-avatar"></div>
-        <mat-card-title>Giovannino il magnifico</mat-card-title>
+        <div mat-card-avatar class="comment-avatar _{{data.user_id}}"></div>
+        <mat-card-title>{{data.author_name}}</mat-card-title>
+        <mat-card-subtitle>{{data.date| date:"dd/MM/YYYY"}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <p>
-            Che schifo di appunti amma me ma che veramè
+            {{data.text}}
         </p>
     </mat-card-content>
     <mat-card-actions>
         <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
-        <p>104</p>
+        <p>{{data.likes}}</p>
         <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
         <button mat-button color="primary">Rispondi</button>
     </mat-card-actions>
     <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-            style="box-shadow: none;" *ngIf="arr.length != 0">
+            style="box-shadow: none;" *ngIf="subcommentsInfo.length != 0">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{arr.length}} risposte
+                    {{subcommentsInfo.length}} risposte
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="subcomment-cards" *ngFor="let x of arr">
+            <div class="subcomment-cards" *ngFor="let subcomment of subcommentsInfo">
                 <mat-card class="subcomment-card"
                     style="box-shadow: none !important; border-left: 1px solid darkgray; border-radius: 0; padding-left: 1em;">
                     <mat-card-header>
-                        <div mat-card-avatar class="comment-avatar"></div>
-                        <mat-card-title>Giovannino il magnifico</mat-card-title>
+                        <div mat-card-avatar class="comment-avatar _{{subcomment.user_id}}"></div>
+                        <mat-card-title>{{subcomment.author_name}}</mat-card-title>
+                        <mat-card-subtitle>{{subcomment.date| date:"dd/MM/YYYY"}}</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content class="content">
                         <p>
-                            Che schifo di appunti amma me ma che veramè
+                            {{subcomment.text}}
                         </p>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
-                        <p>69</p>
-                        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
+                        <p>{{subcomment.likes}}</p>
+                        <button mat-icon-button><mat-icon
+                                class="material-symbols-rounded">thumb_down</mat-icon></button>
                     </mat-card-actions>
                 </mat-card>
             </div>

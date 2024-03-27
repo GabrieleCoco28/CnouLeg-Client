@@ -42,7 +42,6 @@ export class SearchComponent {
               );
             });
           });
-          // this.spinner.hide();
           el.nativeElement.querySelector('.search-root').style.display =
             'block';
           this.spinner.hide();
