@@ -1,4 +1,4 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.2)" size = "large" color = "#fff" type = "ball-atom" [fullScreen] = "true"></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
 <div style="display: none;padding: 0 1em 0 1em;" #root class="search-root">
     <a *ngFor="let note of noteInfo" [routerLink]="'note/' + note._id" [class]="'_id' + note._id"
         (click)="saveElementID(note._id)">
@@ -6,16 +6,19 @@
             <mat-card-header>
                 <mat-card-title>{{note.title}}</mat-card-title>
                 <div mat-card-avatar [class]="'comment-avatar _' + note.author_id"></div>
-                <mat-card-subtitle>Di {{note.author_name}} • {{note.data_last_modified|
+                <mat-card-subtitle>{{translator.labels.by[translator.getLanguage()]}} {{note.author_name}} •
+                    {{note.data_last_modified|
                     date:"dd/MM/YYYY"}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <mat-chip-set class="tags">
-                    <mat-chip class="tag">{{translateSubject(note.subject)}}</mat-chip>
-                    <mat-chip class="tag">{{translateSchool(note.class)}}</mat-chip>
+                    <mat-chip class="tag">{{translator.translateSubject(note.subject)}}</mat-chip>
+                    <mat-chip class="tag">{{translator.translateClass(note.class)}}</mat-chip>
                 </mat-chip-set>
                 <p>{{ note.description }}</p>
             </mat-card-content>
         </mat-card>
     </a>
 </div>
+<markdown mermaid lineNumbers emoji katex clipboard [disableSanitizer]="true" [data]="''" class="md">
+</markdown>

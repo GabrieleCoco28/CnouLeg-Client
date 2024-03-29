@@ -15,7 +15,7 @@ export class SearchComponent {
   constructor(
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
-    private translator: TranslatorService,
+    public translator: TranslatorService,
     private spinner: NgxSpinnerService
   ) {
     cnoulegAPIService.getArticles().subscribe((response) => {
@@ -56,13 +56,6 @@ export class SearchComponent {
 
   ngAfterViewInit() {
     this.spinner.show();
-  }
-
-  translateSubject(sub: string) {
-    return this.translator.translateSubject(sub);
-  }
-  translateSchool(school: string) {
-    return this.translator.translateSchool(school);
   }
   saveElementID(id: string) {
     StaticVariables.elementID = id;

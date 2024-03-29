@@ -1,98 +1,109 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.2)" size = "large" color = "#fff" type = "ball-atom" [fullScreen] = "true"></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
 <div style="padding: 0 1em 0 1em; display: none;" class="noteElementRoot">
     <app-notes-header></app-notes-header>
     <div id="title">
         <h1>{{noteInfo.title}}</h1>
         <div style="display: grid; grid-template-columns: 48px 1fr;">
             <div mat-card-avatar class="user-subtitle-avatar"></div>
-            <p>Di {{noteInfo.author_name}} • {{noteInfo.data_last_modified| date:"dd/MM/YYYY"}}</p>
+            <p>{{translator.labels.by[translator.getLanguage()]}} {{noteInfo.author_name}} •
+                {{noteInfo.data_last_modified| date:"dd/MM/YYYY"}}</p>
         </div>
         <mat-chip-set class="tags">
             <mat-chip class="tag">
-                <mat-icon class="material-symbols-rounded" matChipAvatar style="scale: 1.3;">{{getSubjectIcon(noteInfo.subject)}}</mat-icon>
-                {{translateSubject(noteInfo.subject)}}
+                <mat-icon class="material-symbols-rounded" matChipAvatar
+                    style="scale: 1.3;">{{translator.getSubjectIcon(noteInfo.subject)}}</mat-icon>
+                {{translator.translateSubject(noteInfo.subject)}}
             </mat-chip>
-            <mat-chip class="tag">{{translateSchool(noteInfo.class)}}</mat-chip>
+            <mat-chip class="tag">{{translator.translateClass(noteInfo.class)}}</mat-chip>
             <mat-chip class="tag" *ngFor="let tag of noteInfo.tags">{{tag}}</mat-chip>
         </mat-chip-set>
     </div>
     <mat-card>
         <mat-card-content>
-            <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard (ready)="load()"
+            <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard (ready)="load()" [disableSanitizer]="true"
                 [clipboardButtonComponent]="copyComponent" [data]="noteInfo.markdown" class="md">
             </markdown>
         </mat-card-content>
     </mat-card>
     <mat-card>
         <div *ngIf="imagesPath.length > 0" class="imagesList">
-            <mat-card-content>Immagini</mat-card-content>
+            <mat-card-content>{{translator.labels.images[translator.getLanguage()]}}</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of imagesPath; index as i">
                     <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img"
                         (click)="openImageSlider(i)" routerLink="images/{{i}}" class="content-icon"
                         style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px; -webkit-user-drag: none;">
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item | truncate}}</mat-card-subtitle>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item |
+                        truncate}}</mat-card-subtitle>
                 </div>
             </div>
         </div>
     </mat-card>
     <mat-card>
         <div *ngIf="videosPath.length > 0" class="videosList">
-            <mat-card-content>Video</mat-card-content>
+            <mat-card-content>{{translator.labels.videos[translator.getLanguage()]}}</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of videosPath; index as i">
                     <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128"
                         (click)="openVideoSlider(i)" class="content-icon" routerLink="videos/{{i}}"
                         style="overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item | truncate}}</mat-card-subtitle>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item |
+                        truncate}}</mat-card-subtitle>
                 </div>
             </div>
         </div>
     </mat-card>
     <mat-card>
         <div *ngIf="documentsPath.length > 0">
-            <mat-card-content>Documenti</mat-card-content>
+            <mat-card-content>{{translator.labels.documents[translator.getLanguage()]}}</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of documentsPath; index as i">
                     <a [href]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item">
                         <img src="assets/notes-placeholder/file.svg" alt="img" class="content-icon"
                             style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
                     </a>
-                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item | truncate}}</mat-card-subtitle>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item |
+                        truncate}}</mat-card-subtitle>
                 </div>
             </div>
         </div>
     </mat-card>
     <mat-divider></mat-divider>
-    <p style="text-align: center;">Valuta questo appunto</p>
+    <p style="text-align: center;">{{translator.labels.rateThisNote[translator.getLanguage()]}}</p>
     <div id="starRating" style="text-align: center;">
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">star</mat-icon></button>
+        <button mat-icon-button (mouseover)="setFilledStars(1)" (click)="setGrade(1)"
+            (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_1">star</mat-icon></button>
+        <button mat-icon-button (mouseover)="setFilledStars(2)" (click)="setGrade(2)"
+            (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_2">star</mat-icon></button>
+        <button mat-icon-button (mouseover)="setFilledStars(3)" (click)="setGrade(3)"
+            (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_3">star</mat-icon></button>
+        <button mat-icon-button (mouseover)="setFilledStars(4)" (click)="setGrade(4)"
+            (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_4">star</mat-icon></button>
+        <button mat-icon-button (mouseover)="setFilledStars(5)" (click)="setGrade(5)"
+            (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_5">star</mat-icon></button>
         <h1>{{noteInfo.avg_rating}}/5</h1>
         <div id="users">
             <p><mat-icon class="material-symbols-rounded"
                     style="vertical-align: middle;">person</mat-icon>{{noteInfo.no_of_ratings}}</p>
         </div>
     </div>
-    <h3>Commenti • {{comments.length}}</h3>
+    <h3>{{translator.labels.comments[translator.getLanguage()]}} • {{comments.length}}</h3>
     <form action="#">
         <mat-card-header>
             <div mat-card-avatar class="user-comment-avatar"></div>
             <mat-form-field style="width: 100%;">
-                <mat-label>Lascia un commento</mat-label>
-                <textarea matInput placeholder="Commento..."></textarea>
+                <mat-label>{{translator.labels.leaveAComment[translator.getLanguage()]}}</mat-label>
+                <textarea matInput class="comment"></textarea>
             </mat-form-field><br>
         </mat-card-header>
         <div class="comment-button">
-            <button mat-stroked-button color="primary" (click)="comment($event)">Commenta</button>
+            <button mat-stroked-button color="primary"
+                (click)="comment($event)">{{translator.labels.comment[translator.getLanguage()]}}</button>
         </div>
     </form>
     <br>
     <mat-divider *ngIf="comments.length > 0"></mat-divider>
-    <div *ngIf="comments.length > 0">
+    <div *ngIf="comments.length > 0" class="commentsList" #commentsList>
         <app-comment-card *ngFor=" let comment of comments" [data]="comment"></app-comment-card>
     </div>
     <br>

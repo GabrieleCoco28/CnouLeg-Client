@@ -1,11 +1,26 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { CopyButtonComponent } from '../copy-button/copy-button.component';
 import { MermaidAPI } from 'ngx-markdown';
-import { CnouLegAPIService, Note, Users, Comment } from '../cnou-leg-api.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {
+  CnouLegAPIService,
+  Note,
+  Users,
+  Comment,
+} from '../cnou-leg-api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatorService } from '../translator.service';
 import { StaticVariables } from '../static-variables';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MarkdownService } from 'ngx-markdown';
+import { CommentCardComponent } from '../comment-card/comment-card.component';
 
 @Component({
   selector: 'app-note',
@@ -16,6 +31,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   ],
 })
 export class NoteComponent implements OnInit {
+  @ViewChild('markdown') markdownElement!: ElementRef<HTMLElement>;
   readonly copyComponent = CopyButtonComponent;
   public noteInfo: Note = {} as Note;
   public mermaidOptions: MermaidAPI.Config = {
@@ -31,12 +47,14 @@ export class NoteComponent implements OnInit {
 
   public comments: Comment[] = [];
 
+  public starsVoted = 0;
+
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
     public route: ActivatedRoute,
     private router: Router,
     private el: ElementRef,
-    private translator: TranslatorService,
+    public translator: TranslatorService,
     private spinner: NgxSpinnerService
   ) {
     setTimeout(() => {
@@ -88,18 +106,12 @@ export class NoteComponent implements OnInit {
           },
           error: (e) => {
             console.log(e);
-          }
-        })
+          },
+        });
       });
-    })
-  }
-  ngOnInit(): void {
-    this.router.events.subscribe((evt) => {
-      if (!(evt instanceof NavigationEnd)) {
-        return;
-      }
     });
   }
+  ngOnInit(): void {}
 
   openImageSlider(i: number) {
     StaticVariables.lastContent = 'imagesList';
@@ -107,18 +119,6 @@ export class NoteComponent implements OnInit {
 
   openVideoSlider(i: number) {
     StaticVariables.lastContent = 'videosList';
-  }
-
-  translateSubject(sub: string) {
-    return this.translator.translateSubject(sub);
-  }
-
-  translateSchool(school: string) {
-    return this.translator.translateSchool(school);
-  }
-
-  getSubjectIcon(sub: string) {
-    return this.translator.getSubjectIcon(sub);
   }
 
   ngAfterViewInit() {
@@ -147,6 +147,67 @@ export class NoteComponent implements OnInit {
 
   comment(e: Event) {
     e.preventDefault();
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    const finalDate = `${year}-${
+      month + 1 < 10 ? '0' + (month + 1) : month + 1
+    }-${day < 10 ? '0' + day : day} ${hour < 10 ? '0' + hour : hour}:${
+      minutes < 10 ? '0' + minutes : minutes
+    }:${seconds < 10 ? '0' + seconds : seconds}`;
+    const input = this.el.nativeElement.querySelector(
+      '.comment'
+    ) as HTMLInputElement;
+    const user_id = this.random(4, 5);
+    if (input.value.trim().length > 0) {
+      this.cnoulegAPIService
+        .addComment(
+          input.value.trim(),
+          user_id,
+          this.noteInfo._id,
+          null,
+          finalDate
+        )
+        .subscribe((res) => {
+          this.el.nativeElement
+            .querySelector('.commentsList')
+            .insertAdjacentHTML(
+              'afterbegin',
+              `<app-comment-card [data]="${{
+                _id: res.insertedId,
+                text: input.value.trim(),
+                user_id,
+                post_id: this.noteInfo._id,
+                parent_id: null,
+                date: finalDate,
+              }}"></app-comment-card>`
+            );
+          input.value = '';
+        });
+    }
   }
-  
+
+  setFilledStars(n?: number) {
+    for (let i = 1; i <= 5; i++) {
+      (
+        this.el.nativeElement.querySelector('.star_' + i) as HTMLElement
+      ).className =
+        'material-symbols-rounded star_' +
+        i +
+        (i <= (n ? n : this.starsVoted) ? ' filled' : '');
+    }
+  }
+
+  setGrade(n: number) {
+    this.starsVoted = n;
+  }
+
+  random(min: number, max: number) {
+    return Math.round(Math.random() * (max - min) + min);
+  }
 }

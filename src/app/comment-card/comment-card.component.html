@@ -13,14 +13,31 @@
         <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
         <p>{{data.likes}}</p>
         <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
-        <button mat-button color="primary">Rispondi</button>
+        <button mat-button color="primary" (click)="toggleAnswerPanel($event)">{{translator.labels.answer[translator.getLanguage()]}}</button>
     </mat-card-actions>
     <mat-accordion>
+        <mat-expansion-panel [expanded]="panelOpenStateAnswer" style="box-shadow: none;">
+            <form action="#">
+                <mat-card-header>
+                    <div mat-card-avatar class="user-comment-avatar"></div>
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>{{translator.labels.answerTheComment[translator.getLanguage()]}}</mat-label>
+                        <textarea matInput placeholder="Commento..." class="answer"></textarea>
+                    </mat-form-field><br>
+                </mat-card-header>
+                <div class="comment-button">
+                    <button mat-stroked-button color="primary" (click)="answer($event)">{{translator.labels.answer[translator.getLanguage()]}}</button>
+                    <button mat-stroked-button color="warn" (click)="toggleAnswerPanel($event)" style="margin-left: 0.5em;">{{translator.labels.cancel[translator.getLanguage()]}}</button>
+                </div>
+            </form>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-            style="box-shadow: none;" *ngIf="subcommentsInfo.length != 0">
+            style="box-shadow: none;" *ngIf="subcommentsInfo.length > 0">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{subcommentsInfo.length}} risposte
+                    {{subcommentsInfo.length}} {{subcommentsInfo.length != 1 ? translator.labels.answerPlural[translator.getLanguage()] : translator.labels.answerSingular[translator.getLanguage()]}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="subcomment-cards" *ngFor="let subcomment of subcommentsInfo">

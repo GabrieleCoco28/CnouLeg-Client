@@ -31,7 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -39,50 +39,50 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { Ng2FittextModule } from 'ng2-fittext';
 import { NoteComponent } from './note/note.component';
 import { SearchComponent } from './search/search.component';
-import { TruncateName } from "./truncate-name-pipe";
+import { TruncateName } from './truncate-name-pipe';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        CopyButtonComponent,
-        NotesHeaderComponent,
-        CommentCardComponent,
-        NoteComponent,
-        SearchComponent,
-        ImageSliderComponent,
-        VideoSliderComponent,
-        NoteNotFoundComponent
-    ],
-    providers: [provideMarkdown(), provideAnimationsAsync(), provideAnimations()],
-    bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        MarkdownModule.forRoot(),
-        HttpClientModule,
-        MarkdownModule.forRoot({ loader: HttpClient }),
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatButtonModule,
-        MatDivider,
-        MatCheckbox,
-        MatFormFieldModule,
-        MatLabel,
-        MatOption,
-        MatSelectModule,
-        MatToolbarModule,
-        MatCardModule,
-        MatTooltipModule,
-        MatChipsModule,
-        MatInputModule,
-        MatExpansionModule,
-        Ng2FittextModule,
-        HttpClientModule,
-        RouterModule.forRoot([]),
-        MatProgressSpinnerModule,
-        NgxSpinnerModule,
-        TruncateName
-    ]
+  declarations: [
+    AppComponent,
+    CopyButtonComponent,
+    NotesHeaderComponent,
+    CommentCardComponent,
+    NoteComponent,
+    SearchComponent,
+    ImageSliderComponent,
+    VideoSliderComponent,
+    NoteNotFoundComponent,
+  ],
+  providers: [provideMarkdown(), provideAnimationsAsync(), provideAnimations()],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MarkdownModule.forRoot(),
+    HttpClientModule,
+    MarkdownModule.forRoot({loader: HttpClient}),
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDivider,
+    MatCheckbox,
+    MatFormFieldModule,
+    MatLabel,
+    MatOption,
+    MatSelectModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatInputModule,
+    MatExpansionModule,
+    Ng2FittextModule,
+    HttpClientModule,
+    RouterModule.forRoot([]),
+    MatProgressSpinnerModule,
+    NgxSpinnerModule,
+    TruncateName,
+  ],
 })
 export class AppModule {}

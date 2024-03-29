@@ -59,25 +59,26 @@ type RefersTo = 'note' | 'comment';
   providedIn: 'root'
 })
 export class CnouLegAPIService {
+  public apiUrl = 'https://cochome.ddns.net';
   constructor(private http: HttpClient) {}
 
   public getArticles(): Observable<Notes> {
-    const url = 'https://cochome.ddns.net/api/notes';
+    const url = this.apiUrl + '/api/notes';
     return this.http.get<Notes>(url);
   }
 
   public getArticleByID(id: string) {
-    const url = 'https://cochome.ddns.net/api/notes?id=' + id;
+    const url = this.apiUrl + '/api/notes?id=' + id;
     return this.http.get<Note>(url);
   }
 
   public getUsers(): Observable<Users> {
-    const url = "https://cochome.ddns.net/api/users";
+    const url = this.apiUrl + "/api/users";
     return this.http.get<Users>(url);
   }
 
   public getUsersById(ids: number[]): Observable<Users> {
-    let url = "https://cochome.ddns.net/api/users?";
+    let url = this.apiUrl + "/api/users?";
     ids.map((v) => {
       url += "include_id[]=" + v + "&";
     })
@@ -85,7 +86,11 @@ export class CnouLegAPIService {
   }
 
   public getComments(id: string, refersTo: RefersTo): Observable<Comments> {
-    const url = "https://cochome.ddns.net/api/comments?" + (refersTo === 'comment' ? "parent_id=" : (refersTo === 'note' ? "post_id=" : "")) + id;
+    const url = this.apiUrl + "/api/comments?" + (refersTo === 'comment' ? "parent_id=" : (refersTo === 'note' ? "post_id=" : "")) + id;
     return this.http.get<Comments>(url);
+  }
+
+  public addComment(text: string, user_id: number, post_id: string | null, parent_id: string | null, date: string): Observable<any> {
+    return this.http.post(this.apiUrl + "/add_comment", {text, user_id, post_id, parent_id, likes: 0, date});
   }
 }

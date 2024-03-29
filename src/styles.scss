@@ -129,3 +129,11 @@ body.light-theme img {
 body.dark-theme img {
   filter: brightness(90%);
 }
+
+.filled {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}

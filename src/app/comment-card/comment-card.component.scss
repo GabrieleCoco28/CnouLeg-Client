@@ -7,7 +7,18 @@
     background-size: cover;
 }
 
+.user-comment-avatar {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba2.jpg');
+    background-size: cover;
+    margin-right: 16px;
+}
+
 mat-card {
     margin-bottom: 1em;
     margin-top: 1em;
+}
+
+.comment-button {
+    width: calc(100% - 16px);
+    text-align: right;
 }
