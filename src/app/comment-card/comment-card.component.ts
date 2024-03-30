@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   CnouLegAPIService,
   Comment,
@@ -22,7 +22,8 @@ export class CommentCardComponent implements OnInit {
   constructor(
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
-    public translator: TranslatorService
+    public translator: TranslatorService,
+    private ref: ChangeDetectorRef,
   ) {}
   ngOnInit(): void {
     this.loadComment();
@@ -94,8 +95,25 @@ export class CommentCardComponent implements OnInit {
 
     const finalDate = `${year}-${month + 1 < 10 ? '0' + (month + 1) : month + 1}-${day < 10 ? '0' + day : day} ${hour < 10 ? '0' + hour : hour}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`
     const input = this.el.nativeElement.querySelector(".answer") as HTMLInputElement;
-    if(input.value.trim().length > 0)
-      this.cnoulegAPIService.addComment(input.value.trim(), this.random(4, 5), null, this.data._id, finalDate).subscribe((res) => console.log(res));
+    const user_id = this.random(4, 5)
+    if(input.value.trim().length > 0) {
+      this.cnoulegAPIService.addComment(input.value.trim(), user_id, null, this.data._id, finalDate).subscribe((res) => {
+        this.subcommentsInfo.unshift({
+          _id: res.value.insertedId,
+          text: input.value.trim(),
+          user_id,
+          post_id: null,
+          parent_id: this.data._id,
+          likes: 0,
+          date: finalDate,
+        })
+        input.value = '';
+        this.panelOpenStateAnswer = !this.panelOpenStateAnswer;
+        this.panelOpenState = true;
+        this.loadSubComments();
+        this.ref.detectChanges();
+      });
+    }
   }
 
   random(min: number, max: number) {

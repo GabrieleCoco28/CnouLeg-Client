@@ -1,12 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ComponentFactoryResolver,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CopyButtonComponent } from '../copy-button/copy-button.component';
 import { MermaidAPI } from 'ngx-markdown';
 import {
@@ -19,8 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatorService } from '../translator.service';
 import { StaticVariables } from '../static-variables';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MarkdownService } from 'ngx-markdown';
-import { CommentCardComponent } from '../comment-card/comment-card.component';
 
 @Component({
   selector: 'app-note',
@@ -49,16 +39,20 @@ export class NoteComponent implements OnInit {
 
   public starsVoted = 0;
 
+  public parameters: any;
+
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
     public route: ActivatedRoute,
     private router: Router,
     private el: ElementRef,
     public translator: TranslatorService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private ref: ChangeDetectorRef,
   ) {
     setTimeout(() => {
       this.route.params.subscribe((params) => {
+        this.parameters = params;
         cnoulegAPIService.getArticleByID(params['id']).subscribe({
           next: (response) => {
             this.noteInfo = response;
@@ -98,7 +92,7 @@ export class NoteComponent implements OnInit {
             this.router.navigateByUrl('/noteNotFound');
           },
         });
-        cnoulegAPIService.getComments(params['id'], 'note').subscribe({
+        this.cnoulegAPIService.getComments(this.parameters['id'], 'note').subscribe({
           next: (response) => {
             response.comments.map((e) => {
               this.comments.push(e);
@@ -174,20 +168,17 @@ export class NoteComponent implements OnInit {
           finalDate
         )
         .subscribe((res) => {
-          this.el.nativeElement
-            .querySelector('.commentsList')
-            .insertAdjacentHTML(
-              'afterbegin',
-              `<app-comment-card [data]="${{
-                _id: res.insertedId,
-                text: input.value.trim(),
-                user_id,
-                post_id: this.noteInfo._id,
-                parent_id: null,
-                date: finalDate,
-              }}"></app-comment-card>`
-            );
+          this.comments.unshift({
+            _id: res.value.insertedId,
+            text: input.value.trim(),
+            user_id,
+            post_id: this.noteInfo._id,
+            parent_id: null,
+            likes: 0,
+            date: finalDate,
+          })
           input.value = '';
+          this.ref.detectChanges();
         });
     }
   }
