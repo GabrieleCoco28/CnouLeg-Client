@@ -81,7 +81,9 @@
             (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_4">star</mat-icon></button>
         <button mat-icon-button (mouseover)="setFilledStars(5)" (click)="setGrade(5)"
             (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_5">star</mat-icon></button>
-        <h1>{{noteInfo.avg_rating}}/5</h1>
+
+        <h1><mat-icon class="material-symbols-rounded filled star-icon" style="scale: 1.5; margin-right: 8px;">star</mat-icon>{{noteInfo.avg_rating}}</h1>
+
         <div id="users">
             <p><mat-icon class="material-symbols-rounded"
                     style="vertical-align: middle;">person</mat-icon>{{noteInfo.no_of_ratings}}</p>

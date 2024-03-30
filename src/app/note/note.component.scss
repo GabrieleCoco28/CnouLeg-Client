@@ -118,3 +118,7 @@ mat-card {
 .arrow--disabled {
   fill: rgba(255, 255, 255, 0.5);
 }
+
+:host ::ng-deep .mat-mdc-chip-graphic {
+    padding-left: 6px !important;
+}

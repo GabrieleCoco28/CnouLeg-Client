@@ -1,10 +1,14 @@
 a {
-    text-decoration: none; 
-    color: inherit; 
+    text-decoration: none;
+    color: inherit;
     margin: 1em;
 }
 
 .comment-avatar {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
+}
+
+:host ::ng-deep .mat-mdc-chip-graphic {
+    padding-right: 0 !important;
 }
