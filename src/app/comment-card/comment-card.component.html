@@ -11,7 +11,7 @@
     </mat-card-content>
     <mat-card-actions>
         <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
-        <p>{{data.likes}}</p>
+        <p style="width: 32px; text-align: center;">{{data.likes| numberSuffix}}</p>
         <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
         <button mat-button color="primary"
             (click)="toggleAnswerPanel($event)">{{translator.labels.answer[translator.getLanguage()]}}</button>
@@ -59,7 +59,7 @@
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
-                    <p>{{subcomment.likes}}</p>
+                    <p>{{subcomment.likes| numberSuffix}}</p>
                     <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
                 </mat-card-actions>
             </mat-card>

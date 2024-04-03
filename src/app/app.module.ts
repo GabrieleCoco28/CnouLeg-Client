@@ -40,6 +40,7 @@ import { Ng2FittextModule } from 'ng2-fittext';
 import { NoteComponent } from './note/note.component';
 import { SearchComponent } from './search/search.component';
 import { TruncateName } from './truncate-name-pipe';
+import { NumberSuffixPipe } from './number-suffix-pipe';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { TruncateName } from './truncate-name-pipe';
     MatProgressSpinnerModule,
     NgxSpinnerModule,
     TruncateName,
+    NumberSuffixPipe
   ],
 })
 export class AppModule {}
