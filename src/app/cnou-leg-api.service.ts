@@ -60,8 +60,7 @@ type RefersTo = 'note' | 'comment';
   providedIn: 'root'
 })
 export class CnouLegAPIService {
-  public apiUrl = 'http://93.148.123.145';
-  // public apiUrl = 'https://cochome.ddns.net';
+  public apiUrl = 'https://cochome.ddns.net';
   constructor(private http: HttpClient) {}
 
   public getArticles(): Observable<Notes> {
