@@ -38,7 +38,7 @@ export class SearchComponent {
             elements.forEach((e) => {
               e.setAttribute(
                 'style',
-                `background-image: url(https://cochome.ddns.net/profile_pics/${v.profile_pic_url})`
+                `background-image: url(${cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
               );
             });
           });

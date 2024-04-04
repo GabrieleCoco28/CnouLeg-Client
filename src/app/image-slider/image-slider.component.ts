@@ -40,7 +40,7 @@ export class ImageSliderComponent {
               case 'image':
                 this.imagesPath.push(v.path);
                 this.imagesCompletePath.push(
-                  'https://cochome.ddns.net/content/' +
+                  cnoulegAPIService.apiUrl + '/content/' +
                     response._id +
                     '/' +
                     v.path

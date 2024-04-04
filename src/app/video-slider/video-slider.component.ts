@@ -34,7 +34,7 @@ export class VideoSliderComponent {
               case 'video':
                 this.videosPath.push(v.path);
                 this.videosCompletePath.push(
-                  'https://cochome.ddns.net/content/' +
+                  cnoulegAPIService.apiUrl + '/content/' +
                     response._id +
                     '/' +
                     v.path

@@ -79,7 +79,7 @@ export class NoteComponent implements OnInit {
                   .querySelector('.user-subtitle-avatar')
                   ?.setAttribute(
                     'style',
-                    `background-image: url(https://cochome.ddns.net/profile_pics/${response.users[0].profile_pic_url})`
+                    `background-image: url(${cnoulegAPIService.apiUrl}/profile_pics/${response.users[0].profile_pic_url})`
                   );
               });
             el.nativeElement.addEventListener('keydown', (e: KeyboardEvent) => {
