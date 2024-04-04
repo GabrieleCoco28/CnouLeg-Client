@@ -27,6 +27,7 @@ export interface Comment {
   parent_id: string | null,
   likes: number,
   date: string,
+  has_children: boolean,
   author_name?: string
 }
 
@@ -91,6 +92,6 @@ export class CnouLegAPIService {
   }
 
   public addComment(text: string, user_id: number, post_id: string | null, parent_id: string | null, date: string): Observable<any> {
-    return this.http.post(this.apiUrl + "/add_comment", {text, user_id, post_id, parent_id, likes: 0, date});
+    return this.http.post(this.apiUrl + "/add_comment", {text, user_id, post_id, parent_id, likes: 0, date, has_children: false});
   }
 }

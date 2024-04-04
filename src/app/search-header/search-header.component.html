@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+    <span class="spacer"></span>
+    <button mat-icon-button class="theme-button" (click)="toggleTheme()">
+        <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>
+    </button>
+    <!-- <div mat-card-avatar class="toolbar-avatar"></div> -->
+    <div style="margin: 8px;">
+        <button mat-flat-button color="primary" style="margin-right: 8px;" routerLink="register">{{translator.labels.register[translator.getLanguage()]}}</button>
+        <button mat-stroked-button color="primary">{{translator.labels.login[translator.getLanguage()]}}</button>
+    </div>
+</mat-toolbar>

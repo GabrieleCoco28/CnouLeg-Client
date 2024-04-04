@@ -148,6 +148,38 @@ export class TranslatorService {
     documents: {
       it: 'Documenti',
       en: 'Documents',
+    },
+    login: {
+      it: 'Accedi',
+      en: 'Login'
+    },
+    register: {
+      it: 'Registrati',
+      en: 'Sign up'
+    },
+    emailRequired: {
+      it: 'Inserisci un indirizzo email',
+      en: 'Enter an email address'
+    },
+    invaildEmail: {
+      it: 'Indirizzo email non valido',
+      en: 'Invalid email address'
+    },
+    passwordRequired: {
+      it: 'Inserisci una password',
+      en: 'Enter a password'
+    },
+    usernameRequired: {
+      it: 'Inserisci uno username', 
+      en: 'Enter a username', 
+    },
+    birthRequired: {
+      it: 'Inserisci la tua data di nascita', 
+      en: 'Enter your date of birth', 
+    },
+    genderRequired: {
+      it: 'Inserisci il tuo genere', 
+      en: 'Enter your gender', 
     }
   };
   constructor() {}

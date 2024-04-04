@@ -1,0 +1,143 @@
+<div style="padding: 0 1em 0 1em;">
+    <app-login-register-header></app-login-register-header>
+    <mat-stepper orientation="horizontal" style="margin: auto;" [linear]="true"
+        [orientation]="(stepperOrientation | async)!" #stepper>
+        <ng-template matStepperIcon="edit">
+            <mat-icon class='material-symbols-rounded'>done</mat-icon>
+        </ng-template>
+        <ng-template matStepperIcon="done">
+            <mat-icon class='material-symbols-rounded'>arrow_back</mat-icon>
+        </ng-template>
+        <mat-step [stepControl]="usernameFormGroup">
+            <form [formGroup]="usernameFormGroup" style="padding: 16px;">
+                <ng-template matStepLabel>Username</ng-template>
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" (blur)="updateUsernameErrorMessage()" required>
+                    @if (username.invalid) {
+                    <mat-error>
+                        <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                        {{usernameErrorMessage}}
+                    </mat-error>
+                    }
+                </mat-form-field>
+                <br>
+                <br>
+                <div>
+                    <button mat-flat-button matStepperNext (click)="updateUsernameErrorMessage()">Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="birthAndGenderFormGroup">
+            <form [formGroup]="birthAndGenderFormGroup" style="padding: 16px;">
+                <ng-template matStepLabel>Data di nascita e genere</ng-template>
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Data di nascita</mat-label>
+                    <input matInput [matDatepicker]="datepicker" formControlName="birth" (blur)="updateBirthErrorMessage()" required>
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker></mat-datepicker>
+                    @if (birth.invalid) {
+                    <mat-error>
+                        <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                        {{birthErrorMessage}}
+                    </mat-error>
+                    }
+                </mat-form-field>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Genere</mat-label>
+                    <mat-select formControlName="gender" (blur)="updateGenderErrorMessage()" required>
+                        <mat-option value="male">Uomo</mat-option>
+                        <mat-option value="female">Donna</mat-option>
+                        <mat-option value="other">Preferisco non specificare</mat-option>
+                    </mat-select>
+                    @if (gender.invalid) {
+                    <mat-error>
+                        <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                        {{genderErrorMessage}}
+                    </mat-error>
+                    }
+                </mat-form-field>
+                <br>
+                <br>
+                <div>
+                    <button mat-stroked-button matStepperPrevious style="margin-right: 8px;" (click)="updateBirthErrorMessage(); updateGenderErrorMessage()">Back</button>
+                    <button mat-flat-button matStepperNext (click)="updateBirthErrorMessage(); updateGenderErrorMessage()">Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="emailAndPasswordFormGroup">
+            <ng-template matStepLabel>Email e password</ng-template>
+            <form [formGroup]="emailAndPasswordFormGroup" style="padding: 16px;">
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Email</mat-label>
+                    <input matInput [formControl]="email" (blur)="updateEmailErrorMessage()" required>
+                    @if (email.invalid) {
+                    <mat-error>
+                        <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                        {{emailErrorMessage}}
+                    </mat-error>
+                    }
+                </mat-form-field>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Password</mat-label>
+                    <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'"
+                        (blur)="updatePasswordErrorMessage()" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon class="material-symbols-rounded">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    @if (password.invalid) {
+                    <mat-error>
+                        <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                        {{passwordErrorMessage}}
+                    </mat-error>
+                    }
+                </mat-form-field>
+                <br>
+                <br>
+                <div>
+                    <button mat-stroked-button matStepperPrevious style="margin-right: 8px;" (click)="updateEmailErrorMessage(); updatePasswordErrorMessage()">Back</button>
+                    <button mat-flat-button matStepperNext (click)="updateEmailErrorMessage(); updatePasswordErrorMessage()">Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step optional>
+            <ng-template matStepLabel>Ruolo, scuola e descrizione</ng-template>
+            <form style="padding: 16px;">
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Ruolo</mat-label>
+                    <mat-select>
+                        <mat-option value="teacher">Docente</mat-option>
+                        <mat-option value="student">Studente</mat-option>
+                        <mat-option value="other">Altro</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Scuola</mat-label>
+                    <input matInput>
+                </mat-form-field>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: 256px;">
+                    <mat-label>Descrizione</mat-label>
+                    <textarea matInput rows="5" maxlength="300" style="resize: none;"
+                        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                        #description></textarea>
+                </mat-form-field>
+                <br>
+                <label>{{description.value.length}}/{{description.maxLength}}</label>
+            </form>
+            <br>
+            <br>
+            <div>
+                <button mat-flat-button>Registrati</button>
+            </div>
+        </mat-step>
+    </mat-stepper>
+</div>

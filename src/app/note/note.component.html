@@ -90,10 +90,10 @@
         </div>
     </div>
     <h3>{{translator.labels.comments[translator.getLanguage()]}} • {{comments.length}}</h3>
-    <form action="#">
+    <div>
         <mat-card-header>
             <div mat-card-avatar class="user-comment-avatar"></div>
-            <mat-form-field style="width: 100%;">
+            <mat-form-field style="width: 100%;" appearance="outline">
                 <mat-label>{{translator.labels.leaveAComment[translator.getLanguage()]}}</mat-label>
                 <textarea matInput class="comment"></textarea>
             </mat-form-field><br>
@@ -102,7 +102,7 @@
             <button mat-stroked-button color="primary"
                 (click)="comment($event)">{{translator.labels.comment[translator.getLanguage()]}}</button>
         </div>
-    </form>
+    </div>
     <br>
     <mat-divider *ngIf="comments.length > 0"></mat-divider>
     <div *ngIf="comments.length > 0" class="commentsList" #commentsList>

@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button class="back-button" routerLink="/">
+        <mat-icon class="material-symbols-rounded">arrow_back</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-icon-button class="theme-button" (click)="toggleTheme()">
+        <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>
+    </button>
+</mat-toolbar>

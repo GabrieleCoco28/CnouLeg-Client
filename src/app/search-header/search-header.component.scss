@@ -1,0 +1,14 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+mat-toolbar {
+    padding: 0;
+}
+
+.toolbar-avatar {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba2.jpg');
+    background-size: cover;
+    margin-bottom: 0 !important;
+    margin-left: 8px;
+}

@@ -18,10 +18,10 @@
     </mat-card-actions>
     <mat-accordion>
         <mat-expansion-panel [expanded]="panelOpenStateAnswer" style="box-shadow: none;">
-            <form action="#">
+            <div>
                 <mat-card-header>
                     <div mat-card-avatar class="user-comment-avatar"></div>
-                    <mat-form-field style="width: 100%;">
+                    <mat-form-field style="width: 100%;" appearance="outline">
                         <mat-label>{{translator.labels.answerTheComment[translator.getLanguage()]}}</mat-label>
                         <textarea matInput placeholder="Commento..." class="answer"></textarea>
                     </mat-form-field><br>
@@ -32,7 +32,7 @@
                     <button mat-stroked-button color="warn" (click)="toggleAnswerPanel($event)"
                         style="margin-left: 0.5em;">{{translator.labels.cancel[translator.getLanguage()]}}</button>
                 </div>
-            </form>
+            </div>
         </mat-expansion-panel>
     </mat-accordion>
     <mat-accordion>
@@ -59,7 +59,7 @@
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
-                    <p>{{subcomment.likes| numberSuffix}}</p>
+                    <p style="width: 32px; text-align: center;">{{subcomment.likes| numberSuffix}}</p>
                     <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
                 </mat-card-actions>
             </mat-card>

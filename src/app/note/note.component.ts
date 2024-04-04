@@ -176,6 +176,7 @@ export class NoteComponent implements OnInit {
             parent_id: null,
             likes: 0,
             date: finalDate,
+            has_children: false
           })
           input.value = '';
           this.ref.detectChanges();

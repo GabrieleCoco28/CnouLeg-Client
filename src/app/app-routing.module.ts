@@ -5,6 +5,7 @@ import { NoteComponent } from './note/note.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { VideoSliderComponent } from './video-slider/video-slider.component';
 import { NoteNotFoundComponent } from './note-not-found/note-not-found.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: SearchComponent, data: { state: 'search' } },
@@ -38,6 +39,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: 'register', component: RegisterComponent },
   { path: 'noteNotFound', component: NoteNotFoundComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];

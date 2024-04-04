@@ -1,5 +1,6 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
 <div style="display: none;padding: 0 1em 0 1em;" #root class="search-root">
+    <app-search-header></app-search-header>
     <a *ngFor="let note of noteInfo" [routerLink]="'note/' + note._id" [class]="'_id' + note._id"
         (click)="saveElementID(note._id)">
         <mat-card class="hover">

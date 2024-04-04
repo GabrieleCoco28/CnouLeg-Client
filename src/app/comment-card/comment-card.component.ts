@@ -106,6 +106,7 @@ export class CommentCardComponent implements OnInit {
           parent_id: this.data._id,
           likes: 0,
           date: finalDate,
+          has_children: false
         })
         input.value = '';
         this.panelOpenStateAnswer = !this.panelOpenStateAnswer;
