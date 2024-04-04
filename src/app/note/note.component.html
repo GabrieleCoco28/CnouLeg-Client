@@ -30,7 +30,7 @@
             <mat-card-content>{{translator.labels.images[translator.getLanguage()]}}</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of imagesPath; index as i">
-                    <img [src]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item" alt="img"
+                    <img [src]="cnoulegAPIService.apiUrl + '/content/' + noteInfo._id + '/' + item" alt="img"
                         (click)="openImageSlider(i)" routerLink="images/{{i}}" class="content-icon"
                         style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px; -webkit-user-drag: none;">
                     <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item |
@@ -58,7 +58,7 @@
             <mat-card-content>{{translator.labels.documents[translator.getLanguage()]}}</mat-card-content>
             <div class="scroll-container" style="overflow: auto">
                 <div *ngFor="let item of documentsPath; index as i">
-                    <a [href]="'https://cochome.ddns.net/content/' + noteInfo._id + '/' + item">
+                    <a [href]="cnoulegAPIService.apiUrl + '/content/' + noteInfo._id + '/' + item">
                         <img src="assets/notes-placeholder/file.svg" alt="img" class="content-icon"
                             style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
                     </a>
