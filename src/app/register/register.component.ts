@@ -8,6 +8,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { CnouLegAPIService, RegistrationData } from '../cnou-leg-api.service';
 import { MatSelect } from '@angular/material/select';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-register',
@@ -15,15 +17,17 @@ import { MatSelect } from '@angular/material/select';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-
   @ViewChild('usernameRef') usernameRef!: ElementRef<HTMLInputElement>;
   @ViewChild('birthRef') birthRef!: ElementRef<HTMLInputElement>;
-  public genderValue = "";
+  public genderValue = '';
   @ViewChild('emailRef') emailRef!: ElementRef<HTMLInputElement>;
   @ViewChild('passwordRef') passwordRef!: ElementRef<HTMLInputElement>;
-  public roleValue = "";
+  public roleValue = '';
   @ViewChild('schoolRef') schoolRef!: ElementRef<HTMLInputElement>;
   @ViewChild('descriptionRef') descriptionRef!: ElementRef<HTMLInputElement>;
+  
+  @ViewChild('emailSpinner') emailSpinner!: ElementRef<HTMLElement>;
+  @ViewChild('stepper') stepper!: MatStepper;
 
   username = new FormControl('', [Validators.required]);
   usernameErrorMessage = '';
@@ -32,7 +36,10 @@ export class RegisterComponent {
   password = new FormControl('', [Validators.required]);
   passwordErrorMessage = '';
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email = new FormControl('', [
+    Validators.required,
+    Validators.email
+  ]);
   emailErrorMessage = '';
 
   birth = new FormControl('', [Validators.required]);
@@ -123,8 +130,16 @@ export class RegisterComponent {
     } else if (this.email.hasError('email')) {
       this.emailErrorMessage =
         this.translator.labels.invaildEmail[this.translator.getLanguage()];
+    } else if (this.email.hasError('exists')) {
+      this.emailErrorMessage = "Email già esistente";
     } else {
       this.emailErrorMessage = '';
+    }
+  }
+
+  checkEmailAlreadyExists() {
+    if (this.email.hasError('exists')) {
+      this.emailErrorMessage = 'Email già esistente';
     }
   }
 
@@ -147,7 +162,7 @@ export class RegisterComponent {
       role: this.roleValue,
       school: this.schoolRef.nativeElement.value,
       description: this.descriptionRef.nativeElement.value,
-      profile_pic_url: ""
+      profile_pic_url: '',
     };
     this.cnoulegAPIService.sendRegistrationData(data).subscribe(() => {
       this.router.navigateByUrl('/registrationDone');
@@ -160,5 +175,20 @@ export class RegisterComponent {
 
   setRole(role: string) {
     this.roleValue = role;
+  }
+
+  checkEmail() {
+    this.emailSpinner.nativeElement.style.display = "block";
+    this.cnoulegAPIService.validateEmail(this.emailRef.nativeElement.value).subscribe((response) => {
+      if(!response.exists) {
+        this.stepper.next();
+        this.email.setErrors({exists: null});
+        this.email.updateValueAndValidity();
+      }else {
+        this.email.setErrors({exists: true});
+      }
+      this.emailSpinner.nativeElement.style.display = "none";
+      this.updateEmailErrorMessage();
+    })
   }
 }

@@ -127,4 +127,9 @@ export class CnouLegAPIService {
   public sendRegistrationData(data: RegistrationData): Observable<any> {
     return this.http.post(this.apiUrl + "/api/register", data);
   }
+
+  public validateEmail(email: string): Observable<any> {
+    const url = this.apiUrl + "/api/validate_email?email=" + email;
+    return this.http.get<Comments>(url);
+  }
 }

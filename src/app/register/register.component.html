@@ -80,6 +80,9 @@
                     </mat-error>
                     }
                 </mat-form-field>
+                <div style="display: none;" #emailSpinner>
+                    <mat-spinner [diameter]="16"></mat-spinner>
+                </div>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
@@ -101,7 +104,7 @@
                 <br>
                 <div>
                     <button mat-stroked-button matStepperPrevious style="margin-right: 8px;" (click)="updateEmailErrorMessage(); updatePasswordErrorMessage()">Back</button>
-                    <button mat-flat-button matStepperNext (click)="updateEmailErrorMessage(); updatePasswordErrorMessage()">Next</button>
+                    <button mat-flat-button (click)="updateEmailErrorMessage(); updatePasswordErrorMessage(); checkEmail()">Next</button>
                 </div>
             </form>
         </mat-step>
@@ -136,6 +139,7 @@
             <br>
             <br>
             <div>
+                <button mat-stroked-button matStepperPrevious style="margin-right: 8px;">Back</button>
                 <button mat-flat-button (click)="sendRegistrationData()">Registrati</button>
             </div>
         </mat-step>
