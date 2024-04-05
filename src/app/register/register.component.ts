@@ -1,10 +1,13 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, map, merge } from 'rxjs';
 import { TranslatorService } from '../translator.service';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
+import { CnouLegAPIService, RegistrationData } from '../cnou-leg-api.service';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-register',
@@ -12,6 +15,16 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+
+  @ViewChild('usernameRef') usernameRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('birthRef') birthRef!: ElementRef<HTMLInputElement>;
+  public genderValue = "";
+  @ViewChild('emailRef') emailRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('passwordRef') passwordRef!: ElementRef<HTMLInputElement>;
+  public roleValue = "";
+  @ViewChild('schoolRef') schoolRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('descriptionRef') descriptionRef!: ElementRef<HTMLInputElement>;
+
   username = new FormControl('', [Validators.required]);
   usernameErrorMessage = '';
 
@@ -47,7 +60,9 @@ export class RegisterComponent {
   constructor(
     private translator: TranslatorService,
     private _formBuilder: FormBuilder,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private cnoulegAPIService: CnouLegAPIService
   ) {
     merge(this.username.statusChanges, this.username.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -120,5 +135,30 @@ export class RegisterComponent {
     } else {
       this.passwordErrorMessage = '';
     }
+  }
+
+  sendRegistrationData() {
+    const data: RegistrationData = {
+      username: this.usernameRef.nativeElement.value,
+      birth: this.birthRef.nativeElement.value,
+      gender: this.genderValue,
+      email: this.emailRef.nativeElement.value,
+      password: this.passwordRef.nativeElement.value,
+      role: this.roleValue,
+      school: this.schoolRef.nativeElement.value,
+      description: this.descriptionRef.nativeElement.value,
+      profile_pic_url: ""
+    };
+    this.cnoulegAPIService.sendRegistrationData(data).subscribe(() => {
+      this.router.navigateByUrl('/registrationDone');
+    });
+  }
+
+  setGender(gender: string) {
+    this.genderValue = gender;
+  }
+
+  setRole(role: string) {
+    this.roleValue = role;
   }
 }

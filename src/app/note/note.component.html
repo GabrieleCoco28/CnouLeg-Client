@@ -20,8 +20,9 @@
     </div>
     <mat-card>
         <mat-card-content>
-            <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard (ready)="load()" [disableSanitizer]="true"
-                [clipboardButtonComponent]="copyComponent" [data]="noteInfo.markdown" class="md">
+            <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard (ready)="load()"
+                [disableSanitizer]="true" [clipboardButtonComponent]="copyComponent" [data]="noteInfo.markdown"
+                class="md">
             </markdown>
         </mat-card-content>
     </mat-card>
@@ -82,7 +83,8 @@
         <button mat-icon-button (mouseover)="setFilledStars(5)" (click)="setGrade(5)"
             (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_5">star</mat-icon></button>
 
-        <h1><mat-icon class="material-symbols-rounded filled star-icon" style="scale: 1.5; margin-right: 8px;">star</mat-icon>{{noteInfo.avg_rating}}</h1>
+        <h1><mat-icon class="material-symbols-rounded filled star-icon"
+                style="scale: 1.5; margin-right: 8px;">star</mat-icon>{{noteInfo.avg_rating}}</h1>
 
         <div id="users">
             <p><mat-icon class="material-symbols-rounded"
@@ -95,10 +97,12 @@
             <div mat-card-avatar class="user-comment-avatar"></div>
             <mat-form-field style="width: 100%;" appearance="outline">
                 <mat-label>{{translator.labels.leaveAComment[translator.getLanguage()]}}</mat-label>
-                <textarea matInput class="comment"></textarea>
-            </mat-form-field><br>
+                <textarea matInput class="comment" style="resize: none;" maxlength="500" #commentContent
+                    oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+            </mat-form-field>
         </mat-card-header>
         <div class="comment-button">
+            <label style="margin-right: 8px;">{{commentContent.value.length}}/{{commentContent.maxLength}}</label>
             <button mat-stroked-button color="primary"
                 (click)="comment($event)">{{translator.labels.comment[translator.getLanguage()]}}</button>
         </div>

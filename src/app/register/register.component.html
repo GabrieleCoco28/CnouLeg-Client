@@ -13,7 +13,7 @@
                 <ng-template matStepLabel>Username</ng-template>
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Username</mat-label>
-                    <input matInput formControlName="username" (blur)="updateUsernameErrorMessage()" required>
+                    <input matInput formControlName="username" (blur)="updateUsernameErrorMessage()" required #usernameRef>
                     @if (username.invalid) {
                     <mat-error>
                         <mat-icon class="material-symbols-rounded error">error</mat-icon>
@@ -33,7 +33,7 @@
                 <ng-template matStepLabel>Data di nascita e genere</ng-template>
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Data di nascita</mat-label>
-                    <input matInput [matDatepicker]="datepicker" formControlName="birth" (blur)="updateBirthErrorMessage()" required>
+                    <input matInput [matDatepicker]="datepicker" formControlName="birth" (blur)="updateBirthErrorMessage()" required #birthRef>
                     <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                     <mat-datepicker #datepicker></mat-datepicker>
                     @if (birth.invalid) {
@@ -47,7 +47,7 @@
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Genere</mat-label>
-                    <mat-select formControlName="gender" (blur)="updateGenderErrorMessage()" required>
+                    <mat-select formControlName="gender" (valueChange)="setGender($event)" (blur)="updateGenderErrorMessage()" required #genderRef>
                         <mat-option value="male">Uomo</mat-option>
                         <mat-option value="female">Donna</mat-option>
                         <mat-option value="other">Preferisco non specificare</mat-option>
@@ -72,7 +72,7 @@
             <form [formGroup]="emailAndPasswordFormGroup" style="padding: 16px;">
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Email</mat-label>
-                    <input matInput [formControl]="email" (blur)="updateEmailErrorMessage()" required>
+                    <input matInput [formControl]="email" (blur)="updateEmailErrorMessage()" required #emailRef>
                     @if (email.invalid) {
                     <mat-error>
                         <mat-icon class="material-symbols-rounded error">error</mat-icon>
@@ -85,7 +85,7 @@
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Password</mat-label>
                     <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'"
-                        (blur)="updatePasswordErrorMessage()" required>
+                        (blur)="updatePasswordErrorMessage()" required #passwordRef>
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
                         <mat-icon class="material-symbols-rounded">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -110,7 +110,7 @@
             <form style="padding: 16px;">
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Ruolo</mat-label>
-                    <mat-select>
+                    <mat-select #roleRef (valueChange)="setRole($event)">
                         <mat-option value="teacher">Docente</mat-option>
                         <mat-option value="student">Studente</mat-option>
                         <mat-option value="other">Altro</mat-option>
@@ -120,7 +120,7 @@
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Scuola</mat-label>
-                    <input matInput>
+                    <input matInput #schoolRef>
                 </mat-form-field>
                 <br>
                 <br>
@@ -128,15 +128,15 @@
                     <mat-label>Descrizione</mat-label>
                     <textarea matInput rows="5" maxlength="300" style="resize: none;"
                         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                        #description></textarea>
+                        #descriptionRef></textarea>
                 </mat-form-field>
                 <br>
-                <label>{{description.value.length}}/{{description.maxLength}}</label>
+                <label>{{descriptionRef.value.length}}/{{descriptionRef.maxLength}}</label>
             </form>
             <br>
             <br>
             <div>
-                <button mat-flat-button>Registrati</button>
+                <button mat-flat-button (click)="sendRegistrationData()">Registrati</button>
             </div>
         </mat-step>
     </mat-stepper>

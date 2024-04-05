@@ -36,8 +36,7 @@ export class ImageSliderComponent {
       cnoulegAPIService.getArticleByID(params['id']).subscribe({
         next: (response) => {
           response.contents.map((v) => {
-            switch (v.type) {
-              case 'image':
+            if (v.type === 'image') {
                 this.imagesPath.push(v.path);
                 this.imagesCompletePath.push(
                   cnoulegAPIService.apiUrl + '/content/' +

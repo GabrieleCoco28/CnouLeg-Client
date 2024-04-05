@@ -74,7 +74,7 @@ export class NoteComponent implements OnInit {
             cnoulegAPIService
               .getUsersById([this.noteInfo.author_id])
               .subscribe((response: Users) => {
-                this.noteInfo.author_name = response.users[0].name;
+                this.noteInfo.author_name = response.users[0].username;
                 (<HTMLElement>el.nativeElement)
                   .querySelector('.user-subtitle-avatar')
                   ?.setAttribute(
@@ -157,13 +157,12 @@ export class NoteComponent implements OnInit {
     const input = this.el.nativeElement.querySelector(
       '.comment'
     ) as HTMLInputElement;
-    const user_id = this.random(4, 5);
     if (input.value.trim().length > 0) {
       this.cnoulegAPIService
         .addComment(
           input.value.trim(),
-          user_id,
-          this.noteInfo._id,
+          this.noteInfo.author_id, //todo replace with actual user id
+          this.noteInfo._id, 
           null,
           finalDate
         )
@@ -171,7 +170,7 @@ export class NoteComponent implements OnInit {
           this.comments.unshift({
             _id: res.value.insertedId,
             text: input.value.trim(),
-            user_id,
+            user_id: this.noteInfo.author_id, //todo replace with actual user id
             post_id: this.noteInfo._id,
             parent_id: null,
             likes: 0,

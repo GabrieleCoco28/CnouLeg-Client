@@ -30,16 +30,15 @@ export class VideoSliderComponent {
       cnoulegAPIService.getArticleByID(params['id']).subscribe({
         next: (response) => {
           response.contents.map((v) => {
-            switch (v.type) {
-              case 'video':
-                this.videosPath.push(v.path);
-                this.videosCompletePath.push(
-                  cnoulegAPIService.apiUrl + '/content/' +
-                    response._id +
-                    '/' +
-                    v.path
-                );
-                break;
+            if (v.type === 'video') {
+              this.videosPath.push(v.path);
+              this.videosCompletePath.push(
+                cnoulegAPIService.apiUrl +
+                  '/content/' +
+                  response._id +
+                  '/' +
+                  v.path
+              );
             }
           });
           setTimeout(() => {

@@ -23,10 +23,14 @@
                     <div mat-card-avatar class="user-comment-avatar"></div>
                     <mat-form-field style="width: 100%;" appearance="outline">
                         <mat-label>{{translator.labels.answerTheComment[translator.getLanguage()]}}</mat-label>
-                        <textarea matInput placeholder="Commento..." class="answer"></textarea>
-                    </mat-form-field><br>
+                        <textarea matInput placeholder="Commento..." class="answer" style="resize: none;"
+                            maxlength="500" #subcommentContent
+                            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+                    </mat-form-field>
+                    <br>
                 </mat-card-header>
                 <div class="comment-button">
+                    <label style="margin-right: 8px;">{{subcommentContent.value.length}}/{{subcommentContent.maxLength}}</label>
                     <button mat-stroked-button color="primary"
                         (click)="answer($event)">{{translator.labels.answer[translator.getLanguage()]}}</button>
                     <button mat-stroked-button color="warn" (click)="toggleAnswerPanel($event)"

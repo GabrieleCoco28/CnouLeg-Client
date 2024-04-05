@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class SearchComponent {
   public noteInfo: Note[] = [{} as Note];
-  public idsLoaded: number[] = [];
+  public idsLoaded: string[] = [];
   constructor(
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
@@ -28,13 +28,13 @@ export class SearchComponent {
         .subscribe((response: Users) => {
           this.noteInfo.map((v) => {
             v.author_name = response.users.find(
-              (v2) => v2.id === v.author_id
-            )?.name;
+              (v2) => v2._id === v.author_id
+            )?.username;
           });
           response.users.map((v: User) => {
             const elements = (<HTMLElement>(
               this.el.nativeElement
-            )).querySelectorAll('._' + v.id);
+            )).querySelectorAll('._' + v._id);
             elements.forEach((e) => {
               e.setAttribute(
                 'style',

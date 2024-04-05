@@ -20,13 +20,14 @@ import { NoteNotFoundComponent } from './note-not-found/note-not-found.component
 import { SearchHeaderComponent } from './search-header/search-header.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginRegisterHeaderComponent } from './login-register-header/login-register-header.component';
+import { SuccessfulRegistrationComponent } from './successful-registration/successful-registration.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { MatOption } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -51,6 +52,9 @@ import { SearchComponent } from './search/search.component';
 import { TruncateName } from './truncate-name-pipe';
 import { NumberSuffixPipe } from './number-suffix-pipe';
 
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MY_FORMATS } from './cnou-leg-api.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,13 +68,16 @@ import { NumberSuffixPipe } from './number-suffix-pipe';
     NoteNotFoundComponent,
     SearchHeaderComponent,
     RegisterComponent,
-    LoginRegisterHeaderComponent
+    LoginRegisterHeaderComponent,
+    SuccessfulRegistrationComponent
   ],
   providers: [
     provideMarkdown(),
     provideAnimationsAsync(),
     provideAnimations(),
     provideNativeDateAdapter(),
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

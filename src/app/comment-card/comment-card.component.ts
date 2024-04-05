@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   CnouLegAPIService,
   Comment,
@@ -14,7 +21,7 @@ import { TranslatorService } from '../translator.service';
 })
 export class CommentCardComponent implements OnInit {
   @Input() data!: Comment;
-  public subcommentsIdsLoaded: number[] = [];
+  public subcommentsIdsLoaded: string[] = [];
   public subcommentsInfo: Comment[] = [{} as Comment];
   panelOpenStateAnswer = false;
   panelOpenState = false;
@@ -23,7 +30,7 @@ export class CommentCardComponent implements OnInit {
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
     public translator: TranslatorService,
-    private ref: ChangeDetectorRef,
+    private ref: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
     this.loadComment();
@@ -35,10 +42,10 @@ export class CommentCardComponent implements OnInit {
       .getUsersById([this.data.user_id])
       .subscribe((response: Users) => {
         response.users.map((v: User) => {
-          this.data.author_name = v.name;
+          this.data.author_name = v.username;
           const elements = (<HTMLElement>(
             this.el.nativeElement
-          )).querySelectorAll('._' + v.id);
+          )).querySelectorAll('._' + v._id);
           elements.forEach((e) => {
             e.setAttribute(
               'style',
@@ -58,13 +65,13 @@ export class CommentCardComponent implements OnInit {
           .subscribe((response: Users) => {
             this.subcommentsInfo.map((v) => {
               v.author_name = response.users.find(
-                (v2) => v2.id === v.user_id
-              )?.name;
+                (v2) => v2._id === v.user_id
+              )?.username;
             });
             response.users.map((v: User) => {
               const elements = (<HTMLElement>(
                 this.el.nativeElement
-              )).querySelectorAll('._' + v.id);
+              )).querySelectorAll('._' + v._id);
               elements.forEach((e) => {
                 e.setAttribute(
                   'style',
@@ -93,27 +100,34 @@ export class CommentCardComponent implements OnInit {
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();
 
-    const finalDate = `${year}-${month + 1 < 10 ? '0' + (month + 1) : month + 1}-${day < 10 ? '0' + day : day} ${hour < 10 ? '0' + hour : hour}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`
-    const input = this.el.nativeElement.querySelector(".answer") as HTMLInputElement;
-    const user_id = this.random(4, 5)
-    if(input.value.trim().length > 0) {
-      this.cnoulegAPIService.addComment(input.value.trim(), user_id, null, this.data._id, finalDate).subscribe((res) => {
-        this.subcommentsInfo.unshift({
-          _id: res.value.insertedId,
-          text: input.value.trim(),
-          user_id,
-          post_id: null,
-          parent_id: this.data._id,
-          likes: 0,
-          date: finalDate,
-          has_children: false
-        })
-        input.value = '';
-        this.panelOpenStateAnswer = !this.panelOpenStateAnswer;
-        this.panelOpenState = true;
-        this.loadSubComments();
-        this.ref.detectChanges();
-      });
+    const finalDate = `${year}-${
+      month + 1 < 10 ? '0' + (month + 1) : month + 1
+    }-${day < 10 ? '0' + day : day} ${hour < 10 ? '0' + hour : hour}:${
+      minutes < 10 ? '0' + minutes : minutes
+    }:${seconds < 10 ? '0' + seconds : seconds}`;
+    const input = this.el.nativeElement.querySelector(
+      '.answer'
+    ) as HTMLInputElement;
+    if (input.value.trim().length > 0) {
+      this.cnoulegAPIService
+        .addComment(input.value.trim(), this.data.user_id /*todo replace it with actual user id*/, null, this.data._id, finalDate)
+        .subscribe((res) => {
+          this.subcommentsInfo.unshift({
+            _id: res.value.insertedId,
+            text: input.value.trim(),
+            user_id: this.data.user_id, //todo replace it with actual user id
+            post_id: null,
+            parent_id: this.data._id,
+            likes: 0,
+            date: finalDate,
+            has_children: false,
+          });
+          input.value = '';
+          this.panelOpenStateAnswer = !this.panelOpenStateAnswer;
+          this.panelOpenState = true;
+          this.loadSubComments();
+          this.ref.detectChanges();
+        });
     }
   }
 
