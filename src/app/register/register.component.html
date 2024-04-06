@@ -13,7 +13,7 @@
                 <ng-template matStepLabel>Username</ng-template>
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Username</mat-label>
-                    <input matInput formControlName="username" (blur)="updateUsernameErrorMessage()" required #usernameRef>
+                    <input matInput formControlName="username" maxlength="30" (blur)="updateUsernameErrorMessage()" required #usernameRef>
                     @if (username.invalid) {
                     <mat-error>
                         <mat-icon class="material-symbols-rounded error">error</mat-icon>
@@ -21,6 +21,8 @@
                     </mat-error>
                     }
                 </mat-form-field>
+                <br>
+                <label>{{usernameRef.value.length}}/{{usernameRef.maxLength}}</label>
                 <br>
                 <br>
                 <div>
@@ -123,8 +125,10 @@
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Scuola</mat-label>
-                    <input matInput #schoolRef>
+                    <input matInput #schoolRef maxlength="40">
                 </mat-form-field>
+                <br>
+                <label>{{usernameRef.value.length}}/{{usernameRef.maxLength}}</label>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
