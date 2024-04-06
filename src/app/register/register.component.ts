@@ -65,7 +65,7 @@ export class RegisterComponent {
   public stepperOrientation: Observable<StepperOrientation>;
 
   constructor(
-    private translator: TranslatorService,
+    public translator: TranslatorService,
     private _formBuilder: FormBuilder,
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -131,7 +131,8 @@ export class RegisterComponent {
       this.emailErrorMessage =
         this.translator.labels.invaildEmail[this.translator.getLanguage()];
     } else if (this.email.hasError('exists')) {
-      this.emailErrorMessage = "Email già esistente";
+      this.emailErrorMessage =
+        this.translator.labels.emailAlreadyExists[this.translator.getLanguage()];
     } else {
       this.emailErrorMessage = '';
     }
@@ -139,7 +140,8 @@ export class RegisterComponent {
 
   checkEmailAlreadyExists() {
     if (this.email.hasError('exists')) {
-      this.emailErrorMessage = 'Email già esistente';
+      this.emailErrorMessage =
+        this.translator.labels.emailAlreadyExists[this.translator.getLanguage()];
     }
   }
 

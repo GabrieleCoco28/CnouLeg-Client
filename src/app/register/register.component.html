@@ -26,15 +26,17 @@
                 <br>
                 <br>
                 <div>
-                    <button mat-flat-button matStepperNext (click)="updateUsernameErrorMessage()">Next</button>
+                    <button mat-flat-button matStepperNext (click)="updateUsernameErrorMessage()">
+                        {{this.translator.labels.next[this.translator.getLanguage()]}}
+                    </button>
                 </div>
             </form>
         </mat-step>
         <mat-step [stepControl]="birthAndGenderFormGroup">
             <form [formGroup]="birthAndGenderFormGroup" style="padding: 16px;">
-                <ng-template matStepLabel>Data di nascita e genere</ng-template>
+                <ng-template matStepLabel>{{this.translator.labels.birthDateAndGender[this.translator.getLanguage()]}}</ng-template>
                 <mat-form-field appearance="outline" style="width: 256px;">
-                    <mat-label>Data di nascita</mat-label>
+                    <mat-label>{{this.translator.labels.birthDate[this.translator.getLanguage()]}}</mat-label>
                     <input matInput [matDatepicker]="datepicker" formControlName="birth" (blur)="updateBirthErrorMessage()" required #birthRef>
                     <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                     <mat-datepicker #datepicker></mat-datepicker>
@@ -48,11 +50,11 @@
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
-                    <mat-label>Genere</mat-label>
+                    <mat-label>{{this.translator.labels.gender[this.translator.getLanguage()]}}</mat-label>
                     <mat-select formControlName="gender" (valueChange)="setGender($event)" (blur)="updateGenderErrorMessage()" required #genderRef>
-                        <mat-option value="male">Uomo</mat-option>
-                        <mat-option value="female">Donna</mat-option>
-                        <mat-option value="other">Preferisco non specificare</mat-option>
+                        <mat-option value="male">{{this.translator.labels.male[this.translator.getLanguage()]}}</mat-option>
+                        <mat-option value="female">{{this.translator.labels.female[this.translator.getLanguage()]}}</mat-option>
+                        <mat-option value="other">{{this.translator.labels.genderNotSpecified[this.translator.getLanguage()]}}</mat-option>
                     </mat-select>
                     @if (gender.invalid) {
                     <mat-error>
@@ -64,13 +66,14 @@
                 <br>
                 <br>
                 <div>
-                    <button mat-stroked-button matStepperPrevious style="margin-right: 8px;" (click)="updateBirthErrorMessage(); updateGenderErrorMessage()">Back</button>
-                    <button mat-flat-button matStepperNext (click)="updateBirthErrorMessage(); updateGenderErrorMessage()">Next</button>
+                    <button mat-flat-button matStepperNext (click)="updateBirthErrorMessage(); updateGenderErrorMessage()">
+                        {{this.translator.labels.next[this.translator.getLanguage()]}}
+                    </button>
                 </div>
             </form>
         </mat-step>
         <mat-step [stepControl]="emailAndPasswordFormGroup">
-            <ng-template matStepLabel>Email e password</ng-template>
+            <ng-template matStepLabel>{{this.translator.labels.emailAndPassword[this.translator.getLanguage()]}}</ng-template>
             <form [formGroup]="emailAndPasswordFormGroup" style="padding: 16px;">
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>Email</mat-label>
@@ -105,34 +108,35 @@
                 <br>
                 <br>
                 <div>
-                    <button mat-stroked-button matStepperPrevious style="margin-right: 8px;" (click)="updateEmailErrorMessage(); updatePasswordErrorMessage()">Back</button>
-                    <button mat-flat-button (click)="updateEmailErrorMessage(); updatePasswordErrorMessage(); checkEmail()">Next</button>
+                    <button mat-flat-button (click)="updateEmailErrorMessage(); updatePasswordErrorMessage(); checkEmail()">
+                        {{this.translator.labels.next[this.translator.getLanguage()]}}
+                    </button>
                 </div>
             </form>
         </mat-step>
         <mat-step optional>
-            <ng-template matStepLabel>Ruolo, scuola e descrizione</ng-template>
+            <ng-template matStepLabel>{{this.translator.labels.roleSchoolDescription[this.translator.getLanguage()]}}</ng-template>
             <form style="padding: 16px;">
                 <mat-form-field appearance="outline" style="width: 256px;">
-                    <mat-label>Ruolo</mat-label>
+                    <mat-label>{{this.translator.labels.role[this.translator.getLanguage()]}}</mat-label>
                     <mat-select #roleRef (valueChange)="setRole($event)">
-                        <mat-option value="teacher">Docente</mat-option>
-                        <mat-option value="student">Studente</mat-option>
-                        <mat-option value="other">Altro</mat-option>
+                        <mat-option value="teacher">{{this.translator.labels.teacher[this.translator.getLanguage()]}}</mat-option>
+                        <mat-option value="student">{{this.translator.labels.student[this.translator.getLanguage()]}}</mat-option>
+                        <mat-option value="other">{{this.translator.labels.other[this.translator.getLanguage()]}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
-                    <mat-label>Scuola</mat-label>
+                    <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
                     <input matInput #schoolRef maxlength="40">
                 </mat-form-field>
                 <br>
-                <label>{{usernameRef.value.length}}/{{usernameRef.maxLength}}</label>
+                <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
-                    <mat-label>Descrizione</mat-label>
+                    <mat-label>{{this.translator.labels.description[this.translator.getLanguage()]}}</mat-label>
                     <textarea matInput rows="5" maxlength="300" style="resize: none;"
                         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
                         #descriptionRef></textarea>
@@ -143,8 +147,7 @@
             <br>
             <br>
             <div>
-                <button mat-stroked-button matStepperPrevious style="margin-right: 8px;">Back</button>
-                <button mat-flat-button (click)="sendRegistrationData()">Registrati</button>
+                <button mat-flat-button (click)="sendRegistrationData()">{{this.translator.labels.register[this.translator.getLanguage()]}}</button>
             </div>
         </mat-step>
     </mat-stepper>

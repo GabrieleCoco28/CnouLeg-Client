@@ -151,35 +151,103 @@ export class TranslatorService {
     },
     login: {
       it: 'Accedi',
-      en: 'Login'
+      en: 'Login',
     },
     register: {
       it: 'Registrati',
-      en: 'Sign up'
+      en: 'Sign up',
     },
     emailRequired: {
       it: 'Inserisci un indirizzo email',
-      en: 'Enter an email address'
+      en: 'Enter an email address',
     },
     invaildEmail: {
       it: 'Indirizzo email non valido',
-      en: 'Invalid email address'
+      en: 'Invalid email address',
     },
     passwordRequired: {
       it: 'Inserisci una password',
-      en: 'Enter a password'
+      en: 'Enter a password',
     },
     usernameRequired: {
-      it: 'Inserisci uno username', 
-      en: 'Enter a username', 
+      it: 'Inserisci uno username',
+      en: 'Enter a username',
     },
     birthRequired: {
-      it: 'Inserisci la tua data di nascita', 
-      en: 'Enter your date of birth', 
+      it: 'Inserisci la tua data di nascita',
+      en: 'Enter your date of birth',
     },
     genderRequired: {
-      it: 'Inserisci il tuo genere', 
-      en: 'Enter your gender', 
+      it: 'Inserisci il tuo genere',
+      en: 'Enter your gender',
+    },
+    birthDate: {
+      it: 'Data di nascita',
+      en: 'Birth date',
+    },
+    birthDateAndGender: {
+      it: 'Data di nascita e genere',
+      en: 'Birth date and gender',
+    },
+    gender: {
+      it: 'Genere',
+      en: 'Gender',
+    },
+    male: {
+      it: 'Uomo',
+      en: 'Male',
+    },
+    female: {
+      it: 'Donna',
+      en: 'Female',
+    },
+    genderNotSpecified: {
+      it: 'Preferisco non specificare',
+      en: 'I prefer not to specify',
+    },
+    emailAndPassword: {
+      it: 'Email e password',
+      en: 'Email and password'
+    },
+    next: {
+      it: 'Avanti',
+      en: 'Next'
+    },
+    back: {
+      it: 'Indietro',
+      en: 'Back'
+    },
+    emailAlreadyExists: {
+      it: 'Email già esistente',
+      en: 'Email already exists'
+    },
+    roleSchoolDescription: {
+      it: 'Ruolo, scuola e descrizioe',
+      en: 'Role school and description'
+    },
+    role: {
+      it: 'Ruolo',
+      en: 'Role'
+    },
+    school: {
+      it: 'Scuola',
+      en: 'School'
+    },
+    description: {
+      it: 'Descrizione',
+      en: 'Description'
+    },
+    teacher: {
+      it: 'Insegnante',
+      en: 'Teacher'
+    },
+    student: {
+      it: 'Studente',
+      en: 'Student'
+    },
+    other: {
+      it: 'Altro',
+      en: 'Other'
     }
   };
   constructor() {}
@@ -195,8 +263,8 @@ export class TranslatorService {
     if (subjects[sub] && subjects[sub].icon) return subjects[sub].icon;
   }
   public getLanguage() {
-    if(navigator.language.includes('en')) return 'en';
-    if(navigator.language.includes('it')) return 'it';
+    if (navigator.language.includes('en')) return 'en';
+    if (navigator.language.includes('it')) return 'it';
     return 'en';
   }
 }
