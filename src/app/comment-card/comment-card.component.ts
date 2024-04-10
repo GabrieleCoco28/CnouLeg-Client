@@ -92,34 +92,23 @@ export class CommentCardComponent implements OnInit {
   }
   answer(e: Event) {
     e.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-
-    const finalDate = `${year}-${
-      month + 1 < 10 ? '0' + (month + 1) : month + 1
-    }-${day < 10 ? '0' + day : day} ${hour < 10 ? '0' + hour : hour}:${
-      minutes < 10 ? '0' + minutes : minutes
-    }:${seconds < 10 ? '0' + seconds : seconds}`;
+    const dateIso = new Date().toISOString().replace('T', ' ');
+    const date = dateIso.substring(0, dateIso.lastIndexOf('.'));
     const input = this.el.nativeElement.querySelector(
       '.answer'
     ) as HTMLInputElement;
     if (input.value.trim().length > 0) {
       this.cnoulegAPIService
-        .addComment(input.value.trim(), this.data.user_id /*todo replace it with actual user id*/, null, this.data._id, finalDate)
+        .addComment(input.value.trim(), this.data.user_id /*todo replace it with actual user id*/, null, this.data._id)
         .subscribe((res) => {
-          this.subcommentsInfo.unshift({
+          this.subcommentsInfo.push({
             _id: res.value.insertedId,
             text: input.value.trim(),
             user_id: this.data.user_id, //todo replace it with actual user id
             post_id: null,
             parent_id: this.data._id,
             likes: 0,
-            date: finalDate,
+            date: date,
             has_children: false,
           });
           input.value = '';

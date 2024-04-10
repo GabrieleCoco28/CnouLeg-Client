@@ -51,7 +51,7 @@ export interface User {
   gender: string,
   role: string,
   school: string,
-  description: string,
+  bio: string,
   profile_pic_url: string
 }
 
@@ -67,7 +67,7 @@ export interface RegistrationData {
   password: string,
   role: string,
   school: string,
-  description: string,
+  bio: string,
   profile_pic_url: string
 }
 
@@ -120,8 +120,8 @@ export class CnouLegAPIService {
     return this.http.get<Comments>(url);
   }
 
-  public addComment(text: string, user_id: string, post_id: string | null, parent_id: string | null, date: string): Observable<any> {
-    return this.http.post(this.apiUrl + "/api/comments", {text, user_id, post_id, parent_id, likes: 0, date, has_children: false});
+  public addComment(text: string, user_id: string, post_id: string | null, parent_id: string | null): Observable<any> {
+    return this.http.post(this.apiUrl + "/api/comments", {text, user_id, post_id, parent_id});
   }
 
   public sendRegistrationData(data: RegistrationData): Observable<any> {

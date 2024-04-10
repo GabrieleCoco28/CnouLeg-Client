@@ -24,7 +24,7 @@ export class RegisterComponent {
   @ViewChild('passwordRef') passwordRef!: ElementRef<HTMLInputElement>;
   public roleValue = '';
   @ViewChild('schoolRef') schoolRef!: ElementRef<HTMLInputElement>;
-  @ViewChild('descriptionRef') descriptionRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('bioRef') bioRef!: ElementRef<HTMLInputElement>;
   
   @ViewChild('emailSpinner') emailSpinner!: ElementRef<HTMLElement>;
   @ViewChild('stepper') stepper!: MatStepper;
@@ -163,7 +163,7 @@ export class RegisterComponent {
       password: this.passwordRef.nativeElement.value,
       role: this.roleValue,
       school: this.schoolRef.nativeElement.value,
-      description: this.descriptionRef.nativeElement.value,
+      bio: this.bioRef.nativeElement.value,
       profile_pic_url: '',
     };
     this.cnoulegAPIService.sendRegistrationData(data).subscribe(() => {

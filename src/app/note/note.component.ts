@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CopyButtonComponent } from '../copy-button/copy-button.component';
 import { MermaidAPI } from 'ngx-markdown';
 import {
@@ -48,7 +54,7 @@ export class NoteComponent implements OnInit {
     private el: ElementRef,
     public translator: TranslatorService,
     private spinner: NgxSpinnerService,
-    private ref: ChangeDetectorRef,
+    private ref: ChangeDetectorRef
   ) {
     setTimeout(() => {
       this.route.params.subscribe((params) => {
@@ -92,16 +98,18 @@ export class NoteComponent implements OnInit {
             this.router.navigateByUrl('/noteNotFound');
           },
         });
-        this.cnoulegAPIService.getComments(this.parameters['id'], 'note').subscribe({
-          next: (response) => {
-            response.comments.map((e) => {
-              this.comments.push(e);
-            });
-          },
-          error: (e) => {
-            console.log(e);
-          },
-        });
+        this.cnoulegAPIService
+          .getComments(this.parameters['id'], 'note')
+          .subscribe({
+            next: (response) => {
+              response.comments.map((e) => {
+                this.comments.push(e);
+              });
+            },
+            error: (e) => {
+              console.log(e);
+            },
+          });
       });
     });
   }
@@ -141,19 +149,8 @@ export class NoteComponent implements OnInit {
 
   comment(e: Event) {
     e.preventDefault();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-
-    const finalDate = `${year}-${
-      month + 1 < 10 ? '0' + (month + 1) : month + 1
-    }-${day < 10 ? '0' + day : day} ${hour < 10 ? '0' + hour : hour}:${
-      minutes < 10 ? '0' + minutes : minutes
-    }:${seconds < 10 ? '0' + seconds : seconds}`;
+    const dateIso = new Date().toISOString().replace('T', ' ');
+    const date = dateIso.substring(0, dateIso.lastIndexOf('.'));
     const input = this.el.nativeElement.querySelector(
       '.comment'
     ) as HTMLInputElement;
@@ -162,9 +159,8 @@ export class NoteComponent implements OnInit {
         .addComment(
           input.value.trim(),
           this.noteInfo.author_id, //todo replace with actual user id
-          this.noteInfo._id, 
-          null,
-          finalDate
+          this.noteInfo._id,
+          null
         )
         .subscribe((res) => {
           this.comments.unshift({
@@ -174,9 +170,9 @@ export class NoteComponent implements OnInit {
             post_id: this.noteInfo._id,
             parent_id: null,
             likes: 0,
-            date: finalDate,
-            has_children: false
-          })
+            date: date,
+            has_children: false,
+          });
           input.value = '';
           this.ref.detectChanges();
         });

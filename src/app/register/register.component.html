@@ -36,10 +36,10 @@
             <form [formGroup]="birthAndGenderFormGroup" style="padding: 16px;">
                 <ng-template matStepLabel>{{this.translator.labels.birthDateAndGender[this.translator.getLanguage()]}}</ng-template>
                 <mat-form-field appearance="outline" style="width: 256px;">
-                    <mat-label>{{this.translator.labels.birthDate[this.translator.getLanguage()]}}</mat-label>
-                    <input matInput [matDatepicker]="datepicker" formControlName="birth" (blur)="updateBirthErrorMessage()" required #birthRef>
+                    <mat-label [for]="datepicker">{{this.translator.labels.birthDate[this.translator.getLanguage()]}}</mat-label>
+                    <input matInput [matDatepicker]="datepicker" readonly formControlName="birth" (blur)="updateBirthErrorMessage()" required #birthRef (click)="datepicker.open()">
                     <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-                    <mat-datepicker #datepicker></mat-datepicker>
+                    <mat-datepicker #datepicker (closed)="datepicker.restoreFocus"></mat-datepicker>
                     @if (birth.invalid) {
                     <mat-error>
                         <mat-icon class="material-symbols-rounded error">error</mat-icon>
@@ -115,7 +115,7 @@
             </form>
         </mat-step>
         <mat-step optional>
-            <ng-template matStepLabel>{{this.translator.labels.roleSchoolDescription[this.translator.getLanguage()]}}</ng-template>
+            <ng-template matStepLabel>{{this.translator.labels.roleSchoolBio[this.translator.getLanguage()]}}</ng-template>
             <form style="padding: 16px;">
                 <mat-form-field appearance="outline" style="width: 256px;">
                     <mat-label>{{this.translator.labels.role[this.translator.getLanguage()]}}</mat-label>
@@ -136,13 +136,13 @@
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: 256px;">
-                    <mat-label>{{this.translator.labels.description[this.translator.getLanguage()]}}</mat-label>
+                    <mat-label>Bio</mat-label>
                     <textarea matInput rows="5" maxlength="300" style="resize: none;"
                         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-                        #descriptionRef></textarea>
+                        #bioRef></textarea>
                 </mat-form-field>
                 <br>
-                <label>{{descriptionRef.value.length}}/{{descriptionRef.maxLength}}</label>
+                <label>{{bioRef.value.length}}/{{bioRef.maxLength}}</label>
             </form>
             <br>
             <br>
