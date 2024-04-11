@@ -248,6 +248,18 @@ export class TranslatorService {
     other: {
       it: 'Altro',
       en: 'Other'
+    },
+    noteNotFound: {
+      it: 'Nota non trovata',
+      en: 'Note not found'
+    },
+    noteNotFoundSubtext: {
+      it: 'Ci dispiace, ma la nota che stai cercando non esiste o è stata eliminata',
+      en: 'We are sorry, but the note you are looking for does not exist or has been deleted'
+    },
+    accountSuccessfullyRegistered: {
+      it: 'Account registrato con successo!',
+      en: 'Account successfully registered!'
     }
   };
   constructor() {}
