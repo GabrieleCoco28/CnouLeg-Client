@@ -149,8 +149,6 @@ export class NoteComponent implements OnInit {
 
   comment(e: Event) {
     e.preventDefault();
-    const dateIso = new Date().toISOString().replace('T', ' ');
-    const date = dateIso.substring(0, dateIso.lastIndexOf('.'));
     const input = this.el.nativeElement.querySelector(
       '.comment'
     ) as HTMLInputElement;
@@ -170,7 +168,7 @@ export class NoteComponent implements OnInit {
             post_id: this.noteInfo._id,
             parent_id: null,
             likes: 0,
-            date: date,
+            date: res.uploadDate,
             has_children: false,
           });
           input.value = '';

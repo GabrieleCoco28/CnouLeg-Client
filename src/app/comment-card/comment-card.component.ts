@@ -92,8 +92,6 @@ export class CommentCardComponent implements OnInit {
   }
   answer(e: Event) {
     e.preventDefault();
-    const dateIso = new Date().toISOString().replace('T', ' ');
-    const date = dateIso.substring(0, dateIso.lastIndexOf('.'));
     const input = this.el.nativeElement.querySelector(
       '.answer'
     ) as HTMLInputElement;
@@ -108,7 +106,7 @@ export class CommentCardComponent implements OnInit {
             post_id: null,
             parent_id: this.data._id,
             likes: 0,
-            date: date,
+            date: res.uploadDate,
             has_children: false,
           });
           input.value = '';
