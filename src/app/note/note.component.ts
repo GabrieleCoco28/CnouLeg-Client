@@ -162,7 +162,7 @@ export class NoteComponent implements OnInit {
         )
         .subscribe((res) => {
           this.comments.unshift({
-            _id: res.value.insertedId,
+            _id: res.insertedId,
             text: input.value.trim(),
             user_id: this.noteInfo.author_id, //todo replace with actual user id
             post_id: this.noteInfo._id,

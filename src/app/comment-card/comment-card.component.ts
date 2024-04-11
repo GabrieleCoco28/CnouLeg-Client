@@ -100,7 +100,7 @@ export class CommentCardComponent implements OnInit {
         .addComment(input.value.trim(), this.data.user_id /*todo replace it with actual user id*/, null, this.data._id)
         .subscribe((res) => {
           this.subcommentsInfo.push({
-            _id: res.value.insertedId,
+            _id: res.insertedId,
             text: input.value.trim(),
             user_id: this.data.user_id, //todo replace it with actual user id
             post_id: null,
