@@ -1,5 +1,6 @@
 <div style="padding: 0 1em 0 1em;">
     <app-login-register-header></app-login-register-header>
+    <h1 style="text-align: center; font-size: 3em;">{{translator.labels.register[translator.getLanguage()]}}</h1>
     <mat-stepper orientation="horizontal" style="margin: auto;" [linear]="true"
         [orientation]="(stepperOrientation | async)!" #stepper>
         <ng-template matStepperIcon="edit">
@@ -75,7 +76,7 @@
         <mat-step [stepControl]="emailAndPasswordFormGroup">
             <ng-template matStepLabel>{{this.translator.labels.emailAndPassword[this.translator.getLanguage()]}}</ng-template>
             <form [formGroup]="emailAndPasswordFormGroup" style="padding: 16px;">
-                <mat-form-field appearance="outline" style="width: min(256px, 100%)px;">
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
                     <mat-label>Email</mat-label>
                     <input matInput [formControl]="email" (blur)="updateEmailErrorMessage()" required #emailRef>
                     @if (email.invalid) {
@@ -90,7 +91,7 @@
                 </div>
                 <br>
                 <br>
-                <mat-form-field appearance="outline" style="width: min(256px, 100%)px;">
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
                     <mat-label>Password</mat-label>
                     <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'"
                         (blur)="updatePasswordErrorMessage()" required #passwordRef>
@@ -117,7 +118,7 @@
         <mat-step optional>
             <ng-template matStepLabel>{{this.translator.labels.roleSchoolBio[this.translator.getLanguage()]}}</ng-template>
             <form style="padding: 16px;">
-                <mat-form-field appearance="outline" style="width: min(256px, 100%)px;">
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
                     <mat-label>{{this.translator.labels.role[this.translator.getLanguage()]}}</mat-label>
                     <mat-select #roleRef (valueChange)="setRole($event)">
                         <mat-option value="teacher">{{this.translator.labels.teacher[this.translator.getLanguage()]}}</mat-option>
@@ -127,7 +128,7 @@
                 </mat-form-field>
                 <br>
                 <br>
-                <mat-form-field appearance="outline" style="width: min(256px, 100%)px;">
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
                     <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
                     <input matInput #schoolRef maxlength="40">
                 </mat-form-field>
@@ -135,7 +136,7 @@
                 <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
                 <br>
                 <br>
-                <mat-form-field appearance="outline" style="width: min(256px, 100%)px;">
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
                     <mat-label>Bio</mat-label>
                     <textarea matInput rows="5" maxlength="300" style="resize: none;"
                         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'

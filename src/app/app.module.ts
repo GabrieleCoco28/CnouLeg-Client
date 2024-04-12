@@ -21,6 +21,7 @@ import { SearchHeaderComponent } from './search-header/search-header.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginRegisterHeaderComponent } from './login-register-header/login-register-header.component';
 import { SuccessfulRegistrationComponent } from './successful-registration/successful-registration.component';
+import { LoginComponent } from './login/login.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
@@ -69,7 +70,8 @@ import { MY_FORMATS } from './cnou-leg-api.service';
     SearchHeaderComponent,
     RegisterComponent,
     LoginRegisterHeaderComponent,
-    SuccessfulRegistrationComponent
+    SuccessfulRegistrationComponent,
+    LoginComponent
   ],
   providers: [
     provideMarkdown(),
