@@ -3,8 +3,8 @@
     <button mat-icon-button class="theme-button" (click)="toggleTheme()">
         <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>
     </button>
-    <!-- <div mat-card-avatar class="toolbar-avatar"></div> -->
-    <div style="margin: 8px;">
+    <div mat-card-avatar class="toolbar-avatar" #avatar></div>
+    <div style="margin: 8px;" #buttons>
         <button mat-flat-button color="primary" style="margin-right: 8px;" routerLink="register">{{translator.labels.register[translator.getLanguage()]}}</button>
         <button mat-stroked-button color="primary" routerLink="login">{{translator.labels.login[translator.getLanguage()]}}</button>
     </div>

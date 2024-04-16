@@ -32,9 +32,14 @@ export class CommentCardComponent implements OnInit {
     public translator: TranslatorService,
     private ref: ChangeDetectorRef
   ) {}
+
   ngOnInit(): void {
     this.loadComment();
     this.loadSubComments();
+  }
+
+  ngAfterViewInit() {
+    this.auth();
   }
 
   loadComment() {
@@ -92,17 +97,23 @@ export class CommentCardComponent implements OnInit {
   }
   answer(e: Event) {
     e.preventDefault();
+    if(localStorage.getItem('user_id') === null) return;
     const input = this.el.nativeElement.querySelector(
       '.answer'
     ) as HTMLInputElement;
     if (input.value.trim().length > 0) {
       this.cnoulegAPIService
-        .addComment(input.value.trim(), this.data.user_id /*todo replace it with actual user id*/, null, this.data._id)
+        .addComment(
+          input.value.trim(),
+          localStorage.getItem('user_id') as string,
+          null,
+          this.data._id
+        )
         .subscribe((res) => {
           this.subcommentsInfo.push({
             _id: res.insertedId,
             text: input.value.trim(),
-            user_id: this.data.user_id, //todo replace it with actual user id
+            user_id: localStorage.getItem('user_id') as string,
             post_id: null,
             parent_id: this.data._id,
             likes: 0,
@@ -118,7 +129,39 @@ export class CommentCardComponent implements OnInit {
     }
   }
 
-  random(min: number, max: number) {
-    return Math.round(Math.random() * (max - min) + min);
+  auth() {
+    if (localStorage.getItem('access_token')) {
+      this.cnoulegAPIService.auth().subscribe({
+        next: (v) => {
+          this.cnoulegAPIService
+            .getUsersById([localStorage.getItem('user_id') as string])
+            .subscribe((v) => {
+              if (v.users[0].profile_pic_url === '') {
+                (
+                  this.el.nativeElement.querySelector(
+                    '.subcomment_avatar'
+                  ) as HTMLElement
+                ).style.backgroundImage = `url(../../assets/default.svg)`;
+              } else
+                (
+                  this.el.nativeElement.querySelector(
+                    '.subcomment_avatar'
+                  ) as HTMLElement
+                ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
+            });
+        },
+        error: (v) => {
+          (
+            this.el.nativeElement.querySelector(
+              '.subcomment_avatar'
+            ) as HTMLElement
+          ).style.backgroundImage = `url(../../assets/default.svg)`;
+        },
+      });
+    } else {
+      (
+        this.el.nativeElement.querySelector('.subcomment_avatar') as HTMLElement
+      ).style.backgroundImage = `url(../../assets/default.svg)`;
+    }
   }
 }

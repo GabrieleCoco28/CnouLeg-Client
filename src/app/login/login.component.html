@@ -7,9 +7,6 @@
                 <mat-label>Email</mat-label>
                 <input matInput required #emailRef>
             </mat-form-field>
-            <div style="display: none;" #emailSpinner>
-                <mat-spinner [diameter]="16"></mat-spinner>
-            </div>
             <br>
             <br>
             <mat-form-field appearance="outline" style="width: min(320px, 100%);">
@@ -24,7 +21,7 @@
             <br>
             <div style="text-align: center;">
                 <button mat-stroked-button style="margin-right: 8px;" routerLink="/register">Registrati</button>
-                <button mat-flat-button>Accedi</button>
+                <button mat-flat-button (click)="login($event)">Accedi</button>
             </div>
         </div>
     </form>

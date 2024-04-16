@@ -71,6 +71,11 @@ export interface RegistrationData {
   profile_pic_url: string
 }
 
+export interface JWT {
+  token: string,
+  user_id: string
+}
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'LL',
@@ -131,5 +136,15 @@ export class CnouLegAPIService {
   public validateEmail(email: string): Observable<any> {
     const url = this.apiUrl + "/api/validate_email?email=" + email;
     return this.http.get<Comments>(url);
+  }
+
+  public getJWT(email: string, password: string) {
+    const url = this.apiUrl + "/api/login";
+    return this.http.post<JWT>(url, {email, password});
+  }
+
+  public auth() {
+    const url = this.apiUrl + "/api/auth";
+    return this.http.get<any>(url);
   }
 }

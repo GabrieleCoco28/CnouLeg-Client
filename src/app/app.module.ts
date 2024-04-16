@@ -8,7 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { CopyButtonComponent } from './copy-button/copy-button.component';
@@ -28,7 +32,12 @@ import { MatDivider } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatOption } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatOption,
+} from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -55,6 +64,7 @@ import { NumberSuffixPipe } from './number-suffix-pipe';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS } from './cnou-leg-api.service';
+import { JwtInterceptorService } from './jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -71,15 +81,24 @@ import { MY_FORMATS } from './cnou-leg-api.service';
     RegisterComponent,
     LoginRegisterHeaderComponent,
     SuccessfulRegistrationComponent,
-    LoginComponent
+    LoginComponent,
   ],
   providers: [
     provideMarkdown(),
     provideAnimationsAsync(),
     provideAnimations(),
     provideNativeDateAdapter(),
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

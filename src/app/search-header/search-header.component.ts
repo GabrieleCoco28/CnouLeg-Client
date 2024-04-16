@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslatorService } from '../translator.service';
+import { CnouLegAPIService } from '../cnou-leg-api.service';
 
 @Component({
   selector: 'app-search-header',
@@ -8,7 +9,9 @@ import { TranslatorService } from '../translator.service';
 })
 export class SearchHeaderComponent {
   @ViewChild('themeIcon', {read: ElementRef}) themeIcon!: ElementRef<HTMLElement>;
-  constructor(public translator: TranslatorService){}
+  @ViewChild('avatar', {read: ElementRef}) avatar!: ElementRef<HTMLElement>;
+  @ViewChild('buttons', {read: ElementRef}) buttons!: ElementRef<HTMLElement>;
+  constructor(public translator: TranslatorService, private cnoulegAPIService: CnouLegAPIService){}
   toggleTheme() {
     if (document.body.className.includes('light-theme')) {
       document.body.className = 'mat-typography dark-theme';
@@ -23,5 +26,30 @@ export class SearchHeaderComponent {
 
   getTheme() {
     return document.body.className.includes('dark-theme') ? "dark_mode" : "light_mode";
+  }
+
+  ngAfterViewInit() {
+    this.auth();
+  }
+
+  auth() {
+    if(localStorage.getItem('access_token')) {
+      this.cnoulegAPIService.auth().subscribe({
+        next: (v) => {
+          this.avatar.nativeElement.style.display = 'block'
+          this.buttons.nativeElement.style.display = 'none';
+          this.cnoulegAPIService.getUsersById([localStorage.getItem('user_id') as string]).subscribe((v) =>{
+            if(v.users[0].profile_pic_url === "") 
+              this.avatar.nativeElement.style.backgroundImage = `url(../../assets/default.svg)`
+            else
+              this.avatar.nativeElement.style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`
+          })
+        },
+        error: (v) => {
+          this.avatar.nativeElement.style.display = 'none'
+          this.buttons.nativeElement.style.display = 'block';
+        }
+      })
+    }
   }
 }
