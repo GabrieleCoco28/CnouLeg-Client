@@ -41,14 +41,16 @@ export class NotesHeaderComponent {
         next: (v) => {
           this.avatar.nativeElement.style.display = 'block';
           this.buttons.nativeElement.style.display = 'none';
-          this.cnoulegAPIService
-            .getUsersById([localStorage.getItem('user_id') as string])
-            .subscribe((v) => {
-              if (v.users[0].profile_pic_url === '')
-                this.avatar.nativeElement.style.backgroundImage = `url(../../assets/default.svg)`;
-              else
-                this.avatar.nativeElement.style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
-            });
+          this.cnoulegAPIService.getUserByJwt().subscribe((user) => {
+            this.cnoulegAPIService
+              .getUsersById([user.user_id])
+              .subscribe((v) => {
+                if (v.users[0].profile_pic_url === '')
+                  this.avatar.nativeElement.style.backgroundImage = `url(../../assets/default.svg)`;
+                else
+                  this.avatar.nativeElement.style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
+              });
+          })
         },
         error: (v) => {
           this.avatar.nativeElement.style.display = 'none';

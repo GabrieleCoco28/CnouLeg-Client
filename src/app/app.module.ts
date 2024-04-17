@@ -26,6 +26,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginRegisterHeaderComponent } from './login-register-header/login-register-header.component';
 import { SuccessfulRegistrationComponent } from './successful-registration/successful-registration.component';
 import { LoginComponent } from './login/login.component';
+import { AccessDialogComponent } from './access-dialog/access-dialog.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
@@ -48,6 +49,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -82,6 +89,7 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
     LoginRegisterHeaderComponent,
     SuccessfulRegistrationComponent,
     LoginComponent,
+    AccessDialogComponent
   ],
   providers: [
     provideMarkdown(),
@@ -133,6 +141,10 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
     NumberSuffixPipe,
     ReactiveFormsModule,
     MatDatepickerModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
   ],
 })
 export class AppModule {}

@@ -17,6 +17,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslatorService } from '../translator.service';
 import { StaticVariables } from '../static-variables';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { AccessDialogComponent } from '../access-dialog/access-dialog.component';
 
 @Component({
   selector: 'app-note',
@@ -54,7 +56,8 @@ export class NoteComponent implements OnInit {
     private el: ElementRef,
     public translator: TranslatorService,
     private spinner: NgxSpinnerService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    public dialog: MatDialog
   ) {
     setTimeout(() => {
       this.route.params.subscribe((params) => {
@@ -151,31 +154,31 @@ export class NoteComponent implements OnInit {
 
   comment(e: Event) {
     e.preventDefault();
-    if(localStorage.getItem('user_id') === null) return;
+    if (localStorage.getItem('access_token') === null) {
+      this.dialog.open(AccessDialogComponent);
+      return;
+    }
     const input = this.el.nativeElement.querySelector(
       '.comment'
     ) as HTMLInputElement;
     if (input.value.trim().length > 0) {
       this.cnoulegAPIService
-        .addComment(
-          input.value.trim(),
-          localStorage.getItem('user_id') as string,
-          this.noteInfo._id,
-          null
-        )
+        .addComment(input.value.trim(), this.noteInfo._id, null)
         .subscribe((res) => {
-          this.comments.unshift({
-            _id: res.insertedId,
-            text: input.value.trim(),
-            user_id: localStorage.getItem('user_id') as string,
-            post_id: this.noteInfo._id,
-            parent_id: null,
-            likes: 0,
-            date: res.uploadDate,
-            has_children: false,
+          this.cnoulegAPIService.getUserByJwt().subscribe((v) => {
+            this.comments.unshift({
+              _id: res.insertedId,
+              text: input.value.trim(),
+              user_id: v.user_id,
+              post_id: this.noteInfo._id,
+              parent_id: null,
+              likes: 0,
+              date: res.uploadDate,
+              has_children: false,
+            });
+            input.value = '';
+            this.ref.detectChanges();
           });
-          input.value = '';
-          this.ref.detectChanges();
         });
     }
   }
@@ -199,22 +202,24 @@ export class NoteComponent implements OnInit {
     if (localStorage.getItem('access_token')) {
       this.cnoulegAPIService.auth().subscribe({
         next: (v) => {
-          this.cnoulegAPIService
-            .getUsersById([localStorage.getItem('user_id') as string])
-            .subscribe((v) => {
-              if (v.users[0].profile_pic_url === '') {
-                (
-                  this.el.nativeElement.querySelector(
-                    '.user-comment-avatar'
-                  ) as HTMLElement
-                ).style.backgroundImage = `url(../../assets/default.svg)`;
-              } else
-                (
-                  this.el.nativeElement.querySelector(
-                    '.user-comment-avatar'
-                  ) as HTMLElement
-                ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
-            });
+          this.cnoulegAPIService.getUserByJwt().subscribe((user) => {
+            this.cnoulegAPIService
+              .getUsersById([user.user_id])
+              .subscribe((v) => {
+                if (v.users[0].profile_pic_url === '') {
+                  (
+                    this.el.nativeElement.querySelector(
+                      '.user-comment-avatar'
+                    ) as HTMLElement
+                  ).style.backgroundImage = `url(../../assets/default.svg)`;
+                } else
+                  (
+                    this.el.nativeElement.querySelector(
+                      '.user-comment-avatar'
+                    ) as HTMLElement
+                  ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
+              });
+          });
         },
         error: (v) => {
           (

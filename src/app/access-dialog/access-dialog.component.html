@@ -1,0 +1,7 @@
+<div style="text-align: center; padding: 0 16px 0 16px;">
+    <p>Non puoi procedere senza aver prima effettuato l'accesso</p>
+    <div style="margin: 8px;" #buttons>
+        <button mat-flat-button color="primary" style="margin-right: 8px;" routerLink="/register" (click)="closeDialog()">{{translator.labels.register[translator.getLanguage()]}}</button>
+        <button mat-stroked-button color="primary" routerLink="/login" (click)="closeDialog()">{{translator.labels.login[translator.getLanguage()]}}</button>
+    </div>
+</div>

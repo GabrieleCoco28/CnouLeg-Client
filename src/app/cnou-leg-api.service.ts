@@ -72,8 +72,7 @@ export interface RegistrationData {
 }
 
 export interface JWT {
-  token: string,
-  user_id: string
+  token: string
 }
 
 export const MY_FORMATS = {
@@ -125,8 +124,8 @@ export class CnouLegAPIService {
     return this.http.get<Comments>(url);
   }
 
-  public addComment(text: string, user_id: string, post_id: string | null, parent_id: string | null): Observable<any> {
-    return this.http.post(this.apiUrl + "/api/comments", {text, user_id, post_id, parent_id});
+  public addComment(text: string, post_id: string | null, parent_id: string | null): Observable<any> {
+    return this.http.post(this.apiUrl + "/api/comments", {text, post_id, parent_id});
   }
 
   public sendRegistrationData(data: RegistrationData): Observable<any> {
@@ -141,6 +140,11 @@ export class CnouLegAPIService {
   public getJWT(email: string, password: string) {
     const url = this.apiUrl + "/api/login";
     return this.http.post<JWT>(url, {email, password});
+  }
+
+  public getUserByJwt() {
+    const url = this.apiUrl + "/api/user";
+    return this.http.get<any>(url);
   }
 
   public auth() {

@@ -25,7 +25,6 @@ export class LoginComponent {
       .subscribe({
         next: (v) => {
           localStorage.setItem('access_token', v.token);
-          localStorage.setItem('user_id', v.user_id);
         },
         error: (err) => {
           console.log(err)

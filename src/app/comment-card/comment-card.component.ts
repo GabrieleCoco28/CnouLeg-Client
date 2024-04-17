@@ -13,6 +13,8 @@ import {
   Users,
 } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AccessDialogComponent } from '../access-dialog/access-dialog.component';
 
 @Component({
   selector: 'app-comment-card',
@@ -30,7 +32,8 @@ export class CommentCardComponent implements OnInit {
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
     public translator: TranslatorService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -93,11 +96,18 @@ export class CommentCardComponent implements OnInit {
   }
   toggleAnswerPanel(e: Event) {
     e.preventDefault();
+    if (localStorage.getItem('access_token') === null) {
+      this.dialog.open(AccessDialogComponent);
+      return;
+    }
     this.panelOpenStateAnswer = !this.panelOpenStateAnswer;
   }
   answer(e: Event) {
     e.preventDefault();
-    if(localStorage.getItem('user_id') === null) return;
+    if (localStorage.getItem('access_token') === null) {
+      this.dialog.open(AccessDialogComponent);
+      return;
+    }
     const input = this.el.nativeElement.querySelector(
       '.answer'
     ) as HTMLInputElement;
@@ -105,26 +115,27 @@ export class CommentCardComponent implements OnInit {
       this.cnoulegAPIService
         .addComment(
           input.value.trim(),
-          localStorage.getItem('user_id') as string,
           null,
           this.data._id
         )
         .subscribe((res) => {
-          this.subcommentsInfo.push({
-            _id: res.insertedId,
-            text: input.value.trim(),
-            user_id: localStorage.getItem('user_id') as string,
-            post_id: null,
-            parent_id: this.data._id,
-            likes: 0,
-            date: res.uploadDate,
-            has_children: false,
-          });
-          input.value = '';
-          this.panelOpenStateAnswer = !this.panelOpenStateAnswer;
-          this.panelOpenState = true;
-          this.loadSubComments();
-          this.ref.detectChanges();
+          this.cnoulegAPIService.getUserByJwt().subscribe((v) => {
+            this.subcommentsInfo.push({
+              _id: res.insertedId,
+              text: input.value.trim(),
+              user_id: v.user_id,
+              post_id: null,
+              parent_id: this.data._id,
+              likes: 0,
+              date: res.uploadDate,
+              has_children: false,
+            });
+            input.value = '';
+            this.panelOpenStateAnswer = !this.panelOpenStateAnswer;
+            this.panelOpenState = true;
+            this.loadSubComments();
+            this.ref.detectChanges();
+          })
         });
     }
   }
@@ -133,22 +144,24 @@ export class CommentCardComponent implements OnInit {
     if (localStorage.getItem('access_token')) {
       this.cnoulegAPIService.auth().subscribe({
         next: (v) => {
-          this.cnoulegAPIService
-            .getUsersById([localStorage.getItem('user_id') as string])
-            .subscribe((v) => {
-              if (v.users[0].profile_pic_url === '') {
-                (
-                  this.el.nativeElement.querySelector(
-                    '.subcomment_avatar'
-                  ) as HTMLElement
-                ).style.backgroundImage = `url(../../assets/default.svg)`;
-              } else
-                (
-                  this.el.nativeElement.querySelector(
-                    '.subcomment_avatar'
-                  ) as HTMLElement
-                ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
-            });
+          this.cnoulegAPIService.getUserByJwt().subscribe((user) => {
+            this.cnoulegAPIService
+              .getUsersById([user.user_id])
+              .subscribe((v) => {
+                if (v.users[0].profile_pic_url === '') {
+                  (
+                    this.el.nativeElement.querySelector(
+                      '.subcomment_avatar'
+                    ) as HTMLElement
+                  ).style.backgroundImage = `url(../../assets/default.svg)`;
+                } else
+                  (
+                    this.el.nativeElement.querySelector(
+                      '.subcomment_avatar'
+                    ) as HTMLElement
+                  ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
+              });
+          })
         },
         error: (v) => {
           (
