@@ -169,7 +169,7 @@ export class NoteComponent implements OnInit {
             this.comments.unshift({
               _id: res.insertedId,
               text: input.value.trim(),
-              user_id: v.user_id,
+              user_id: v.users[0]._id,
               post_id: this.noteInfo._id,
               parent_id: null,
               likes: 0,
@@ -202,23 +202,19 @@ export class NoteComponent implements OnInit {
     if (localStorage.getItem('access_token')) {
       this.cnoulegAPIService.auth().subscribe({
         next: (v) => {
-          this.cnoulegAPIService.getUserByJwt().subscribe((user) => {
-            this.cnoulegAPIService
-              .getUsersById([user.user_id])
-              .subscribe((v) => {
-                if (v.users[0].profile_pic_url === '') {
-                  (
-                    this.el.nativeElement.querySelector(
-                      '.user-comment-avatar'
-                    ) as HTMLElement
-                  ).style.backgroundImage = `url(../../assets/default.svg)`;
-                } else
-                  (
-                    this.el.nativeElement.querySelector(
-                      '.user-comment-avatar'
-                    ) as HTMLElement
-                  ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
-              });
+          this.cnoulegAPIService.getUserByJwt().subscribe((v) => {
+            if (v.users[0].profile_pic_url === '') {
+              (
+                this.el.nativeElement.querySelector(
+                  '.user-comment-avatar'
+                ) as HTMLElement
+              ).style.backgroundImage = `url(../../assets/default.svg)`;
+            } else
+              (
+                this.el.nativeElement.querySelector(
+                  '.user-comment-avatar'
+                ) as HTMLElement
+              ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
           });
         },
         error: (v) => {

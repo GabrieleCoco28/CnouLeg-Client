@@ -8,11 +8,15 @@ import { TranslatorService } from '../translator.service';
   styleUrl: './notes-header.component.scss',
 })
 export class NotesHeaderComponent {
-  @ViewChild('themeIcon', { read: ElementRef }) themeIcon!: ElementRef<HTMLElement>;
+  @ViewChild('themeIcon', { read: ElementRef })
+  themeIcon!: ElementRef<HTMLElement>;
   @ViewChild('avatar', { read: ElementRef }) avatar!: ElementRef<HTMLElement>;
-  @ViewChild('buttons', {read: ElementRef}) buttons!: ElementRef<HTMLElement>;
+  @ViewChild('buttons', { read: ElementRef }) buttons!: ElementRef<HTMLElement>;
 
-  constructor(private cnoulegAPIService: CnouLegAPIService, public translator: TranslatorService) {}
+  constructor(
+    private cnoulegAPIService: CnouLegAPIService,
+    public translator: TranslatorService
+  ) {}
 
   toggleTheme() {
     if (document.body.className.includes('light-theme')) {
@@ -41,16 +45,12 @@ export class NotesHeaderComponent {
         next: (v) => {
           this.avatar.nativeElement.style.display = 'block';
           this.buttons.nativeElement.style.display = 'none';
-          this.cnoulegAPIService.getUserByJwt().subscribe((user) => {
-            this.cnoulegAPIService
-              .getUsersById([user.user_id])
-              .subscribe((v) => {
-                if (v.users[0].profile_pic_url === '')
-                  this.avatar.nativeElement.style.backgroundImage = `url(../../assets/default.svg)`;
-                else
-                  this.avatar.nativeElement.style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
-              });
-          })
+          this.cnoulegAPIService.getUserByJwt().subscribe((v) => {
+            if (v.users[0].profile_pic_url === '')
+              this.avatar.nativeElement.style.backgroundImage = `url(../../assets/default.svg)`;
+            else
+              this.avatar.nativeElement.style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
+          });
         },
         error: (v) => {
           this.avatar.nativeElement.style.display = 'none';

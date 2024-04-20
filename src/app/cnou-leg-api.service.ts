@@ -143,8 +143,8 @@ export class CnouLegAPIService {
   }
 
   public getUserByJwt() {
-    const url = this.apiUrl + "/api/user";
-    return this.http.get<any>(url);
+    const claims = atob(localStorage.getItem('access_token')!.split('.')[1])
+    return this.getUsersById([JSON.parse(claims).id]);
   }
 
   public auth() {

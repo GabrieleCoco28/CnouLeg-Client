@@ -95,7 +95,7 @@
                     <mat-label>Password</mat-label>
                     <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'"
                         (blur)="updatePasswordErrorMessage()" required #passwordRef>
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    <button mat-icon-button matSuffix (click)="hide = !hide; $event.preventDefault()" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
                         <mat-icon class="material-symbols-rounded">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>

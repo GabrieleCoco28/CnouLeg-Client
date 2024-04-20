@@ -55,10 +55,12 @@ export class CommentCardComponent implements OnInit {
             this.el.nativeElement
           )).querySelectorAll('._' + v._id);
           elements.forEach((e) => {
-            e.setAttribute(
-              'style',
-              `background-image: url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
-            );
+            if(v.profile_pic_url !== "") {
+              e.setAttribute(
+                'style',
+                `background-image: url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
+              );
+            }
           });
         });
       });
@@ -81,10 +83,12 @@ export class CommentCardComponent implements OnInit {
                 this.el.nativeElement
               )).querySelectorAll('._' + v._id);
               elements.forEach((e) => {
-                e.setAttribute(
-                  'style',
-                  `background-image: url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
-                );
+                if(v.profile_pic_url !== "") {
+                  e.setAttribute(
+                    'style',
+                    `background-image: url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
+                  );
+                }
               });
             });
           });
@@ -113,17 +117,13 @@ export class CommentCardComponent implements OnInit {
     ) as HTMLInputElement;
     if (input.value.trim().length > 0) {
       this.cnoulegAPIService
-        .addComment(
-          input.value.trim(),
-          null,
-          this.data._id
-        )
+        .addComment(input.value.trim(), null, this.data._id)
         .subscribe((res) => {
           this.cnoulegAPIService.getUserByJwt().subscribe((v) => {
             this.subcommentsInfo.push({
               _id: res.insertedId,
               text: input.value.trim(),
-              user_id: v.user_id,
+              user_id: v.users[0]._id,
               post_id: null,
               parent_id: this.data._id,
               likes: 0,
@@ -135,7 +135,7 @@ export class CommentCardComponent implements OnInit {
             this.panelOpenState = true;
             this.loadSubComments();
             this.ref.detectChanges();
-          })
+          });
         });
     }
   }
@@ -144,24 +144,20 @@ export class CommentCardComponent implements OnInit {
     if (localStorage.getItem('access_token')) {
       this.cnoulegAPIService.auth().subscribe({
         next: (v) => {
-          this.cnoulegAPIService.getUserByJwt().subscribe((user) => {
-            this.cnoulegAPIService
-              .getUsersById([user.user_id])
-              .subscribe((v) => {
-                if (v.users[0].profile_pic_url === '') {
-                  (
-                    this.el.nativeElement.querySelector(
-                      '.subcomment_avatar'
-                    ) as HTMLElement
-                  ).style.backgroundImage = `url(../../assets/default.svg)`;
-                } else
-                  (
-                    this.el.nativeElement.querySelector(
-                      '.subcomment_avatar'
-                    ) as HTMLElement
-                  ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
-              });
-          })
+          this.cnoulegAPIService.getUserByJwt().subscribe((v) => {
+            if (v.users[0].profile_pic_url === '') {
+              (
+                this.el.nativeElement.querySelector(
+                  '.subcomment_avatar'
+                ) as HTMLElement
+              ).style.backgroundImage = `url(../../assets/default.svg)`;
+            } else
+              (
+                this.el.nativeElement.querySelector(
+                  '.subcomment_avatar'
+                ) as HTMLElement
+              ).style.backgroundImage = `url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.users[0].profile_pic_url})`;
+          });
         },
         error: (v) => {
           (
