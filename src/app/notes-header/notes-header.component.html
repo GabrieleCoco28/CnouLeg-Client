@@ -12,7 +12,21 @@
     <button mat-icon-button class="theme-button" (click)="toggleTheme()">
         <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>
     </button>
-    <div mat-card-avatar class="toolbar-avatar" #avatar></div>
+    <div mat-card-avatar class="toolbar-avatar" [matMenuTriggerFor]="menu" style="cursor: pointer;" #avatar></div>
+    <mat-menu #menu>
+        <button mat-menu-item>
+            <mat-icon class="material-symbols-rounded">person</mat-icon>
+            <span>Mio profilo</span>
+        </button>
+        <button mat-menu-item (click)="cnoulegAPIService.logout(router)">
+            <mat-icon class="material-symbols-rounded">logout</mat-icon>
+            <span>Esci</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon class="material-symbols-rounded">settings</mat-icon>
+            <span>Impostazioni</span>
+        </button>
+    </mat-menu>
     <div style="margin: 8px;" #buttons>
         <button mat-flat-button color="primary" style="margin-right: 8px;" routerLink="/register">{{translator.labels.register[translator.getLanguage()]}}</button>
         <button mat-stroked-button color="primary" routerLink="/login">{{translator.labels.login[translator.getLanguage()]}}</button>

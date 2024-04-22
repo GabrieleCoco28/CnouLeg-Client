@@ -1,6 +1,12 @@
 div#form {
     position: absolute;
+    width: min(420px, 100%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.error {
+    scale: 1.5;
+    transform: translateY(1px);
 }

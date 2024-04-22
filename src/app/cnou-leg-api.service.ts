@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 export interface Note {
@@ -47,11 +48,12 @@ export interface Content {
 export interface User {
   _id: string,
   username: string,
-  birth: string,
+  birthdate: string,
   gender: string,
   role: string,
   school: string,
   bio: string,
+  subject: string,
   profile_pic_url: string
 }
 
@@ -61,13 +63,14 @@ export interface Users {
 
 export interface RegistrationData {
   username: string,
-  birth: string,
+  birthdate: string,
   gender: string,
   email: string,
   password: string,
   role: string,
   school: string,
   bio: string,
+  subject: string,
   profile_pic_url: string
 }
 
@@ -129,7 +132,7 @@ export class CnouLegAPIService {
   }
 
   public sendRegistrationData(data: RegistrationData): Observable<any> {
-    return this.http.post(this.apiUrl + "/api/register", data);
+    return this.http.post(this.apiUrl + "/api/user", data);
   }
 
   public validateEmail(email: string): Observable<any> {
@@ -150,5 +153,10 @@ export class CnouLegAPIService {
   public auth() {
     const url = this.apiUrl + "/api/auth";
     return this.http.get<any>(url);
+  }
+
+  public logout(router: Router) {
+    localStorage.removeItem('access_token');
+    router.navigateByUrl('/login');
   }
 }

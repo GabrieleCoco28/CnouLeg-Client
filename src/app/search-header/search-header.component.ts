@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslatorService } from '../translator.service';
 import { CnouLegAPIService } from '../cnou-leg-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-header',
@@ -11,7 +12,7 @@ export class SearchHeaderComponent {
   @ViewChild('themeIcon', {read: ElementRef}) themeIcon!: ElementRef<HTMLElement>;
   @ViewChild('avatar', {read: ElementRef}) avatar!: ElementRef<HTMLElement>;
   @ViewChild('buttons', {read: ElementRef}) buttons!: ElementRef<HTMLElement>;
-  constructor(public translator: TranslatorService, private cnoulegAPIService: CnouLegAPIService){}
+  constructor(public translator: TranslatorService, public cnoulegAPIService: CnouLegAPIService, public router: Router){}
   toggleTheme() {
     if (document.body.className.includes('light-theme')) {
       document.body.className = 'mat-typography dark-theme';

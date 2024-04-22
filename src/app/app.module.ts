@@ -49,6 +49,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMenuModule } from '@angular/material/menu';
 import {
   MatDialogActions,
   MatDialogClose,
@@ -145,6 +146,7 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
     MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
+    MatMenuModule
   ],
 })
 export class AppModule {}

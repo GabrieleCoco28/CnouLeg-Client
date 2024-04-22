@@ -24,6 +24,7 @@ export class RegisterComponent {
   @ViewChild('passwordRef') passwordRef!: ElementRef<HTMLInputElement>;
   public roleValue = '';
   @ViewChild('schoolRef') schoolRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('subjectRef') subjectRef!: ElementRef<HTMLInputElement>;
   @ViewChild('bioRef') bioRef!: ElementRef<HTMLInputElement>;
   
   @ViewChild('emailSpinner') emailSpinner!: ElementRef<HTMLElement>;
@@ -89,7 +90,7 @@ export class RegisterComponent {
 
     merge(this.password.statusChanges, this.password.valueChanges)
       .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateEmailErrorMessage());
+      .subscribe(() => this.updatePasswordErrorMessage());
 
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -157,13 +158,14 @@ export class RegisterComponent {
   sendRegistrationData() {
     const data: RegistrationData = {
       username: this.usernameRef.nativeElement.value,
-      birth: this.birthRef.nativeElement.value,
+      birthdate: this.birthRef.nativeElement.value,
       gender: this.genderValue,
       email: this.emailRef.nativeElement.value,
       password: this.passwordRef.nativeElement.value,
       role: this.roleValue,
       school: this.schoolRef.nativeElement.value,
       bio: this.bioRef.nativeElement.value,
+      subject: this.subjectRef.nativeElement.value,
       profile_pic_url: '',
     };
     this.cnoulegAPIService.sendRegistrationData(data).subscribe(() => {

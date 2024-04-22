@@ -260,6 +260,26 @@ export class TranslatorService {
     accountSuccessfullyRegistered: {
       it: 'Account registrato con successo!',
       en: 'Account successfully registered!'
+    },
+    subject: {
+      it: 'Materia',
+      en: 'Subject'
+    },
+    emailDoesntExist: {
+      it: 'Questa email non esiste',
+      en: 'This email does not exist'
+    },
+    wrongPassword: {
+      it: 'Password errata',
+      en: 'Wrong password'
+    },
+    alreadyRegistered: {
+      it: 'Hai già un\'account? Accedi',
+      en: 'Do you already have an account? Sign in'
+    },
+    notAlreadyRegistered: {
+      it: 'Non hai un account? Registrati',
+      en: 'Do not have an account? Sign in'
     }
   };
   constructor() {}

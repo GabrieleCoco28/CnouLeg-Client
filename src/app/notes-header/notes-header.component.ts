@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CnouLegAPIService } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notes-header',
@@ -14,8 +15,9 @@ export class NotesHeaderComponent {
   @ViewChild('buttons', { read: ElementRef }) buttons!: ElementRef<HTMLElement>;
 
   constructor(
-    private cnoulegAPIService: CnouLegAPIService,
-    public translator: TranslatorService
+    public cnoulegAPIService: CnouLegAPIService,
+    public translator: TranslatorService,
+    public router: Router
   ) {}
 
   toggleTheme() {

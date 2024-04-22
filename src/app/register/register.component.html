@@ -26,6 +26,9 @@
                 <label>{{usernameRef.value.length}}/{{usernameRef.maxLength}}</label>
                 <br>
                 <br>
+                <a routerLink="/login">{{this.translator.labels.alreadyRegistered[this.translator.getLanguage()]}}</a>
+                <br>
+                <br>
                 <div>
                     <button mat-flat-button matStepperNext (click)="updateUsernameErrorMessage()">
                         {{this.translator.labels.next[this.translator.getLanguage()]}}
@@ -134,6 +137,14 @@
                 </mat-form-field>
                 <br>
                 <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
+                    <mat-label>{{this.translator.labels.subject[this.translator.getLanguage()]}}</mat-label>
+                    <input matInput #subjectRef maxlength="40">
+                </mat-form-field>
+                <br>
+                <label>{{subjectRef.value.length}}/{{subjectRef.maxLength}}</label>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: min(256px, 100%);">

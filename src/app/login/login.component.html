@@ -1,28 +1,45 @@
 <div style="padding: 0 1em 0 1em;">
-    <app-login-register-header></app-login-register-header>
-    <h1 style="text-align: center; font-size: 3em;">{{translator.labels.login[translator.getLanguage()]}}</h1>
+<app-login-register-header></app-login-register-header>
+<form [formGroup]="emailAndPasswordFormGroup">
     <div style="text-align: center;" id="form">
+        <h1 style="font-size: 3em;">{{translator.labels.login[translator.getLanguage()]}}</h1>
         <div style="border-radius: 5px; padding: 3em;">
-            <mat-form-field appearance="outline" style="width: min(320px, 100%);">
+            <mat-form-field appearance="outline" style="width: min(420px, 100%);">
                 <mat-label>Email</mat-label>
-                <input matInput required #emailRef>
+                <input matInput required #emailRef [formControl]="email">
+                @if (email.invalid) {
+                <mat-error>
+                    <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                    {{emailErrorMessage}}
+                </mat-error>
+                }
             </mat-form-field>
             <br>
             <br>
-            <mat-form-field appearance="outline" style="width: min(320px, 100%);">
+            <mat-form-field appearance="outline" style="width: min(420px, 100%);">
                 <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" required #passwordRef>
+                <input matInput [type]="hide ? 'password' : 'text'" required #passwordRef  [formControl]="password">
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
+                    [attr.aria-pressed]="hide" (click)="$event.preventDefault()">
                     <mat-icon class="material-symbols-rounded">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
+                @if (password.invalid) {
+                <mat-error>
+                    <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                    {{passwordErrorMessage}}
+                </mat-error>
+                }
             </mat-form-field>
             <br>
+            <div style="text-align: left;">
+                <a routerLink="/register">{{this.translator.labels.notAlreadyRegistered[this.translator.getLanguage()]}}</a>
+            </div>
             <br>
-            <div style="text-align: center;">
-                <button mat-stroked-button style="margin-right: 8px;" routerLink="/register">Registrati</button>
-                <button mat-flat-button (click)="login($event)">Accedi</button>
+            <br>
+            <div style="text-align: right;">
+                <button mat-flat-button (click)="login($event); updateEmailErrorMessage(); updatePasswordErrorMessage()">Accedi</button>
             </div>
         </div>
     </div>
+</form>
 </div>
