@@ -49,6 +49,7 @@
     "ng-image-slider": "^7.0.1",
     "ng-mat-carousel": "^0.11.1",
     "ng2-fittext": "^1.4.3",
+    "ngx-image-cropper": "^7.2.1",
     "ngx-markdown": "^17.1.1",
     "ngx-router-animations": "^13.0.0",
     "ngx-spinner": "^16.0.2",

@@ -98,7 +98,7 @@ export class RegisterComponent {
   }
 
   updateUsernameErrorMessage() {
-    if (this.password.hasError('required')) {
+    if (this.username.hasError('required')) {
       this.usernameErrorMessage =
         this.translator.labels.usernameRequired[this.translator.getLanguage()];
     } else {

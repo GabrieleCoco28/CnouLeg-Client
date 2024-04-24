@@ -159,4 +159,11 @@ export class CnouLegAPIService {
     localStorage.removeItem('access_token');
     router.navigateByUrl('/login');
   }
+
+  public getUserIdFromJWT() {
+    if(localStorage.getItem('access_token')) {
+      const claims = atob(localStorage.getItem('access_token')?.split('.')[1] as string);
+      return JSON.parse(claims).id;
+    }
+  }
 }

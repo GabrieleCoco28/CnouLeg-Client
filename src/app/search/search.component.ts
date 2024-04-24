@@ -36,10 +36,12 @@ export class SearchComponent {
               this.el.nativeElement
             )).querySelectorAll('._' + v._id);
             elements.forEach((e) => {
-              e.setAttribute(
-                'style',
-                `background-image: url(${cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
-              );
+              if(v.profile_pic_url.trim().length > 0) {
+                e.setAttribute(
+                  'style',
+                  `background-image: url(${cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
+                );
+              }
             });
           });
           el.nativeElement.querySelector('.search-root').style.display =

@@ -1,0 +1,183 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
+<div style="padding: 0 1em 0 1em;" [hidden]="showCropper">
+    <app-login-register-header></app-login-register-header>
+    <div id="header">
+        <div style="display: inline-block;">
+            <img [src]="(croppedImage && croppedSaved) ? croppedImage : currentAvatarUrl" alt="profile" id="avatar"
+            #avatar>
+            <button mat-mini-fab style="position: relative; top: 52px; left: -52px;" *ngIf="isEditMode" [matMenuTriggerFor]="avatarMenu">
+                <mat-icon class="material-symbols-rounded">photo_camera</mat-icon>
+            </button>
+            <mat-menu #avatarMenu>
+                <button mat-menu-item (click)="avatarInput.click()">
+                    <mat-icon class="material-symbols-rounded">upload_file</mat-icon>
+                    <span>Carica immagine</span>
+                </button>
+                <button mat-menu-item (click)="currentAvatarUrl = defaultAvatarUrl">
+                    <mat-icon class="material-symbols-rounded">delete</mat-icon>
+                    <span>Cancella immagine</span>
+                </button>
+            </mat-menu>
+            <input type="file" style="display: none;" accept="image/*" (click)="avatarInput.value = ''"
+                (change)="fileChangeEvent($event)" #avatarInput>
+        </div>
+        <h2 style="vertical-align: middle; display: inline-block; margin-right: 8px;" *ngIf="!isEditMode">
+            {{userInfo?.username}}</h2>
+
+        <div [style]="'display: ' + (isEditMode ? 'inline-block' : 'none') " *ngIf="isEditMode">
+            <mat-form-field appearance="outline" style="width: min(256px, 100%); margin-right: 8px;">
+                <mat-label>Username</mat-label>
+                <input matInput maxlength="30" [value]="userInfo?.username" required #usernameRef>
+            </mat-form-field>
+        </div>
+
+        <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && !isEditMode"
+            (click)="toggleEdit()">
+            <mat-icon class="material-symbols-rounded">edit</mat-icon>
+        </button>
+        <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
+            (click)="revertChanges()">
+            <mat-icon class="material-symbols-rounded">close</mat-icon>
+        </button>
+        <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
+            (click)="applyChanges()">
+            <mat-icon class="material-symbols-rounded">done</mat-icon>
+        </button>
+    </div>
+    <br>
+    <br>
+    <mat-card>
+        <div *ngIf="userInfo?.bio?.trim()!.length > 0 && !isEditMode">
+            <mat-card-header>
+                <mat-card-title>Bio</mat-card-title>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+                {{userInfo?.bio}}
+            </mat-card-content>
+            <br>
+        </div>
+        <div *ngIf="isEditMode">
+            <mat-card-header>
+                <mat-card-title>Bio</mat-card-title>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Bio</mat-label>
+                    <textarea matInput rows="5" maxlength="300" style="resize: none;" [value]="userInfo?.bio"
+                        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+                        #bioRef></textarea>
+                </mat-form-field>
+                <br>
+                <label>{{bioRef.value.length}}/{{bioRef.maxLength}}</label>
+            </mat-card-content>
+        </div>
+        <mat-card-header>
+            <mat-card-title>Informazioni personali</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <div *ngIf="!isEditMode">
+                <mat-icon class="material-symbols-rounded icon">cake</mat-icon>
+                Data di nascita: {{userInfo?.birthdate | date:"dd/MM/YYYY"}}
+            </div>
+            <div [hidden]="!isEditMode">
+                <mat-icon class="material-symbols-rounded icon">cake</mat-icon>
+                Data di nascita:
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
+                    <mat-label
+                        [for]="datepicker">{{this.translator.labels.birthDate[this.translator.getLanguage()]}}</mat-label>
+                    <input matInput [matDatepicker]="datepicker" readonly required #birthRef (click)="datepicker.open()"
+                        [value]="userInfo?.birthdate">
+                    <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datepicker (closed)="datepicker.restoreFocus"></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div *ngIf="!isEditMode">
+                @if(userInfo?.role?.trim()!.length > 0 && userInfo?.role !== 'other') {
+                @if(userInfo?.role === 'teacher') {
+                @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
+                <br>
+                <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                Insegna {{userInfo?.subject}} presso {{userInfo?.school}}
+                }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) { <br>
+                    <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                    Insegna {{userInfo?.subject}}
+                    }
+                    }
+                    @if (userInfo?.role === 'student') {
+                    @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
+                    <br>
+                    <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                    Studia {{userInfo?.subject}} presso {{userInfo?.school}}
+                    }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) { <br>
+                        <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                        Studia {{userInfo?.subject}}
+                        }
+                        }
+                        }
+            </div>
+            <div *ngIf="isEditMode">
+                <br>
+                <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                Informazioni personali
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
+                    <mat-label>{{this.translator.labels.role[this.translator.getLanguage()]}}</mat-label>
+                    <mat-select #roleRef (valueChange)="setRole($event)" [value]="userInfo?.role">
+                        <mat-option
+                            value="teacher">{{this.translator.labels.teacher[this.translator.getLanguage()]}}</mat-option>
+                        <mat-option
+                            value="student">{{this.translator.labels.student[this.translator.getLanguage()]}}</mat-option>
+                        <mat-option
+                            value="other">{{this.translator.labels.other[this.translator.getLanguage()]}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
+                    <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
+                    <input matInput #schoolRef maxlength="40" [value]="userInfo?.school">
+                </mat-form-field>
+                <br>
+                <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
+                    <mat-label>{{this.translator.labels.subject[this.translator.getLanguage()]}}</mat-label>
+                    <input matInput #subjectRef maxlength="40" [value]="userInfo?.subject">
+                </mat-form-field>
+                <br>
+                <label>{{subjectRef.value.length}}/{{subjectRef.maxLength}}</label>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <br>
+</div>
+
+<div [hidden]="!showCropper">
+    <mat-toolbar color="primary">
+        <button mat-icon-button class="back-button" (click)="showCropper = !showCropper" style="z-index: 10;">
+            <mat-icon class="material-symbols-rounded">arrow_back</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <button mat-icon-button style="vertical-align: middle;" (click)="rotateLeft()" style="z-index: 10;">
+            <mat-icon class="material-symbols-rounded">rotate_left</mat-icon>
+        </button>
+        <button mat-icon-button style="vertical-align: middle;" (click)="rotateRight()" style="z-index: 10;">
+            <mat-icon class="material-symbols-rounded">rotate_right</mat-icon>
+        </button>
+        <button mat-button style="z-index: 10;" (click)="uploadImage()">Carica</button>
+    </mat-toolbar>
+    <image-cropper [imageChangedEvent]="imageChangedEvent" [imageURL]="imageURL" [maintainAspectRatio]="true"
+        [containWithinAspectRatio]="true" [aspectRatio]="aspectRatio" [cropperMinWidth]="128" [resizeToWidth]="256"
+        [resizeToHeight]="256" [onlyScaleDown]="false" [roundCropper]="true" [canvasRotation]="canvasRotation"
+        [(transform)]="transform" [alignImage]="'center'" imageAltText="Alternative image text" output="blob"
+        format="jpeg" backgroundColor="#1a1b1f" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+        (cropperReady)="cropperReady($event)" (loadImageFailed)="loadImageFailed()"
+        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 0 !important; z-index: 1;">
+    </image-cropper>
+    <!-- <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" /> -->
+</div>

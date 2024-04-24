@@ -84,12 +84,14 @@ export class NoteComponent implements OnInit {
               .getUsersById([this.noteInfo.author_id])
               .subscribe((response: Users) => {
                 this.noteInfo.author_name = response.users[0].username;
-                (<HTMLElement>el.nativeElement)
-                  .querySelector('.user-subtitle-avatar')
-                  ?.setAttribute(
-                    'style',
-                    `background-image: url(${cnoulegAPIService.apiUrl}/profile_pics/${response.users[0].profile_pic_url})`
-                  );
+                if(response.users[0].profile_pic_url.trim().length > 0) {
+                  (<HTMLElement>el.nativeElement)
+                    .querySelector('.user-subtitle-avatar')
+                    ?.setAttribute(
+                      'style',
+                      `background-image: url(${cnoulegAPIService.apiUrl}/profile_pics/${response.users[0].profile_pic_url})`
+                    );
+                }
               });
             el.nativeElement.addEventListener('keydown', (e: KeyboardEvent) => {
               if (e.key === 'Escape') {

@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideMarkdown } from 'ngx-markdown';
 import { MarkdownModule } from 'ngx-markdown';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -73,6 +74,8 @@ import { NumberSuffixPipe } from './number-suffix-pipe';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS } from './cnou-leg-api.service';
 import { JwtInterceptorService } from './jwt-interceptor.service';
+import { UserComponent } from './user/user.component';
+import { UserNotFoundComponent } from './user-not-found/user-not-found.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +93,9 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
     LoginRegisterHeaderComponent,
     SuccessfulRegistrationComponent,
     LoginComponent,
-    AccessDialogComponent
+    AccessDialogComponent,
+    UserComponent,
+    UserNotFoundComponent
   ],
   providers: [
     provideMarkdown(),
@@ -146,7 +151,8 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
     MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
-    MatMenuModule
+    MatMenuModule,
+    ImageCropperModule
   ],
 })
 export class AppModule {}

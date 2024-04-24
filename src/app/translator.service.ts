@@ -221,9 +221,9 @@ export class TranslatorService {
       it: 'Email già esistente',
       en: 'Email already exists'
     },
-    roleSchoolBio: {
-      it: 'Ruolo, scuola e bio',
-      en: 'Role school and bio'
+    roleSchoolSubjectBio: {
+      it: 'Ruolo, scuola, materia e bio',
+      en: 'Role, school, subject and bio'
     },
     role: {
       it: 'Ruolo',
