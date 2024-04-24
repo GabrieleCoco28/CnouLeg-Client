@@ -144,19 +144,19 @@
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: min(256px, 100%);">
-                    <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
-                    <input matInput #schoolRef maxlength="40" [value]="userInfo?.school">
-                </mat-form-field>
-                <br>
-                <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
-                <br>
-                <br>
-                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
                     <mat-label>{{this.translator.labels.subject[this.translator.getLanguage()]}}</mat-label>
                     <input matInput #subjectRef maxlength="40" [value]="userInfo?.subject">
                 </mat-form-field>
                 <br>
                 <label>{{subjectRef.value.length}}/{{subjectRef.maxLength}}</label>
+                <br>
+                <br>
+                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
+                    <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
+                    <input matInput #schoolRef maxlength="40" [value]="userInfo?.school">
+                </mat-form-field>
+                <br>
+                <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
             </div>
         </mat-card-content>
     </mat-card>

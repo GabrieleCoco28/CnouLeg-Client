@@ -166,4 +166,17 @@ export class CnouLegAPIService {
       return JSON.parse(claims).id;
     }
   }
+
+  public uploadAvatar(imageData: Blob) {
+    
+    const url = this.apiUrl + "/api/user";
+    let formData = new FormData();
+    formData.append('avatar', imageData);
+    return this.http.put(url, formData);
+  }
+
+  public updateUser(username: string, bio: string, birthdate: string, role: string, school: string, subject: string, pic_eliminated: boolean) {
+    const url = this.apiUrl + "/api/user";
+    return this.http.put(url, {username, bio, birthdate, role, school, subject, pic_eliminated});
+  }
 }

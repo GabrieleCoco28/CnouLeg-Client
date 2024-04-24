@@ -32,6 +32,7 @@ export class UserComponent {
   // Cropper params
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  croppedImageBlob: Blob = new Blob();
   canvasRotation = 0;
   rotation?: number;
   aspectRatio = 1 / 1;
@@ -112,6 +113,7 @@ export class UserComponent {
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl || event.base64 || '');
+    this.croppedImageBlob = event.blob as Blob;
   }
 
   imageLoaded() {
@@ -162,8 +164,21 @@ export class UserComponent {
     this.userInfo!.birthdate = this.birthRef.nativeElement.value;
     this.userInfo!.subject = this.subjectRef.nativeElement.value;
     this.userInfo!.school = this.schoolRef.nativeElement.value;
-    this.userInfo!.role = this.roleValue;
+    this.userInfo!.role = this.roleValue.trim().length <= 0 ? this.userInfo!.role : this.roleValue;
     this.lastSavedAvatarUrl = this.currentAvatarUrl;
+    this.cnoulegAPIService.updateUser(this.userInfo!.username, this.userInfo!.bio, this.userInfo!.birthdate, this.userInfo!.role, this.userInfo!.school, this.userInfo!.subject, (this.currentAvatarUrl === this.defaultAvatarUrl)).subscribe((v) => {
+      console.log(v);
+    })
+    if(this.lastSavedAvatarUrl !== this.defaultAvatarUrl && this.croppedImageBlob && this.croppedImage) {
+      this.cnoulegAPIService.uploadAvatar(this.croppedImageBlob).subscribe({
+        next: (v) => {
+          console.log(v);
+        },
+        error: (e) => {
+          console.error(e);
+        }
+      })
+    }
     //username;
     this.toggleEdit();
   }
