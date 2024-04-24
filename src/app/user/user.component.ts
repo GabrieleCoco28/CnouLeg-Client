@@ -18,6 +18,7 @@ export class UserComponent {
   @ViewChild('schoolRef') schoolRef!: ElementRef<HTMLInputElement>;
   @ViewChild('subjectRef') subjectRef!: ElementRef<HTMLInputElement>;
   @ViewChild('bioRef') bioRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('themeIcon', {read: ElementRef}) themeIcon!: ElementRef<HTMLElement>;
   public roleValue = '';
   
   public parameters: any;
@@ -75,6 +76,22 @@ export class UserComponent {
         });
       });
     });
+  }
+  
+  toggleTheme() {
+    if (document.body.className.includes('light-theme')) {
+      document.body.className = 'mat-typography dark-theme';
+      this.themeIcon.nativeElement.innerText = "dark_mode";
+      localStorage.setItem("cnouleg-theme", "dark-theme");
+    } else {
+      document.body.className = 'mat-typography light-theme';
+      this.themeIcon.nativeElement.innerText = "light_mode";
+      localStorage.setItem("cnouleg-theme", "light-theme");
+    }
+  }
+
+  getTheme() {
+    return document.body.className.includes('dark-theme') ? "dark_mode" : "light_mode";
   }
 
   toggleEdit() {

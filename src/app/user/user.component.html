@@ -1,12 +1,32 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
+<mat-toolbar color="primary">
+    <button mat-icon-button class="back-button" routerLink="/">
+        <mat-icon class="material-symbols-rounded">arrow_back</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && !isEditMode"
+        (click)="toggleEdit()">
+        <mat-icon class="material-symbols-rounded">edit</mat-icon>
+    </button>
+    <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
+        (click)="revertChanges()">
+        <mat-icon class="material-symbols-rounded">close</mat-icon>
+    </button>
+    <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
+        (click)="applyChanges()">
+        <mat-icon class="material-symbols-rounded">done</mat-icon>
+    </button>
+    <button mat-icon-button class="theme-button" (click)="toggleTheme()">
+        <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>
+    </button>
+</mat-toolbar>
 <div style="padding: 0 1em 0 1em;" [hidden]="showCropper">
-    <app-login-register-header></app-login-register-header>
     <br>
-    <div id="header">
-        <div style="display: inline-block; margin-bottom: 16px;">
+    <div id="header" style="width: 100%;">
+        <div style="text-align: center;">
             <img [src]="(croppedImage && croppedSaved) ? croppedImage : currentAvatarUrl" alt="profile" id="avatar"
             #avatar>
-            <button mat-mini-fab style="position: relative; top: 48px; left: -48px;" *ngIf="isEditMode" [matMenuTriggerFor]="avatarMenu">
+            <button mat-mini-fab style="position: absolute; transform: translate(-40px, 88px);" *ngIf="isEditMode" [matMenuTriggerFor]="avatarMenu">
                 <mat-icon class="material-symbols-rounded">photo_camera</mat-icon>
             </button>
             <mat-menu #avatarMenu>
@@ -22,31 +42,18 @@
             <input type="file" style="display: none;" accept="image/*" (click)="avatarInput.value = ''"
                 (change)="fileChangeEvent($event)" #avatarInput>
         </div>
-        <h2 style="vertical-align: middle; display: inline-block; margin-right: 8px;" *ngIf="!isEditMode">
-            {{userInfo?.username}}</h2>
-
-        <div [style]="'display: ' + (isEditMode ? 'inline-block' : 'none') " *ngIf="isEditMode">
-            <mat-form-field appearance="outline" style="width: min(256px, 100%); margin-right: 8px;">
+        <div style="width: 100%; text-align: center;">
+            <h1 style="vertical-align: middle; font-size: min(5vw, 1.5em);" *ngIf="!isEditMode">
+                {{userInfo?.username}}</h1>
+        </div>
+        <div *ngIf="isEditMode" style="width: 100%; text-align: center;">
+            <br>
+            <mat-form-field appearance="outline" style="width: min(320px, 100%);">
                 <mat-label>Username</mat-label>
                 <input matInput maxlength="30" [value]="userInfo?.username" required #usernameRef>
             </mat-form-field>
         </div>
-
-        <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && !isEditMode"
-            (click)="toggleEdit()">
-            <mat-icon class="material-symbols-rounded">edit</mat-icon>
-        </button>
-        <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
-            (click)="revertChanges()">
-            <mat-icon class="material-symbols-rounded">close</mat-icon>
-        </button>
-        <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
-            (click)="applyChanges()">
-            <mat-icon class="material-symbols-rounded">done</mat-icon>
-        </button>
     </div>
-    <br>
-    <br>
     <mat-card>
         <div *ngIf="userInfo?.bio?.trim()!.length > 0 && !isEditMode">
             <mat-card-header>
