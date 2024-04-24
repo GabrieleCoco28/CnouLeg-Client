@@ -1,11 +1,12 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
 <div style="padding: 0 1em 0 1em;" [hidden]="showCropper">
     <app-login-register-header></app-login-register-header>
+    <br>
     <div id="header">
-        <div style="display: inline-block;">
+        <div style="display: inline-block; margin-bottom: 16px;">
             <img [src]="(croppedImage && croppedSaved) ? croppedImage : currentAvatarUrl" alt="profile" id="avatar"
             #avatar>
-            <button mat-mini-fab style="position: relative; top: 52px; left: -52px;" *ngIf="isEditMode" [matMenuTriggerFor]="avatarMenu">
+            <button mat-mini-fab style="position: relative; top: 48px; left: -48px;" *ngIf="isEditMode" [matMenuTriggerFor]="avatarMenu">
                 <mat-icon class="material-symbols-rounded">photo_camera</mat-icon>
             </button>
             <mat-menu #avatarMenu>
@@ -78,14 +79,14 @@
         </mat-card-header>
         <br>
         <mat-card-content>
-            <div *ngIf="!isEditMode">
+            <div *ngIf="!isEditMode" style="margin-bottom: 16px;">
                 <mat-icon class="material-symbols-rounded icon">cake</mat-icon>
                 Data di nascita: {{userInfo?.birthdate | date:"dd/MM/YYYY"}}
             </div>
             <div [hidden]="!isEditMode">
                 <mat-icon class="material-symbols-rounded icon">cake</mat-icon>
                 Data di nascita:
-                <mat-form-field appearance="outline" style="width: min(256px, 100%);">
+                <mat-form-field appearance="outline" style="width: min(256px, 100%); margin-top: 16px;">
                     <mat-label
                         [for]="datepicker">{{this.translator.labels.birthDate[this.translator.getLanguage()]}}</mat-label>
                     <input matInput [matDatepicker]="datepicker" readonly required #birthRef (click)="datepicker.open()"
@@ -96,27 +97,25 @@
             </div>
             <div *ngIf="!isEditMode">
                 @if(userInfo?.role?.trim()!.length > 0 && userInfo?.role !== 'other') {
-                @if(userInfo?.role === 'teacher') {
-                @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
-                <br>
-                <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                Insegna {{userInfo?.subject}} presso {{userInfo?.school}}
-                }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) { <br>
-                    <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                    Insegna {{userInfo?.subject}}
-                    }
+                    @if(userInfo?.role === 'teacher') {
+                        @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
+                            <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                            Insegna {{userInfo?.subject}} presso {{userInfo?.school}}
+                        }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) {
+                            <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                            Insegna {{userInfo?.subject}}
+                        }
                     }
                     @if (userInfo?.role === 'student') {
-                    @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
-                    <br>
-                    <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                    Studia {{userInfo?.subject}} presso {{userInfo?.school}}
-                    }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) { <br>
-                        <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                        Studia {{userInfo?.subject}}
+                        @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
+                            <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                            Studia {{userInfo?.subject}} presso {{userInfo?.school}}
+                        }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) {
+                            <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                            Studia {{userInfo?.subject}}
                         }
-                        }
-                        }
+                    }
+                }
             </div>
             <div *ngIf="isEditMode">
                 <br>
