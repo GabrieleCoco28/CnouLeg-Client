@@ -1,5 +1,5 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="!showCropper">
     <button mat-icon-button class="back-button" routerLink="/">
         <mat-icon class="material-symbols-rounded">arrow_back</mat-icon>
     </button>
