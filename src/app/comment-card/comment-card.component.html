@@ -1,7 +1,7 @@
 <mat-card class="comment-card">
     <mat-card-header>
-        <div mat-card-avatar class="comment-avatar _{{data.user_id}}"></div>
-        <mat-card-title>{{data.author_name}}</mat-card-title>
+        <div mat-card-avatar class="comment-avatar _{{data.user_id}}" [routerLink]="'/user/' + data.user_id"></div>
+        <mat-card-title [routerLink]="'/user/' + data.user_id" style="cursor: pointer;">{{data.author_name}}</mat-card-title>
         <mat-card-subtitle>{{data.date| date:"dd/MM/YYYY"}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -52,8 +52,8 @@
             <mat-card class="subcomment-card" *ngFor="let subcomment of subcommentsInfo"
                 style="box-shadow: none !important; border-left: 1px solid darkgray; border-radius: 0; padding-left: 1em;">
                 <mat-card-header>
-                    <div mat-card-avatar class="comment-avatar _{{subcomment.user_id}}"></div>
-                    <mat-card-title>{{subcomment.author_name}}</mat-card-title>
+                    <div mat-card-avatar class="comment-avatar _{{subcomment.user_id}}" [routerLink]="'/user/' + subcomment.user_id"></div>
+                    <mat-card-title [routerLink]="'/user/' + subcomment.user_id" style="cursor: pointer;">{{subcomment.author_name}}</mat-card-title>
                     <mat-card-subtitle>{{subcomment.date| date:"dd/MM/YYYY"}}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content class="content">

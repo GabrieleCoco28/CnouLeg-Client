@@ -76,6 +76,7 @@ import { MY_FORMATS } from './cnou-leg-api.service';
 import { JwtInterceptorService } from './jwt-interceptor.service';
 import { UserComponent } from './user/user.component';
 import { UserNotFoundComponent } from './user-not-found/user-not-found.component';
+import { SnackBarCopiedToClipboardComponent } from './snack-bar-copied-to-clipboard/snack-bar-copied-to-clipboard.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { UserNotFoundComponent } from './user-not-found/user-not-found.component
     LoginComponent,
     AccessDialogComponent,
     UserComponent,
-    UserNotFoundComponent
+    UserNotFoundComponent,
+    SnackBarCopiedToClipboardComponent
   ],
   providers: [
     provideMarkdown(),

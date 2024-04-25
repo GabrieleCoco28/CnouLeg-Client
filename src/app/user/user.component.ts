@@ -6,6 +6,8 @@ import { Dimensions, ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarCopiedToClipboardComponent } from '../snack-bar-copied-to-clipboard/snack-bar-copied-to-clipboard.component';
 
 @Component({
   selector: 'app-user',
@@ -52,7 +54,8 @@ export class UserComponent {
     private router: Router,
     public translator: TranslatorService,
     private sanitizer: DomSanitizer,
-    public spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar
   ) {
     setTimeout(() => {
       this.route.params.subscribe((params) => {
@@ -187,5 +190,16 @@ export class UserComponent {
     this.currentAvatarUrl = this.lastSavedAvatarUrl;
     this.croppedSaved = false;
     this.toggleEdit();
+  }
+
+  back() {
+    history.back();
+  }
+
+  copyUrlToClipboard() {
+    navigator.clipboard.writeText(document.location.href);
+    this.snackBar.openFromComponent(SnackBarCopiedToClipboardComponent, {
+      duration: 2000,
+    });
   }
 }

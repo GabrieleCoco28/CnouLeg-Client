@@ -22,4 +22,8 @@ export class LoginRegisterHeaderComponent {
   getTheme() {
     return document.body.className.includes('dark-theme') ? "dark_mode" : "light_mode";
   }
+
+  back() {
+    history.back();
+  }
 }

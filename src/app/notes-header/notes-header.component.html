@@ -3,10 +3,7 @@
         <mat-icon class="material-symbols-rounded">arrow_back</mat-icon>
     </button>
     <span class="spacer"></span>
-    <button mat-icon-button class="save-button">
-        <mat-icon class="material-symbols-rounded">bookmark</mat-icon>
-    </button>
-    <button mat-icon-button class="share-button">
+    <button mat-icon-button class="share-button" (click)="copyUrlToClipboard()">
         <mat-icon class="material-symbols-rounded">share</mat-icon>
     </button>
     <button mat-icon-button class="theme-button" (click)="toggleTheme()">
@@ -21,10 +18,6 @@
         <button mat-menu-item (click)="cnoulegAPIService.logout(router)">
             <mat-icon class="material-symbols-rounded">logout</mat-icon>
             <span>Esci</span>
-        </button>
-        <button mat-menu-item>
-            <mat-icon class="material-symbols-rounded">settings</mat-icon>
-            <span>Impostazioni</span>
         </button>
     </mat-menu>
     <div style="margin: 8px;" #buttons>

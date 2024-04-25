@@ -4,8 +4,8 @@
     <div id="title">
         <h1>{{noteInfo.title}}</h1>
         <div style="display: grid; grid-template-columns: 48px 1fr;">
-            <div mat-card-avatar class="user-subtitle-avatar"></div>
-            <p>{{translator.labels.by[translator.getLanguage()]}} {{noteInfo.author_name}} •
+            <div mat-card-avatar class="user-subtitle-avatar" [routerLink]="'/user/' + noteInfo.author_id"></div>
+            <p [routerLink]="'/user/' + noteInfo.author_id" style="cursor: pointer; display:inline-block; width: fit-content;">{{translator.labels.by[translator.getLanguage()]}} {{noteInfo.author_name}} •
                 {{noteInfo.data_last_modified| date:"dd/MM/YYYY"}}</p>
         </div>
         <mat-chip-set class="tags">

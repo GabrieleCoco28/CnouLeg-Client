@@ -2,6 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CnouLegAPIService } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackBarCopiedToClipboardComponent } from '../snack-bar-copied-to-clipboard/snack-bar-copied-to-clipboard.component';
 
 @Component({
   selector: 'app-notes-header',
@@ -17,7 +19,8 @@ export class NotesHeaderComponent {
   constructor(
     public cnoulegAPIService: CnouLegAPIService,
     public translator: TranslatorService,
-    public router: Router
+    public router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   toggleTheme() {
@@ -60,5 +63,12 @@ export class NotesHeaderComponent {
         },
       });
     }
+  }
+
+  copyUrlToClipboard() {
+    navigator.clipboard.writeText(document.location.href);
+    this.snackBar.openFromComponent(SnackBarCopiedToClipboardComponent, {
+      duration: 2000,
+    });
   }
 }

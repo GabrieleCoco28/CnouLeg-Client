@@ -1,6 +1,6 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
 <mat-toolbar color="primary" *ngIf="!showCropper">
-    <button mat-icon-button class="back-button" routerLink="/">
+    <button mat-icon-button class="back-button" (click)="back()">
         <mat-icon class="material-symbols-rounded">arrow_back</mat-icon>
     </button>
     <span class="spacer"></span>
@@ -15,6 +15,9 @@
     <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
         (click)="applyChanges()">
         <mat-icon class="material-symbols-rounded">done</mat-icon>
+    </button>
+    <button mat-icon-button class="share-button" (click)="copyUrlToClipboard()">
+        <mat-icon class="material-symbols-rounded">share</mat-icon>
     </button>
     <button mat-icon-button class="theme-button" (click)="toggleTheme()">
         <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>
