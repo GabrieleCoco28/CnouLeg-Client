@@ -35,11 +35,11 @@
             <mat-menu #avatarMenu>
                 <button mat-menu-item (click)="avatarInput.click()">
                     <mat-icon class="material-symbols-rounded">upload_file</mat-icon>
-                    <span>Carica immagine</span>
+                    <span>{{translator.labels.loadImage[translator.getLanguage()]}}</span>
                 </button>
                 <button mat-menu-item (click)="currentAvatarUrl = defaultAvatarUrl">
                     <mat-icon class="material-symbols-rounded">delete</mat-icon>
-                    <span>Cancella immagine</span>
+                    <span>{{translator.labels.deleteImage[translator.getLanguage()]}}</span>
                 </button>
             </mat-menu>
             <input type="file" style="display: none;" accept="image/*" (click)="avatarInput.value = ''"
@@ -85,17 +85,17 @@
             </mat-card-content>
         </div>
         <mat-card-header>
-            <mat-card-title>Informazioni personali</mat-card-title>
+            <mat-card-title>{{translator.labels.personalInfos[translator.getLanguage()]}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
             <div *ngIf="!isEditMode" style="margin-bottom: 16px;">
                 <mat-icon class="material-symbols-rounded icon">cake</mat-icon>
-                Data di nascita: {{userInfo?.birthdate | date:"dd/MM/YYYY"}}
+                {{translator.labels.birthDate[translator.getLanguage()]}}: {{userInfo?.birthdate | date:"dd/MM/YYYY"}}
             </div>
             <div [hidden]="!isEditMode">
                 <mat-icon class="material-symbols-rounded icon">cake</mat-icon>
-                Data di nascita:
+                {{translator.labels.birthDate[translator.getLanguage()]}}:
                 <mat-form-field appearance="outline" style="width: min(256px, 100%); margin-top: 16px;">
                     <mat-label
                         [for]="datepicker">{{this.translator.labels.birthDate[this.translator.getLanguage()]}}</mat-label>
@@ -110,25 +110,25 @@
                     @if(userInfo?.role === 'teacher') {
                         @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                            Insegna {{userInfo?.subject}} presso {{userInfo?.school}}
+                            {{translator.labels.teaches[translator.getLanguage()]}} {{userInfo?.subject}} {{translator.labels.at[translator.getLanguage()]}} {{userInfo?.school}}
                         }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                            Insegna {{userInfo?.subject}}
+                            {{translator.labels.teaches[translator.getLanguage()]}} {{userInfo?.subject}}
                         }@else if (userInfo?.subject?.trim()!.length <= 0 && userInfo?.school?.trim()!.length > 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                            Insegna presso {{userInfo?.school}}
+                            {{translator.labels.teachesAt[translator.getLanguage()]}} {{userInfo?.school}}
                         }
                     }
                     @if (userInfo?.role === 'student') {
                         @if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length > 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                            Studia {{userInfo?.subject}} presso {{userInfo?.school}}
+                            {{translator.labels.studies[translator.getLanguage()]}} {{userInfo?.subject}} {{translator.labels.at[translator.getLanguage()]}} {{userInfo?.school}}
                         }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                            Studia {{userInfo?.subject}}
+                            {{translator.labels.studies[translator.getLanguage()]}} {{userInfo?.subject}}
                         }@else if (userInfo?.subject?.trim()!.length <= 0 && userInfo?.school?.trim()!.length > 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                            Studia presso {{userInfo?.school}}
+                            {{translator.labels.studiesAt[translator.getLanguage()]}} {{userInfo?.school}}
                         }
                     }
                 }
@@ -136,7 +136,7 @@
             <div *ngIf="isEditMode">
                 <br>
                 <mat-icon class="material-symbols-rounded icon">school</mat-icon>
-                Informazioni personali
+                {{translator.labels.personalInfos[translator.getLanguage()]}}
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: min(256px, 100%);">

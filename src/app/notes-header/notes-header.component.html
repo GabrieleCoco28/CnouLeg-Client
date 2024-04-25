@@ -13,11 +13,11 @@
     <mat-menu #menu>
         <button mat-menu-item routerLink="/user/{{cnoulegAPIService.getUserIdFromJWT()}}">
             <mat-icon class="material-symbols-rounded">person</mat-icon>
-            <span>Mio profilo</span>
+            <span>{{translator.labels.myProfile[translator.getLanguage()]}}</span>
         </button>
         <button mat-menu-item (click)="cnoulegAPIService.logout(router)">
             <mat-icon class="material-symbols-rounded">logout</mat-icon>
-            <span>Esci</span>
+            <span>{{translator.labels.exit[translator.getLanguage()]}}</span>
         </button>
     </mat-menu>
     <div style="margin: 8px;" #buttons>

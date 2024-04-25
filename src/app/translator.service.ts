@@ -280,6 +280,62 @@ export class TranslatorService {
     notAlreadyRegistered: {
       it: 'Non hai un account? Registrati',
       en: 'Do not have an account? Sign in'
+    },
+    copiedToClipboard: {
+      it: 'Copiato negli appunti',
+      en: 'Copied to clipboard'
+    },
+    accessFirst: {
+      it: 'Non puoi procedere senza aver prima effettuato l\'accesso',
+      en: 'You cannot proceed without logging in first'
+    },
+    userNotFound: {
+      it: 'Utente non trovato',
+      en: 'User not found'
+    },
+    userNotFoundSubtext: {
+      it: 'Ci dispiace, ma l\'utente che stai cercando non esiste o è stato eliminato',
+      en: 'Sorry, but the user you are looking for does not exist or has been deleted'
+    },
+    exit: {
+      it: 'Esci',
+      en: 'Exit'
+    },
+    myProfile: {
+      it: 'Mio profilo',
+      en: 'My profile'
+    },
+    loadImage: {
+      it: 'Carica immagine',
+      en: 'Load image'
+    },
+    deleteImage: {
+      it: 'Elimina immagine',
+      en: 'Delete image'
+    },
+    personalInfos: {
+      it: 'Informazioni personali',
+      en: 'Personal informations'
+    },
+    teaches: {
+      it: 'Insegna',
+      en: 'Teaches'
+    },
+    teachesAt: {
+      it: 'Insegna presso',
+      en: 'Teaches at'
+    },
+    studies: {
+      it: 'Studia',
+      en: 'Studies'
+    },
+    studiesAt: {
+      it: 'Studia presso',
+      en: 'Studies at'
+    },
+    at: {
+      it: 'presso',
+      en: 'at'
     }
   };
   constructor() {}

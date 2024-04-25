@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslatorService } from '../translator.service';
 
 @Component({
   selector: 'app-snack-bar-copied-to-clipboard',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './snack-bar-copied-to-clipboard.component.scss'
 })
 export class SnackBarCopiedToClipboardComponent {
-
+  constructor(public translator: TranslatorService) {}
 }

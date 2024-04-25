@@ -167,16 +167,20 @@ export class CnouLegAPIService {
     }
   }
 
-  public uploadAvatar(imageData: Blob) {
-    
+  public updateUser(imageData: Blob | null, username: string, bio: string, birthdate: string, role: string, school: string, subject: string, pic_deleted: boolean ) {
     const url = this.apiUrl + "/api/user";
     let formData = new FormData();
-    formData.append('avatar', imageData);
+    if(imageData !== null) {
+      formData.append('avatar', imageData);
+    }
+    formData.append('username', username);
+    formData.append('bio', bio);
+    formData.append('birthdate', birthdate);
+    formData.append('role', role);
+    formData.append('school', school);
+    formData.append('subject', subject);
+    if(pic_deleted)
+      formData.append('pic_deleted', "true");
     return this.http.put(url, formData);
-  }
-
-  public updateUser(username: string, bio: string, birthdate: string, role: string, school: string, subject: string, pic_eliminated: boolean) {
-    const url = this.apiUrl + "/api/user";
-    return this.http.put(url, {username, bio, birthdate, role, school, subject, pic_eliminated});
   }
 }

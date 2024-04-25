@@ -2,7 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CnouLegAPIService, User } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
-import { Dimensions, ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper';
+import {
+  Dimensions,
+  ImageCroppedEvent,
+  ImageTransform,
+} from 'ngx-image-cropper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -20,9 +24,10 @@ export class UserComponent {
   @ViewChild('schoolRef') schoolRef!: ElementRef<HTMLInputElement>;
   @ViewChild('subjectRef') subjectRef!: ElementRef<HTMLInputElement>;
   @ViewChild('bioRef') bioRef!: ElementRef<HTMLInputElement>;
-  @ViewChild('themeIcon', {read: ElementRef}) themeIcon!: ElementRef<HTMLElement>;
+  @ViewChild('themeIcon', { read: ElementRef })
+  themeIcon!: ElementRef<HTMLElement>;
   public roleValue = '';
-  
+
   public parameters: any;
   public userInfo?: User;
   public isCurrentUser = false;
@@ -30,7 +35,7 @@ export class UserComponent {
   public currentAvatarUrl = '../../assets/default.svg';
   public lastSavedAvatarUrl = '../../assets/default.svg';
   public defaultAvatarUrl = '../../assets/default.svg';
-  
+
   // Cropper params
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -63,14 +68,18 @@ export class UserComponent {
         this.cnoulegAPIService.getUsersById([params['id']]).subscribe({
           next: (response) => {
             this.userInfo = response.users[0];
-            this.isCurrentUser = cnoulegAPIService.getUserIdFromJWT() === params['id'];
+            this.isCurrentUser =
+              cnoulegAPIService.getUserIdFromJWT() === params['id'];
             if (response.users.length <= 0) {
               router.navigateByUrl('/userNotFound');
               return;
             }
             if (this.userInfo.profile_pic_url.trim().length > 0)
-              this.currentAvatarUrl = cnoulegAPIService.apiUrl + '/profile_pics/' + this.userInfo.profile_pic_url;
-            
+              this.currentAvatarUrl =
+                cnoulegAPIService.apiUrl +
+                '/profile_pics/' +
+                this.userInfo.profile_pic_url;
+
             this.roleValue = this.userInfo.role;
             this.lastSavedAvatarUrl = this.currentAvatarUrl;
           },
@@ -81,21 +90,23 @@ export class UserComponent {
       });
     });
   }
-  
+
   toggleTheme() {
     if (document.body.className.includes('light-theme')) {
       document.body.className = 'mat-typography dark-theme';
-      this.themeIcon.nativeElement.innerText = "dark_mode";
-      localStorage.setItem("cnouleg-theme", "dark-theme");
+      this.themeIcon.nativeElement.innerText = 'dark_mode';
+      localStorage.setItem('cnouleg-theme', 'dark-theme');
     } else {
       document.body.className = 'mat-typography light-theme';
-      this.themeIcon.nativeElement.innerText = "light_mode";
-      localStorage.setItem("cnouleg-theme", "light-theme");
+      this.themeIcon.nativeElement.innerText = 'light_mode';
+      localStorage.setItem('cnouleg-theme', 'light-theme');
     }
   }
 
   getTheme() {
-    return document.body.className.includes('dark-theme') ? "dark_mode" : "light_mode";
+    return document.body.className.includes('dark-theme')
+      ? 'dark_mode'
+      : 'light_mode';
   }
 
   toggleEdit() {
@@ -115,7 +126,9 @@ export class UserComponent {
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl || event.base64 || '');
+    this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(
+      event.objectUrl || event.base64 || ''
+    );
     this.croppedImageBlob = event.blob as Blob;
   }
 
@@ -161,28 +174,32 @@ export class UserComponent {
   }
 
   applyChanges() {
-    if(this.usernameRef.nativeElement.value.trim().length <= 0) return;
+    if (this.usernameRef.nativeElement.value.trim().length <= 0) return;
     this.userInfo!.username = this.usernameRef.nativeElement.value;
     this.userInfo!.bio = this.bioRef.nativeElement.value;
     this.userInfo!.birthdate = this.birthRef.nativeElement.value;
     this.userInfo!.subject = this.subjectRef.nativeElement.value;
     this.userInfo!.school = this.schoolRef.nativeElement.value;
-    this.userInfo!.role = this.roleValue.trim().length <= 0 ? this.userInfo!.role : this.roleValue;
+    this.userInfo!.role =
+      this.roleValue.trim().length <= 0 ? this.userInfo!.role : this.roleValue;
     this.lastSavedAvatarUrl = this.currentAvatarUrl;
-    this.cnoulegAPIService.updateUser(this.userInfo!.username, this.userInfo!.bio, this.userInfo!.birthdate, this.userInfo!.role, this.userInfo!.school, this.userInfo!.subject, (this.currentAvatarUrl === this.defaultAvatarUrl)).subscribe((v) => {
-      console.log(v);
-    })
-    if(this.lastSavedAvatarUrl !== this.defaultAvatarUrl && this.croppedImageBlob && this.croppedImage) {
-      this.cnoulegAPIService.uploadAvatar(this.croppedImageBlob).subscribe({
-        next: (v) => {
-          console.log(v);
-        },
-        error: (e) => {
-          console.error(e);
-        }
-      })
-    }
-    //username;
+    this.cnoulegAPIService
+      .updateUser(
+        this.lastSavedAvatarUrl !== this.defaultAvatarUrl &&
+          this.croppedImage
+          ? this.croppedImageBlob
+          : null,
+        this.userInfo!.username,
+        this.userInfo!.bio,
+        this.userInfo!.birthdate,
+        this.userInfo!.role,
+        this.userInfo!.school,
+        this.userInfo!.subject,
+        this.currentAvatarUrl === this.defaultAvatarUrl
+      )
+      .subscribe((v) => {
+        console.log(v);
+      });
     this.toggleEdit();
   }
 
