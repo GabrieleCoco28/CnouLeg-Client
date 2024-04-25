@@ -111,6 +111,9 @@
                         }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
                             Insegna {{userInfo?.subject}}
+                        }@else if (userInfo?.subject?.trim()!.length <= 0 && userInfo?.school?.trim()!.length > 0) {
+                            <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                            Insegna presso {{userInfo?.school}}
                         }
                     }
                     @if (userInfo?.role === 'student') {
@@ -120,6 +123,9 @@
                         }@else if (userInfo?.subject?.trim()!.length > 0 && userInfo?.school?.trim()!.length <= 0) {
                             <mat-icon class="material-symbols-rounded icon">school</mat-icon>
                             Studia {{userInfo?.subject}}
+                        }@else if (userInfo?.subject?.trim()!.length <= 0 && userInfo?.school?.trim()!.length > 0) {
+                            <mat-icon class="material-symbols-rounded icon">school</mat-icon>
+                            Studia presso {{userInfo?.school}}
                         }
                     }
                 }
