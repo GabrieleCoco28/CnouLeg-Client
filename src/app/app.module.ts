@@ -60,7 +60,7 @@ import {
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -77,6 +77,8 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
 import { UserComponent } from './user/user.component';
 import { UserNotFoundComponent } from './user-not-found/user-not-found.component';
 import { SnackBarCopiedToClipboardComponent } from './snack-bar-copied-to-clipboard/snack-bar-copied-to-clipboard.component';
+import { MarkdownEditorComponent } from './markdown-editor/markdown-editor.component';
+import { MarkdownLinkDialogComponent } from './markdown-link-dialog/markdown-link-dialog.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +99,9 @@ import { SnackBarCopiedToClipboardComponent } from './snack-bar-copied-to-clipbo
     AccessDialogComponent,
     UserComponent,
     UserNotFoundComponent,
-    SnackBarCopiedToClipboardComponent
+    SnackBarCopiedToClipboardComponent,
+    MarkdownEditorComponent,
+    MarkdownLinkDialogComponent
   ],
   providers: [
     provideMarkdown(),
@@ -154,7 +158,8 @@ import { SnackBarCopiedToClipboardComponent } from './snack-bar-copied-to-clipbo
     MatDialogContent,
     MatDialogTitle,
     MatMenuModule,
-    ImageCropperModule
+    ImageCropperModule,
+    FormsModule 
   ],
 })
 export class AppModule {}

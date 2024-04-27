@@ -10,6 +10,7 @@ import { SuccessfulRegistrationComponent } from './successful-registration/succe
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { UserNotFoundComponent } from './user-not-found/user-not-found.component';
+import { MarkdownEditorComponent } from './markdown-editor/markdown-editor.component';
 
 const routes: Routes = [
   { path: '', component: SearchComponent, data: { state: 'search' } },
@@ -57,7 +58,19 @@ const routes: Routes = [
       },
     ],
   },
-  
+  {
+    path: 'editor',
+    children: [
+      {
+        path: '',
+        component: MarkdownEditorComponent
+      },
+      {
+        path: ':id',
+        component: MarkdownEditorComponent,
+      },
+    ],
+  },
   { path: 'registrationDone', component: SuccessfulRegistrationComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },

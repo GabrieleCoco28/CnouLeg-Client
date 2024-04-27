@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Inserisci il link e il testo da mostrare</h2>
+<div style="text-align: center;">
+  <mat-dialog-content style="width: 100%;">
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Testo</mat-label>
+      <input matInput [(ngModel)]="data.text">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Link</mat-label>
+      <input matInput  [(ngModel)]="data.link">
+    </mat-form-field>
+  </mat-dialog-content>
+</div>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annulla</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Inserisci</button>
+</mat-dialog-actions>

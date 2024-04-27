@@ -1,0 +1,29 @@
+markdown::ng-deep th {
+    border-collapse: collapse;
+    padding: 0.5rem;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+markdown::ng-deep td {
+    border-collapse: collapse;
+    padding: 0.5rem;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+markdown::ng-deep table {
+    border-collapse: collapse;
+    padding: 0.5rem;
+    white-space: nowrap;
+    margin: auto;
+    width: 100%;
+    table-layout: fixed;
+}
+
+markdown::ng-deep img {
+    display: block;
+    width: min(100%, 512px);
+    margin: auto;
+    border-radius: 10px;
+}

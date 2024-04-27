@@ -1,0 +1,146 @@
+<div style="padding: 0 1em 0 1em;">
+    <app-login-register-header></app-login-register-header>
+    <br>
+    <h1 style="text-align: center;">{{translator.labels.createNote[translator.getLanguage()]}}</h1>
+    <mat-form-field appearance="outline" style="width: min(320px, 100%);">
+        <mat-label>{{translator.labels.title[translator.getLanguage()]}}</mat-label>
+        <input matInput #titleRef maxlength="30">
+    </mat-form-field>
+    <br>
+    <label>{{titleRef.value.length}}/{{titleRef.maxLength}}</label>
+    <br>
+    <br>
+    <mat-form-field appearance="outline" style="width: min(228px, 100%); margin-right: 8px;">
+        <mat-label>{{this.translator.labels.subject[this.translator.getLanguage()]}}</mat-label>
+        <span matPrefix style="margin-right: 4px; margin-left: 8px;"><mat-icon
+                class='material-symbols-rounded'>{{translator.getSubjectIcon(subjectRef.value)}}</mat-icon></span>
+        <mat-select #subjectRef value="other">
+            <mat-option *ngFor="let sub of keys(this.translator.subjects)" value="{{sub}}">
+                <mat-icon class='material-symbols-rounded'>{{translator.getSubjectIcon(sub)}}</mat-icon>
+                {{this.translator.translateSubject(sub)}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: min(228px, 100%);">
+        <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
+        <mat-select #schooltRef value="other">
+            <mat-option *ngFor="let sub of keys(this.translator.schools)" value="{{sub}}">
+                {{this.translator.translateClass(sub)}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter fruits">
+            <mat-chip-row>
+                <mat-icon class="material-symbols-rounded" matChipAvatar
+                    style="scale: 1.2; transform: translateY(1px);">{{translator.getSubjectIcon(subjectRef.value)}}</mat-icon>
+                {{this.translator.translateSubject(subjectRef.value)}}
+            </mat-chip-row>
+            <mat-chip-row>
+                {{this.translator.translateClass(schooltRef.value)}}
+            </mat-chip-row>
+            @for (tag of tags; track tag) {
+            <mat-chip-row (removed)="remove(tag)" [editable]="true" (edited)="edit(tag, $event)"
+                [aria-description]="'press enter to edit ' + tag">
+                {{tag}}
+                <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                    <mat-icon class='material-symbols-rounded'>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+            }
+            <input placeholder="Aggiungi tag..." [matChipInputFor]="chipGrid"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)" />
+        </mat-chip-grid>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Descrizione</mat-label>
+        <textarea matInput maxlength="300" style="resize: none;"
+            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' #descriptionRef></textarea>
+    </mat-form-field>
+    <br>
+    <label>{{descriptionRef.value.length}}/{{descriptionRef.maxLength}}</label>
+    <br>
+    <br>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Markdown</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-toolbar>
+            <button mat-icon-button matTooltip="Title" [matMenuTriggerFor]="headersMenu"><mat-icon
+                    class='material-symbols-rounded'>title</mat-icon></button>
+            <mat-menu #headersMenu>
+                <button mat-menu-item *ngFor="let i of [0, 1, 2, 3, 4, 5]" (click)="insertInLineStarts('#'.repeat(i + 1) + ' ')">
+                    <mat-icon class="material-symbols-rounded">format_h{{i + 1}}</mat-icon>
+                    <span>Titolo {{i + 1}}</span>
+                </button>
+            </mat-menu>
+
+            <button mat-icon-button matTooltip="Italic"
+                (click)='setChars("*"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
+                    class='material-symbols-rounded'>format_italic</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Bold"
+                (click)='setChars("**"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
+                    class='material-symbols-rounded'>format_bold</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Strikethrough"
+                (click)='setChars("~~"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
+                    class='material-symbols-rounded'>format_strikethrough</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Bulleted list" (click)="insertInLineStarts('- ')"><mat-icon
+                    class='material-symbols-rounded'>format_list_bulleted</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Numbered list" (click)="insertInLineStarts('1. ')"><mat-icon
+                    class='material-symbols-rounded'>format_list_numbered</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Image" (click)="insertImage()"><mat-icon
+                    class='material-symbols-rounded'>image</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Link" (click)="insertLink()"><mat-icon
+                    class='material-symbols-rounded'>link</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Quotation" (click)="insertInLineStarts('> ')"><mat-icon
+                    class='material-symbols-rounded'>format_quote</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Inline code" (click)='setChars("`");'><mat-icon
+                    class='material-symbols-rounded'>code</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Code block" [matMenuTriggerFor]="languagesMenu"><mat-icon
+                    class='material-symbols-rounded'>code_blocks</mat-icon></button>
+            <mat-menu #languagesMenu>
+                <button mat-menu-item *ngFor="let lang of languages" (click)="insertCodeBlock(lang);">
+                    <span>{{lang}}</span>
+                </button>
+            </mat-menu>
+
+            <button mat-icon-button matTooltip="Table" (click)="insertTable()"><mat-icon
+                    class='material-symbols-rounded'>table</mat-icon></button>
+
+            <button mat-icon-button matTooltip="Horizontal line"
+                (click)='insertHorizontalLine(); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
+                    class='material-symbols-rounded'>horizontal_rule</mat-icon></button>
+            
+            <button mat-icon-button matTooltip="LaTeX" (click)="insertLatex()"><mat-icon
+                    class='material-symbols-rounded'>function</mat-icon></button>
+        </mat-toolbar>
+        <br>
+        <mat-card-content>
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <textarea matInput style="resize: none;" rows="10" (mouseup)="selectionChange($event)"
+                    (click)="setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)"
+                    oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
+                    #markdownRef></textarea>
+            </mat-form-field>
+            <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard
+                [disableSanitizer]="true" [clipboardButtonComponent]="copyComponent" [data]="markdownRef.value"
+                class="md">
+            </markdown>
+        </mat-card-content>
+    </mat-card>
+    <br>
+</div>

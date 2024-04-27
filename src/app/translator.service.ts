@@ -1,101 +1,110 @@
 import { Injectable } from '@angular/core';
 
-const subjects: any = {
-  math: {
-    it: 'Matematica',
-    en: 'Math',
-    icon: 'calculate',
-  },
-  ict: {
-    it: 'Informatica',
-    en: 'ICT',
-    icon: 'terminal',
-  },
-  economy: {
-    it: 'Economia',
-    en: 'Economy',
-    icon: 'account_balance',
-  },
-  italian_literature: {
-    it: 'Letteratura italiana',
-    en: 'Italian literature',
-    icon: 'book_2',
-  },
-  italian_grammar: {
-    it: 'Grammatica italiana',
-    en: 'Italian grammar',
-    icon: 'dictionary',
-  },
-  english_grammar: {
-    it: 'Grammatica inglese',
-    en: 'English grammar',
-    icon: 'dictionary',
-  },
-  english_literature: {
-    it: 'Letteratura inglese',
-    en: 'English literature',
-    icon: 'book_2',
-  },
-  history: {
-    it: 'Storia',
-    en: 'History',
-    icon: 'history_edu',
-  },
-  chemistry: {
-    it: 'Chimica',
-    en: 'Chemistry',
-    icon: 'experiment',
-  },
-  physics: {
-    it: 'Fisica',
-    en: 'Physics',
-    icon: 'rocket_launch',
-  },
-  science: {
-    it: 'Scienze',
-    en: 'Science',
-    icon: 'biotech',
-  },
-  biology: {
-    it: 'Biologia',
-    en: 'Biology',
-    icon: 'genetics',
-  },
-  law: {
-    it: 'Diritto',
-    en: 'Law',
-    icon: 'gavel',
-  },
-  geography: {
-    it: 'Geografia',
-    en: 'Geography',
-    icon: 'globe',
-  },
-};
-
-const schools: any = {
-  high_school: {
-    it: 'Scuola superiore',
-    en: 'High school',
-  },
-  middle_school: {
-    it: 'Scuola media',
-    en: 'Middle school',
-  },
-  elementary_school: {
-    it: 'Scuola elementare',
-    en: 'Elementary school',
-  },
-  university: {
-    it: 'Università',
-    en: 'University',
-  },
-};
-
 @Injectable({
   providedIn: 'root',
 })
 export class TranslatorService {
+  public subjects: any = {
+    math: {
+      it: 'Matematica',
+      en: 'Math',
+      icon: 'calculate',
+    },
+    ict: {
+      it: 'Informatica',
+      en: 'ICT',
+      icon: 'terminal',
+    },
+    economy: {
+      it: 'Economia',
+      en: 'Economy',
+      icon: 'account_balance',
+    },
+    italian_literature: {
+      it: 'Letteratura italiana',
+      en: 'Italian literature',
+      icon: 'book_2',
+    },
+    italian_grammar: {
+      it: 'Grammatica italiana',
+      en: 'Italian grammar',
+      icon: 'dictionary',
+    },
+    english_grammar: {
+      it: 'Grammatica inglese',
+      en: 'English grammar',
+      icon: 'dictionary',
+    },
+    english_literature: {
+      it: 'Letteratura inglese',
+      en: 'English literature',
+      icon: 'book_2',
+    },
+    history: {
+      it: 'Storia',
+      en: 'History',
+      icon: 'history_edu',
+    },
+    chemistry: {
+      it: 'Chimica',
+      en: 'Chemistry',
+      icon: 'experiment',
+    },
+    physics: {
+      it: 'Fisica',
+      en: 'Physics',
+      icon: 'rocket_launch',
+    },
+    science: {
+      it: 'Scienze',
+      en: 'Science',
+      icon: 'biotech',
+    },
+    biology: {
+      it: 'Biologia',
+      en: 'Biology',
+      icon: 'genetics',
+    },
+    law: {
+      it: 'Diritto',
+      en: 'Law',
+      icon: 'gavel',
+    },
+    geography: {
+      it: 'Geografia',
+      en: 'Geography',
+      icon: 'globe',
+    },
+    other: {
+      it: 'Altro',
+      en: 'Other',
+      icon: 'more_horiz'
+    }
+  };
+  
+  public schools: any = {
+    high_school: {
+      it: 'Scuola superiore',
+      en: 'High school',
+    },
+    middle_school: {
+      it: 'Scuola media',
+      en: 'Middle school',
+    },
+    elementary_school: {
+      it: 'Scuola elementare',
+      en: 'Elementary school',
+    },
+    university: {
+      it: 'Università',
+      en: 'University',
+    },
+    other: {
+      it: 'Altro',
+      en: 'Other'
+    }
+  };
+
   public labels: any = {
     by: {
       it: 'Di',
@@ -336,19 +345,27 @@ export class TranslatorService {
     at: {
       it: 'presso',
       en: 'at'
+    },
+    title: {
+      it: 'Titolo',
+      en: 'Title'
+    },
+    createNote: {
+      it: 'Crea una nuova nota',
+      en: 'Create a new note'
     }
   };
   constructor() {}
-  public translateSubject(sub: string): string {
-    if (subjects[sub]) return subjects[sub][this.getLanguage()];
+  public translateSubject(sub: string | unknown): string {
+    if (this.subjects[sub as string]) return this.subjects[sub as string][this.getLanguage()];
     return 'no such subject';
   }
-  public translateClass(school: string): string {
-    if (schools[school]) return schools[school][this.getLanguage()];
+  public translateClass(school: string | unknown): string {
+    if (this.schools[school as string]) return this.schools[school as string][this.getLanguage()];
     return 'no such school';
   }
-  public getSubjectIcon(sub: string) {
-    if (subjects[sub] && subjects[sub].icon) return subjects[sub].icon;
+  public getSubjectIcon(sub: string | unknown) {
+    if (this.subjects[sub as string] && this.subjects[sub as string].icon) return this.subjects[sub as string].icon;
   }
   public getLanguage() {
     if (navigator.language.includes('en')) return 'en';
