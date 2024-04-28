@@ -14,7 +14,7 @@
         <mat-label>{{this.translator.labels.subject[this.translator.getLanguage()]}}</mat-label>
         <span matPrefix style="margin-right: 4px; margin-left: 8px;"><mat-icon
                 class='material-symbols-rounded'>{{translator.getSubjectIcon(subjectRef.value)}}</mat-icon></span>
-        <mat-select #subjectRef value="other">
+        <mat-select #subjectRef value="other" (valueChange)="setSubject($event)">
             <mat-option *ngFor="let sub of keys(this.translator.subjects)" value="{{sub}}">
                 <mat-icon class='material-symbols-rounded'>{{translator.getSubjectIcon(sub)}}</mat-icon>
                 {{this.translator.translateSubject(sub)}}
@@ -23,7 +23,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline" style="width: min(228px, 100%);">
         <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
-        <mat-select #schooltRef value="other">
+        <mat-select #schooltRef value="other" (valueChange)="setSchool($event)">
             <mat-option *ngFor="let sub of keys(this.translator.schools)" value="{{sub}}">
                 {{this.translator.translateClass(sub)}}
             </mat-option>
@@ -133,9 +133,11 @@
             <mat-form-field appearance="outline" style="width: 100%;">
                 <textarea matInput style="resize: none;" rows="10" (pointerup)="selectionChange($event)" (pointercancel)="selectionChange($event)"
                     (click)="selectionChange($event); setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)"
-                    oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
+                    oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"' onchange='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
                     #markdownRef></textarea>
             </mat-form-field>
+            <br>
+            <label>{{markdownRef.value.length}}</label>
             <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard
                 [disableSanitizer]="true" [clipboardButtonComponent]="copyComponent" [data]="markdownRef.value ? markdownRef.value : ''"
                 class="md">
@@ -143,4 +145,65 @@
         </mat-card-content>
     </mat-card>
     <br>
+    <mat-card>
+        <div class="imagesList">
+            <mat-card-content>{{translator.labels.images[translator.getLanguage()]}}</mat-card-content>
+            <div class="scroll-container" style="overflow: auto">
+                <div *ngFor="let item of loadedImages; index as i">
+                    <img [src]="item.link" alt="img" class="content-icon" style="width: 128px; height: 128px; overflow: hidden; object-fit: cover; border-radius: 15px; -webkit-user-drag: none;">
+                    <button mat-mini-fab color="warn" style="position: absolute; transform: translate(-18px, -12px);" (click)="deleteImage(i)">
+                        <mat-icon class="material-symbols-rounded">close</mat-icon>
+                    </button>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.file.name| truncate}}</mat-card-subtitle>
+                </div>
+                <div class="{{loadedImages.length > 0 ? 'imageAddButton' : ''}}" *ngIf="loadedImages.length < 10" (click)="imageInput.click()">
+                    <img src="../../assets/notes-placeholder/add.svg" alt="img" width="128" height="128" class="add-icon" style="overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
+                    <input type="file" style="display: none;" accept="image/*" (click)="imageInput.value = ''" (change)="onChangeImage($event)" #imageInput>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <br>
+    <mat-card>
+        <div class="videosList">
+            <mat-card-content>{{translator.labels.videos[translator.getLanguage()]}}</mat-card-content>
+            <div class="scroll-container" style="overflow: auto">
+                <div *ngFor="let item of loadedVideos; index as i">
+                    <img src="assets/notes-placeholder/video.svg" alt="img" width="128" height="128" class="content-icon" style="overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
+                    <button mat-mini-fab color="warn" style="position: absolute; transform: translate(-18px, -12px);" (click)="deleteVideo(i)">
+                        <mat-icon class="material-symbols-rounded">close</mat-icon>
+                    </button>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.name| truncate}}</mat-card-subtitle>
+                </div>
+                <div class="{{loadedVideos.length > 0 ? 'videoAddButton' : ''}}" *ngIf="loadedVideos.length < 5" (click)="videoInput.click()">
+                    <img src="../../assets/notes-placeholder/add.svg" alt="img" width="128" height="128" class="add-icon" style="overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
+                    <input type="file" style="display: none;" accept="video/*" (click)="videoInput.value = ''" (change)="onChangeVideo($event)" #videoInput>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <br>
+    <mat-card>
+        <div>
+            <mat-card-content>{{translator.labels.documents[translator.getLanguage()]}}</mat-card-content>
+            <div class="scroll-container" style="overflow: auto">
+                <div *ngFor="let item of loadedDocuments; index as i">
+                    <a [href]="'https://google.com'">
+                        <img src="assets/notes-placeholder/file.svg" alt="img" class="content-icon"
+                            style="width: 128px; height: 128px; overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
+                    </a>
+                    <button mat-mini-fab color="warn" style="position: absolute; transform: translate(-18px, -12px);" (click)="deleteDocument(i)">
+                        <mat-icon class="material-symbols-rounded">close</mat-icon>
+                    </button>
+                    <mat-card-subtitle style="text-align: center; max-width: 128px; overflow: hidden;">{{item.name| truncate}}</mat-card-subtitle>
+                </div>
+                <div class="{{loadedDocuments.length > 0 ? 'documentAddButton' : ''}}" *ngIf="loadedDocuments.length < 5" (click)="documentInput.click()">
+                    <img src="../../assets/notes-placeholder/add.svg" alt="img" width="128" height="128" class="add-icon" style="overflow: hidden; object-fit: none; border-radius: 15px; -webkit-user-drag: none;">
+                    <input type="file" style="display: none;" accept="*/*" (click)="documentInput.value = ''" (change)="onChangeDocument($event)" #documentInput>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <br>
+    <button mat-flat-button color="primary" (click)="uploadNote()">Pubblica</button>
 </div>

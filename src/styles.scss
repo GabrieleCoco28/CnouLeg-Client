@@ -81,6 +81,17 @@ body.light-theme {
       box-shadow: 5px 5px 10px 0 #c0bec5;
     }
   }
+
+  .add-icon {
+    background-color: #d0c7eb;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      border-color: #111;
+      box-shadow: 5px 5px 10px 0 #c0bec5;
+    }
+  }
   
   markdown table {
     border: 1px solid rgb(36, 34, 35);
@@ -124,6 +135,17 @@ body.dark-theme {
 
   .content-icon {
     background-color: #9178db;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      cursor: pointer;
+      border-color: #111;
+      box-shadow: 5px 5px 10px 0 black;
+    }
+  }
+
+  .add-icon {
+    background-color: #cdc4e7;
     transition: box-shadow 0.3s;
 
     &:hover {

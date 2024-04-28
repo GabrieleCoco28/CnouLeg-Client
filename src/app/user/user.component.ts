@@ -143,7 +143,7 @@ export class UserComponent {
   }
 
   loadImageFailed() {
-    console.error('Load image failed');
+    this.spinner.hide();
   }
 
   rotateLeft() {

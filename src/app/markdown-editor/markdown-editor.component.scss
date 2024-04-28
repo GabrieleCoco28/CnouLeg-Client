@@ -27,3 +27,36 @@ markdown::ng-deep img {
     margin: auto;
     border-radius: 10px;
 }
+
+.scroll-container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    &.hide-scrollbar {
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &.show-scroll {
+        overflow: auto;
+    }
+
+    div {
+        white-space: nowrap;
+        margin: .1rem;
+        padding: 1em;
+        transition: box-shadow 0.3s;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.imageAddButton, .videoAddButton, .documentAddButton {
+    transform: translateY(-12px);
+}

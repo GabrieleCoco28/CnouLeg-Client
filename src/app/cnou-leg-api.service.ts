@@ -183,4 +183,27 @@ export class CnouLegAPIService {
       formData.append('pic_deleted', "true");
     return this.http.put(url, formData);
   }
+
+  public uploadNote(images: File[], videos: File[], documents: File[], title: string, subject: string, school: string, tags: string[], description: string, markdown: string) {
+    const url = this.apiUrl + "/api/notes";
+    let formData = new FormData();
+    for(let i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
+    for(let i = 0; i < videos.length; i++) {
+      formData.append('videos', videos[i]);
+    }
+    for(let i = 0; i < documents.length; i++) {
+      formData.append('documents', documents[i]);
+    }
+    for(let i = 0; i < tags.length; i++) {
+      formData.append('tags', tags[i]);
+    }
+    formData.append("title", title);
+    formData.append("subject", subject);
+    formData.append("school", school);
+    formData.append("description", description);
+    formData.append("markdown", markdown);
+    return this.http.post(url, formData);
+  }
 }
