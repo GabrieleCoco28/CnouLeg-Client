@@ -84,7 +84,7 @@ export class MarkdownEditorComponent {
     this.mdSelection.end = 0;
   }
   
-  setChars(chars: string) {
+  insertChars(chars: string) {
     if(this.mdSelection.start === this.mdSelection.end ) {
       this.markdownRef.nativeElement.value = this.markdownRef.nativeElement.value.substring(0, this.mdSelection.start) + chars + chars + this.markdownRef.nativeElement.value.substring(this.mdSelection.end, this.markdownRef.nativeElement.value.length);
       setTimeout(() => {
@@ -258,22 +258,29 @@ export class MarkdownEditorComponent {
       this.text = data.text;
       this.link = data.link;
 
-      let pos = this.markdownRef.nativeElement.value.length;
-      for(let i = this.cursorPosition; i < this.markdownRef.nativeElement.value.length;  i++) {
-        if(this.markdownRef.nativeElement.value.charAt(i) === '\n') {
-          pos = i;
-          break;
-        }
+      if(this.mdSelection.start === this.mdSelection.end ) {
+        this.markdownRef.nativeElement.value = this.markdownRef.nativeElement.value.substring(0, this.mdSelection.start) + `[${this.text}](${this.link})` + this.markdownRef.nativeElement.value.substring(this.mdSelection.end, this.markdownRef.nativeElement.value.length);
+        setTimeout(() => {
+          this.markdownRef.nativeElement.focus();
+        })
+        this.cursorPosition = this.mdSelection.start + (this.text.length + this.link.length) + 3;
+        this.markdownRef.nativeElement.selectionStart = this.cursorPosition;
+        this.markdownRef.nativeElement.selectionEnd = this.cursorPosition;
+      }else {
+        this.markdownRef.nativeElement.value = 
+          this.markdownRef.nativeElement.value.substring(0, this.mdSelection.start) + `[${this.text}](${this.link})` + 
+          this.markdownRef.nativeElement.value.substring(this.mdSelection.start, this.mdSelection.end) + `[${this.text}](${this.link})` + 
+          this.markdownRef.nativeElement.value.substring(this.mdSelection.end, this.markdownRef.nativeElement.value.length);
+          setTimeout(() => {
+            this.markdownRef.nativeElement.focus();
+          })
+          this.markdownRef.nativeElement.selectionStart = this.mdSelection.start + (this.text.length + this.link.length) + 3;
+          this.markdownRef.nativeElement.selectionEnd = this.mdSelection.start + Math.abs(this.mdSelection.end - this.mdSelection.start) + (this.text.length + this.link.length) + 3;
+          this.mdSelection.start = this.markdownRef.nativeElement.selectionStart;
+          this.mdSelection.end = this.markdownRef.nativeElement.selectionEnd;
+          this.cursorPosition = this.markdownRef.nativeElement.selectionStart;
       }
-      this.markdownRef.nativeElement.value = this.markdownRef.nativeElement.value.substring(0, pos) + "\n[" + this.text + "](" + this.link + ")\n" + this.markdownRef.nativeElement.value.substring(pos);
-      setTimeout(() => {
-        this.markdownRef.nativeElement.focus();
-      })
-      this.markdownRef.nativeElement.selectionStart = pos + this.text.length + this.link.length + 4;
-      this.markdownRef.nativeElement.selectionEnd = pos + this.text.length + this.link.length + 4;
-      this.mdSelection.start = this.markdownRef.nativeElement.selectionStart;
-      this.mdSelection.end = this.markdownRef.nativeElement.selectionEnd;
-      this.cursorPosition = this.markdownRef.nativeElement.selectionStart;
+
       this.text = '';
       this.link = '';
     });

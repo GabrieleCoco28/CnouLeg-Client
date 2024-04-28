@@ -70,7 +70,7 @@
             <mat-card-title>Markdown</mat-card-title>
         </mat-card-header>
         <br>
-        <mat-toolbar>
+        <div style="width: 100%; display: inline-block; margin-left: 8px;">
             <button mat-icon-button matTooltip="Title" [matMenuTriggerFor]="headersMenu"><mat-icon
                     class='material-symbols-rounded'>title</mat-icon></button>
             <mat-menu #headersMenu>
@@ -81,15 +81,15 @@
             </mat-menu>
 
             <button mat-icon-button matTooltip="Italic"
-                (click)='setChars("*"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
+                (click)='insertChars("*"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
                     class='material-symbols-rounded'>format_italic</mat-icon></button>
 
             <button mat-icon-button matTooltip="Bold"
-                (click)='setChars("**"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
+                (click)='insertChars("**"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
                     class='material-symbols-rounded'>format_bold</mat-icon></button>
 
             <button mat-icon-button matTooltip="Strikethrough"
-                (click)='setChars("~~"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
+                (click)='insertChars("~~"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
                     class='material-symbols-rounded'>format_strikethrough</mat-icon></button>
 
             <button mat-icon-button matTooltip="Bulleted list" (click)="insertInLineStarts('- ')"><mat-icon
@@ -107,7 +107,7 @@
             <button mat-icon-button matTooltip="Quotation" (click)="insertInLineStarts('> ')"><mat-icon
                     class='material-symbols-rounded'>format_quote</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Inline code" (click)='setChars("`");'><mat-icon
+            <button mat-icon-button matTooltip="Inline code" (click)='insertChars("`");'><mat-icon
                     class='material-symbols-rounded'>code</mat-icon></button>
 
             <button mat-icon-button matTooltip="Code block" [matMenuTriggerFor]="languagesMenu"><mat-icon
@@ -127,7 +127,7 @@
             
             <button mat-icon-button matTooltip="LaTeX" (click)="insertLatex()"><mat-icon
                     class='material-symbols-rounded'>function</mat-icon></button>
-        </mat-toolbar>
+        </div>
         <br>
         <mat-card-content>
             <mat-form-field appearance="outline" style="width: 100%;">
