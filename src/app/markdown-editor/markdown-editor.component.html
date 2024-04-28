@@ -131,13 +131,13 @@
         <br>
         <mat-card-content>
             <mat-form-field appearance="outline" style="width: 100%;">
-                <textarea matInput style="resize: none;" rows="10" (mouseup)="selectionChange($event)"
-                    (click)="setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)"
+                <textarea matInput style="resize: none;" rows="10" (pointerup)="selectionChange($event)" (pointercancel)="selectionChange($event)"
+                    (click)="selectionChange($event); setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)"
                     oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
                     #markdownRef></textarea>
             </mat-form-field>
             <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard
-                [disableSanitizer]="true" [clipboardButtonComponent]="copyComponent" [data]="markdownRef.value"
+                [disableSanitizer]="true" [clipboardButtonComponent]="copyComponent" [data]="markdownRef.value ? markdownRef.value : ''"
                 class="md">
             </markdown>
         </mat-card-content>
