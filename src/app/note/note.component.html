@@ -21,7 +21,7 @@
     <mat-card>
         <mat-card-content>
             <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard (ready)="load()"
-                [disableSanitizer]="true" [clipboardButtonComponent]="copyComponent" [data]="noteInfo.markdown"
+                [disableSanitizer]="false" [clipboardButtonComponent]="copyComponent" [data]="noteInfo.markdown"
                 class="md">
             </markdown>
         </mat-card-content>

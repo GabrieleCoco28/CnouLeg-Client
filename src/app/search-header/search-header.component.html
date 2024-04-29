@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
     <span class="spacer"></span>
-    <button mat-icon-button class="theme-button" routerLink="/editor">
-        <mat-icon class="material-symbols-rounded" #themeIcon>edit_note</mat-icon>
+    <button mat-icon-button routerLink="/editor">
+        <mat-icon class="material-symbols-rounded">edit_note</mat-icon>
     </button>
     <button mat-icon-button class="theme-button" (click)="toggleTheme()">
         <mat-icon class="material-symbols-rounded" #themeIcon>{{getTheme()}}</mat-icon>

@@ -10,6 +10,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { validateImage } from 'image-validator';
 import { CnouLegAPIService } from '../cnou-leg-api.service';
 import { Router } from '@angular/router';
+import { AccessDialogComponent } from '../access-dialog/access-dialog.component';
+import { FormControl, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-markdown-editor',
@@ -20,8 +24,18 @@ export class MarkdownEditorComponent {
   @ViewChild('titleRef') titleRef!: ElementRef<HTMLInputElement>;
   @ViewChild('descriptionRef') descriptionRef!: ElementRef<HTMLTextAreaElement>;
   @ViewChild('markdownRef') markdownRef!: ElementRef<HTMLTextAreaElement>;
-  public schoolValue = "other";
-  public subjectValue = "other";
+
+  public titleControl = new FormControl('', [Validators.required]);
+  public titleErrorMessage = '';
+
+  public descriptionControl = new FormControl('', [Validators.required]);
+  public descriptionErrorMessage = '';
+
+  public markdownControl = new FormControl('', [Validators.required]);
+  public markdownErrorMessage = '';
+
+  public schoolValue = 'other';
+  public subjectValue = 'other';
 
   readonly copyComponent = CopyButtonComponent;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -32,7 +46,6 @@ export class MarkdownEditorComponent {
 
   public text = '';
   public link = '';
-
 
   public languages = [
     'c',
@@ -60,8 +73,21 @@ export class MarkdownEditorComponent {
     public translator: TranslatorService,
     public linkDialog: MatDialog,
     public cnoulegAPIService: CnouLegAPIService,
-    public router: Router
-  ) {}
+    public router: Router,
+    public dialog: MatDialog
+  ) {
+    merge(this.titleControl.statusChanges, this.titleControl.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateTitleErrorMessage());
+
+    merge(this.descriptionControl.statusChanges, this.descriptionControl.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateDescriptionErrorMessage());
+
+    merge(this.markdownControl.statusChanges, this.markdownControl.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateMarkdownErrorMessage());
+  }
 
   public add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -413,13 +439,17 @@ export class MarkdownEditorComponent {
 
   onChangeImage(event: Event) {
     if (event.target !== null) {
-      const isValidImage = validateImage((event.target as HTMLInputElement).files![0]).then((isvalid) => {
-        if(!isvalid) return;
+      const isValidImage = validateImage(
+        (event.target as HTMLInputElement).files![0]
+      ).then((isvalid) => {
+        if (!isvalid) return;
         this.loadedImages.push({
           file: (event.target as HTMLInputElement).files![0],
-          link: URL.createObjectURL((event.target as HTMLInputElement).files![0]),
+          link: URL.createObjectURL(
+            (event.target as HTMLInputElement).files![0]
+          ),
         });
-      })
+      });
     }
   }
 
@@ -457,24 +487,92 @@ export class MarkdownEditorComponent {
 
   uploadNote() {
 
-    if(this.markdownRef.nativeElement.value.trim().length < 100 || this.descriptionRef.nativeElement.value.trim().length <= 0 || this.titleRef.nativeElement.value.trim().length <= 0) return;
+    this.titleRef.nativeElement.focus();
+    this.titleRef.nativeElement.blur();
+    this.descriptionRef.nativeElement.focus();
+    this.descriptionRef.nativeElement.blur();
+    this.markdownRef.nativeElement.focus();
+    this.markdownRef.nativeElement.blur();
 
-    let images = [];
-    for(let i = 0; i < this.loadedImages.length; i++) {
-      images.push(this.loadedImages[i].file);
+    this.updateTitleErrorMessage();
+    this.updateDescriptionErrorMessage();
+    this.updateMarkdownErrorMessage();
+
+    if (
+      this.markdownRef.nativeElement.value.trim().length < 100 ||
+      this.descriptionRef.nativeElement.value.trim().length <= 0 ||
+      this.titleRef.nativeElement.value.trim().length <= 0
+    )
+      return;
+    if (!localStorage.getItem('access_token')) {
+      this.dialog.open(AccessDialogComponent);
+      return;
     }
-    this.cnoulegAPIService.uploadNote(images, this.loadedVideos, 
-      this.loadedDocuments, this.titleRef.nativeElement.value, this.subjectValue, this.schoolValue, this.tags, 
-      this.descriptionRef.nativeElement.value, this.markdownRef.nativeElement.value).subscribe(
-       {
-        next: () => {
-          this.router.navigateByUrl("/");
-        },
-        error: (e) => {
-          console.error(e);
+    this.cnoulegAPIService.auth().subscribe({
+      next: () => {
+        let images = [];
+        for (let i = 0; i < this.loadedImages.length; i++) {
+          images.push(this.loadedImages[i].file);
         }
-       }
-      );
+        this.cnoulegAPIService
+          .uploadNote(
+            images,
+            this.loadedVideos,
+            this.loadedDocuments,
+            this.titleRef.nativeElement.value.trim(),
+            this.subjectValue,
+            this.schoolValue,
+            this.tags,
+            this.descriptionRef.nativeElement.value.trim(),
+            this.markdownRef.nativeElement.value.trim()
+          )
+          .subscribe({
+            next: () => {
+              this.router.navigateByUrl('/');
+            },
+            error: (e) => {
+              console.error(e);
+            },
+          });
+      },
+      error: () => {
+        this.dialog.open(AccessDialogComponent);
+      }
+    });
   }
 
+  updateTitleErrorMessage() {
+    if (this.titleControl.hasError('required')) {
+      this.titleErrorMessage = this.translator.labels.titleEmptyError[this.translator.getLanguage()];
+    } else {
+      this.titleErrorMessage = '';
+    }
+  }
+
+  updateDescriptionErrorMessage() {
+    if (this.descriptionControl.hasError('required')) {
+      this.descriptionErrorMessage = this.translator.labels.descriptionEmptyError[this.translator.getLanguage()];
+    } else {
+      this.descriptionErrorMessage = '';
+    }
+  }
+
+  updateMarkdownErrorMessage() {
+    if (this.markdownControl.hasError('required')) {
+      this.markdownErrorMessage = this.translator.labels.markdownEmptyError[this.translator.getLanguage()];
+    } else if (this.markdownControl.hasError('notEnough')) {
+      this.markdownErrorMessage = this.translator.labels.markdownMinCharsError[this.translator.getLanguage()];
+    } else {
+      this.markdownErrorMessage = '';
+    }
+  }
+
+  checkMinMarkdownChars() {
+    if(this.markdownRef.nativeElement.value.trim().length < 100 && this.markdownRef.nativeElement.value.trim().length > 0)
+      this.markdownControl.setErrors({notEnough: true})
+    else {
+      this.markdownControl.setErrors({notEnough: null})
+      this.markdownControl.updateValueAndValidity();
+    }
+  }
 }

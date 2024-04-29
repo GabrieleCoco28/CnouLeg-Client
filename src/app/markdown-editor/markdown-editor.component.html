@@ -4,10 +4,16 @@
     <h1 style="text-align: center;">{{translator.labels.createNote[translator.getLanguage()]}}</h1>
     <mat-form-field appearance="outline" style="width: min(320px, 100%);">
         <mat-label>{{translator.labels.title[translator.getLanguage()]}}</mat-label>
-        <input matInput #titleRef maxlength="30">
+        <input matInput #titleRef maxlength="60" required [formControl]="titleControl" (blur)="updateTitleErrorMessage()">
+        @if (titleControl.invalid) {
+            <mat-error>
+                <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                {{titleErrorMessage}}
+            </mat-error>
+        }
     </mat-form-field>
     <br>
-    <label>{{titleRef.value.length}}/{{titleRef.maxLength}}</label>
+    <label>{{titleRef.value.trim().length}}/{{titleRef.maxLength}}</label>
     <br>
     <br>
     <mat-form-field appearance="outline" style="width: min(228px, 100%); margin-right: 8px;">
@@ -50,19 +56,25 @@
                 </button>
             </mat-chip-row>
             }
-            <input placeholder="Aggiungi tag..." [matChipInputFor]="chipGrid"
+            <input placeholder="{{translator.labels.addTag[translator.getLanguage()]}}" [matChipInputFor]="chipGrid"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                 (matChipInputTokenEnd)="add($event)" />
         </mat-chip-grid>
     </mat-form-field>
     <br>
     <mat-form-field appearance="outline" style="width: 100%;">
-        <mat-label>Descrizione</mat-label>
-        <textarea matInput maxlength="300" style="resize: none;"
+        <mat-label>{{translator.labels.description[translator.getLanguage()]}}</mat-label>
+        <textarea matInput maxlength="500" style="resize: none;" required [formControl]="descriptionControl" (blur)="updateDescriptionErrorMessage()"
             oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' #descriptionRef></textarea>
+        @if (descriptionControl.invalid) {
+            <mat-error>
+                <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                {{descriptionErrorMessage}}
+            </mat-error>
+        }
     </mat-form-field>
     <br>
-    <label>{{descriptionRef.value.length}}/{{descriptionRef.maxLength}}</label>
+    <label>{{descriptionRef.value.trim().length}}/{{descriptionRef.maxLength}}</label>
     <br>
     <br>
     <mat-card>
@@ -71,46 +83,46 @@
         </mat-card-header>
         <br>
         <div style="width: 100%; display: inline-block; margin-left: 8px;">
-            <button mat-icon-button matTooltip="Title" [matMenuTriggerFor]="headersMenu"><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.title[translator.getLanguage()]}}" [matMenuTriggerFor]="headersMenu"><mat-icon
                     class='material-symbols-rounded'>title</mat-icon></button>
             <mat-menu #headersMenu>
                 <button mat-menu-item *ngFor="let i of [0, 1, 2, 3, 4, 5]" (click)="insertInLineStarts('#'.repeat(i + 1) + ' ')">
                     <mat-icon class="material-symbols-rounded">format_h{{i + 1}}</mat-icon>
-                    <span>Titolo {{i + 1}}</span>
+                    <span>{{translator.labels.title[translator.getLanguage()]}} {{i + 1}}</span>
                 </button>
             </mat-menu>
 
-            <button mat-icon-button matTooltip="Italic"
+            <button mat-icon-button matTooltip="{{translator.labels.italic[translator.getLanguage()]}}"
                 (click)='insertChars("*"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
                     class='material-symbols-rounded'>format_italic</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Bold"
+            <button mat-icon-button matTooltip="{{translator.labels.bold[translator.getLanguage()]}}"
                 (click)='insertChars("**"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
                     class='material-symbols-rounded'>format_bold</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Strikethrough"
+            <button mat-icon-button matTooltip="{{translator.labels.strikethrough[translator.getLanguage()]}}"
                 (click)='insertChars("~~"); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
                     class='material-symbols-rounded'>format_strikethrough</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Bulleted list" (click)="insertInLineStarts('- ')"><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.bulleted_list[translator.getLanguage()]}}" (click)="insertInLineStarts('- ')"><mat-icon
                     class='material-symbols-rounded'>format_list_bulleted</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Numbered list" (click)="insertInLineStarts('1. ')"><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.numbered_list[translator.getLanguage()]}}" (click)="insertInLineStarts('1. ')"><mat-icon
                     class='material-symbols-rounded'>format_list_numbered</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Image" (click)="insertImage()"><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.image[translator.getLanguage()]}}" (click)="insertImage()"><mat-icon
                     class='material-symbols-rounded'>image</mat-icon></button>
 
             <button mat-icon-button matTooltip="Link" (click)="insertLink()"><mat-icon
                     class='material-symbols-rounded'>link</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Quotation" (click)="insertInLineStarts('> ')"><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.quotation[translator.getLanguage()]}}" (click)="insertInLineStarts('> ')"><mat-icon
                     class='material-symbols-rounded'>format_quote</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Inline code" (click)='insertChars("`");'><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.inline_code[translator.getLanguage()]}}" (click)='insertChars("`");'><mat-icon
                     class='material-symbols-rounded'>code</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Code block" [matMenuTriggerFor]="languagesMenu"><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.code_block[translator.getLanguage()]}}" [matMenuTriggerFor]="languagesMenu"><mat-icon
                     class='material-symbols-rounded'>code_blocks</mat-icon></button>
             <mat-menu #languagesMenu>
                 <button mat-menu-item *ngFor="let lang of languages" (click)="insertCodeBlock(lang);">
@@ -118,10 +130,10 @@
                 </button>
             </mat-menu>
 
-            <button mat-icon-button matTooltip="Table" (click)="insertTable()"><mat-icon
+            <button mat-icon-button matTooltip="{{translator.labels.table[translator.getLanguage()]}}" (click)="insertTable()"><mat-icon
                     class='material-symbols-rounded'>table</mat-icon></button>
 
-            <button mat-icon-button matTooltip="Horizontal line"
+            <button mat-icon-button matTooltip="{{translator.labels.horizontal_line[translator.getLanguage()]}}"
                 (click)='insertHorizontalLine(); markdownRef.style.height = ""; markdownRef.style.height = markdownRef.scrollHeight + "px"'><mat-icon
                     class='material-symbols-rounded'>horizontal_rule</mat-icon></button>
             
@@ -133,13 +145,20 @@
             <mat-form-field appearance="outline" style="width: 100%;">
                 <textarea matInput style="resize: none;" rows="10" (pointerup)="selectionChange($event)" (pointercancel)="selectionChange($event)"
                     (click)="selectionChange($event); setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)"
+                    (blur)="checkMinMarkdownChars(); updateMarkdownErrorMessage()" [formControl]="markdownControl" required
                     oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"' onchange='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
                     #markdownRef></textarea>
+                @if (markdownControl.invalid) {
+                    <mat-error>
+                        <mat-icon class="material-symbols-rounded error">error</mat-icon>
+                        {{markdownErrorMessage}}
+                    </mat-error>
+                }
             </mat-form-field>
             <br>
-            <label>{{markdownRef.value.length}}</label>
-            <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard
-                [disableSanitizer]="true" [clipboardButtonComponent]="copyComponent" [data]="markdownRef.value ? markdownRef.value : ''"
+            <label>{{markdownRef.value.trim().length}}</label>
+            <markdown mermaid lineNumbers [mermaidOptions]="mermaidOptions" emoji katex clipboard 
+                [disableSanitizer]="false" [clipboardButtonComponent]="copyComponent" [data]="markdownRef.value ? markdownRef.value : ''"
                 class="md">
             </markdown>
         </mat-card-content>
@@ -204,6 +223,10 @@
             </div>
         </div>
     </mat-card>
-    <br>
-    <button mat-flat-button color="primary" (click)="uploadNote()">Pubblica</button>
+</div>
+<div style="width: 100%; height: 100%; min-width: 100%; min-height: 100%;" #uploadButton>
+    <button style="position: fixed; bottom: 32px; right: 32px;" mat-fab extended color="primary" (click)="uploadNote();">
+        <mat-icon class="material-symbols-rounded">upload</mat-icon>
+        {{translator.labels.publish[translator.getLanguage()]}}
+    </button>
 </div>

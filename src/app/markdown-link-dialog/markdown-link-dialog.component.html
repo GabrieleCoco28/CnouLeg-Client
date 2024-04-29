@@ -2,7 +2,7 @@
 <div style="text-align: center;">
   <mat-dialog-content style="width: 100%;">
     <mat-form-field appearance="outline" style="width: 100%;">
-      <mat-label>Testo</mat-label>
+      <mat-label>{{translator.labels.text[translator.getLanguage()]}}</mat-label>
       <input matInput [(ngModel)]="data.text">
     </mat-form-field>
     <br>
@@ -13,6 +13,6 @@
   </mat-dialog-content>
 </div>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Annulla</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Inserisci</button>
+  <button mat-button (click)="onNoClick()">{{translator.labels.cancel[translator.getLanguage()]}}</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>{{translator.labels.insert[translator.getLanguage()]}}</button>
 </mat-dialog-actions>

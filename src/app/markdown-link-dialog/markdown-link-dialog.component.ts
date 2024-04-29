@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MarkdownEditorComponent } from '../markdown-editor/markdown-editor.component';
+import { TranslatorService } from '../translator.service';
 
 export interface LinkDialogData {
   text: string;
@@ -16,6 +17,7 @@ export class MarkdownLinkDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<MarkdownEditorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LinkDialogData,
+    public translator: TranslatorService
   ) {}
 
   onNoClick(): void {

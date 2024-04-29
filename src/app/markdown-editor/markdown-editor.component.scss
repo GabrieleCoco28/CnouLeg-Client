@@ -60,3 +60,8 @@ markdown::ng-deep img {
 .imageAddButton, .videoAddButton, .documentAddButton {
     transform: translateY(-12px);
 }
+
+.error {
+    scale: 1.5;
+    transform: translateY(1px);
+}

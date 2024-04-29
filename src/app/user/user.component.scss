@@ -20,3 +20,13 @@
 .spacer {
     flex: 1 1 auto;
 }
+
+mat-card {
+    color: inherit;
+    margin: 1em;
+    cursor: pointer;
+}
+
+:host ::ng-deep .mat-mdc-chip-graphic {
+    padding-right: 0 !important;
+}

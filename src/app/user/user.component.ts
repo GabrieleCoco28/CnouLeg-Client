@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CnouLegAPIService, User } from '../cnou-leg-api.service';
+import { CnouLegAPIService, Note, User } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
 import {
   Dimensions,
@@ -52,6 +52,8 @@ export class UserComponent {
   allowMoveImage = false;
   croppedSaved = false;
 
+  public noteInfo: Note[] = [{} as Note];
+  
   constructor(
     public route: ActivatedRoute,
     public cnoulegAPIService: CnouLegAPIService,
@@ -82,6 +84,11 @@ export class UserComponent {
 
             this.roleValue = this.userInfo.role;
             this.lastSavedAvatarUrl = this.currentAvatarUrl;
+
+            cnoulegAPIService.getArticlesByUserId(this.userInfo?._id as string).subscribe((response) => {
+              this.noteInfo = response.notes;
+            });
+
           },
           error: () => {
             router.navigateByUrl('/userNotFound');
@@ -175,11 +182,11 @@ export class UserComponent {
 
   applyChanges() {
     if (this.usernameRef.nativeElement.value.trim().length <= 0) return;
-    this.userInfo!.username = this.usernameRef.nativeElement.value;
-    this.userInfo!.bio = this.bioRef.nativeElement.value;
+    this.userInfo!.username = this.usernameRef.nativeElement.value.trim();
+    this.userInfo!.bio = this.bioRef.nativeElement.value.trim();
     this.userInfo!.birthdate = this.birthRef.nativeElement.value;
-    this.userInfo!.subject = this.subjectRef.nativeElement.value;
-    this.userInfo!.school = this.schoolRef.nativeElement.value;
+    this.userInfo!.subject = this.subjectRef.nativeElement.value.trim();
+    this.userInfo!.school = this.schoolRef.nativeElement.value.trim();
     this.userInfo!.role =
       this.roleValue.trim().length <= 0 ? this.userInfo!.role : this.roleValue;
     this.lastSavedAvatarUrl = this.currentAvatarUrl;

@@ -71,4 +71,8 @@ export class NotesHeaderComponent {
       duration: 2000,
     });
   }
+
+  back() {
+    history.back();
+  }
 }

@@ -109,6 +109,11 @@ export class CnouLegAPIService {
     return this.http.get<Note>(url);
   }
 
+  public getArticlesByUserId(id: string) {
+    const url = this.apiUrl + '/api/notes?user_id=' + id;
+    return this.http.get<Notes>(url);
+  }
+
   public getUsers(): Observable<Users> {
     const url = this.apiUrl + "/api/users";
     return this.http.get<Users>(url);

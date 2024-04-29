@@ -157,15 +157,15 @@ export class RegisterComponent {
 
   sendRegistrationData() {
     const data: RegistrationData = {
-      username: this.usernameRef.nativeElement.value,
+      username: this.usernameRef.nativeElement.value.trim(),
       birthdate: this.birthRef.nativeElement.value,
       gender: this.genderValue,
-      email: this.emailRef.nativeElement.value,
+      email: this.emailRef.nativeElement.value.trim(),
       password: this.passwordRef.nativeElement.value,
       role: this.roleValue,
-      school: this.schoolRef.nativeElement.value,
-      bio: this.bioRef.nativeElement.value,
-      subject: this.subjectRef.nativeElement.value,
+      school: this.schoolRef.nativeElement.value.trim(),
+      bio: this.bioRef.nativeElement.value.trim(),
+      subject: this.subjectRef.nativeElement.value.trim(),
       profile_pic_url: '',
     };
     this.cnoulegAPIService.sendRegistrationData(data).subscribe(() => {

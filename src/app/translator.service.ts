@@ -353,6 +353,90 @@ export class TranslatorService {
     createNote: {
       it: 'Crea una nuova nota',
       en: 'Create a new note'
+    },
+    addTag: {
+      it: 'Aggiungi tag...',
+      en: 'Add tag...'
+    },
+    publish: {
+      it: 'Pubblica',
+      en: 'Publish'
+    },
+    titleEmptyError: {
+      it: 'Il titolo non può essere vuoto',
+      en: 'The title cannot be empty'
+    },
+    descriptionEmptyError: {
+      it: 'La descrizione non può essere vuota',
+      en: 'The description cannot be empty'
+    },
+    markdownEmptyError: {
+      it: 'Il markdown non può essere vuoto',
+      en: 'The markdown cannot be empty'
+    },
+    markdownMinCharsError: {
+      it: 'Il markdown deve contenere almeno 100 caratteri',
+      en: 'Markdown must contain at least 100 characters'
+    },
+    text: {
+      it: 'Testo',
+      en: 'Text'
+    },
+    insert: {
+      it: 'Inserisci',
+      en: 'Insert'
+    },
+    load: {
+      it: 'Carica',
+      en: 'Load'
+    },
+    italic: {
+      it: 'Italico',
+      en: 'Italic'
+    },
+    bold: {
+      it: 'Grassetto',
+      en: 'Bold'
+    },
+    strikethrough: {
+      it: 'Barrato',
+      en: 'Strikethrough'
+    },
+    bulleted_list: {
+      it: 'Elenco puntato',
+      en: 'Bulleted list'
+    },
+    numbered_list: {
+      it: 'Elenco numerato',
+      en: 'Numbered list'
+    },
+    image: {
+      it: 'Immagine',
+      en: 'Image'
+    },
+    quotation: {
+      it: 'Citazione',
+      en: 'Quotation'
+    },
+    inline_code: {
+      it: 'Codie in linea',
+      en: 'Inline code'
+    },
+    code_block: {
+      it: 'Blocco di codice',
+      en: 'Code block'
+    },
+    table: {
+      it: 'Tabella',
+      en: 'Table'
+    },
+    horizontal_line: {
+      it: 'Linea orizzontale',
+      en: 'Horizontal line'
+    },
+    notes: {
+      it: 'Note',
+      en: 'Notes'
     }
   };
   constructor() {}

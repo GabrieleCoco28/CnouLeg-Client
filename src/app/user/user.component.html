@@ -28,7 +28,7 @@
     <div id="header" style="width: 100%;">
         <div style="text-align: center;">
             <img [src]="(croppedImage && croppedSaved) ? croppedImage : currentAvatarUrl" alt="profile" id="avatar"
-            #avatar>
+            #avatar onerror="this.onerror=null;this.src='../../assets/default.svg'">
             <button mat-mini-fab style="position: absolute; transform: translate(-40px, 88px);" *ngIf="isEditMode" [matMenuTriggerFor]="avatarMenu">
                 <mat-icon class="material-symbols-rounded">photo_camera</mat-icon>
             </button>
@@ -81,7 +81,7 @@
                         #bioRef></textarea>
                 </mat-form-field>
                 <br>
-                <label>{{bioRef.value.length}}/{{bioRef.maxLength}}</label>
+                <label>{{bioRef.value.trim().length}}/{{bioRef.maxLength}}</label>
             </mat-card-content>
         </div>
         <mat-card-header>
@@ -157,7 +157,7 @@
                     <input matInput #subjectRef maxlength="40" [value]="userInfo?.subject">
                 </mat-form-field>
                 <br>
-                <label>{{subjectRef.value.length}}/{{subjectRef.maxLength}}</label>
+                <label>{{subjectRef.value.trim().length}}/{{subjectRef.maxLength}}</label>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: min(256px, 100%);">
@@ -165,10 +165,38 @@
                     <input matInput #schoolRef maxlength="40" [value]="userInfo?.school">
                 </mat-form-field>
                 <br>
-                <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
+                <label>{{schoolRef.value.trim().length}}/{{schoolRef.maxLength}}</label>
             </div>
         </mat-card-content>
     </mat-card>
+    <div [hidden]="isEditMode">
+        <br>
+        <h3 style="margin-left: 1em;">{{translator.labels.notes[translator.getLanguage()]}} • {{noteInfo.length}}</h3>
+        <div *ngFor="let note of noteInfo">
+            <mat-card class="hover">
+                <mat-card-header [routerLink]="'/note/' + note._id">
+                    <mat-card-title>{{note.title}}</mat-card-title>
+                    <div mat-card-avatar [class]="'comment-avatar _' + note.author_id" 
+                        style="background-image: url('{{(croppedImage && croppedSaved) ? croppedImage : currentAvatarUrl}}'); background-size: cover;" 
+                        onerror="this.onerror=null;this.src='../../assets/default.svg'"></div>
+                    <mat-card-subtitle style="opacity: 90%;">{{translator.labels.by[translator.getLanguage()]}} {{userInfo?.username}} •
+                        {{note.data_last_modified|
+                        date:"dd/MM/YYYY"}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content [routerLink]="'/note/' + note._id" [class]="'_id' + note._id">
+                    <mat-chip-set class="tags">
+                        <mat-chip class="tag">
+                            <mat-icon class="material-symbols-rounded filled star-icon" matChipAvatar>star</mat-icon>
+                                {{note.avg_rating}}
+                        </mat-chip>
+                        <mat-chip class="tag">{{translator.translateSubject(note.subject)}}</mat-chip>
+                        <mat-chip class="tag">{{translator.translateClass(note.class)}}</mat-chip>
+                    </mat-chip-set>
+                    <p>{{ note.description }}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
     <br>
 </div>
 
@@ -184,7 +212,7 @@
         <button mat-icon-button style="vertical-align: middle;" (click)="rotateRight()" style="z-index: 10;">
             <mat-icon class="material-symbols-rounded">rotate_right</mat-icon>
         </button>
-        <button mat-button style="z-index: 10;" (click)="uploadImage()">Carica</button>
+        <button mat-button style="z-index: 10;" (click)="uploadImage()">{{translator.labels.load[translator.getLanguage()]}}</button>
     </mat-toolbar>
     <image-cropper [imageChangedEvent]="imageChangedEvent" [imageURL]="imageURL" [maintainAspectRatio]="true"
         [containWithinAspectRatio]="true" [aspectRatio]="aspectRatio" [cropperMinWidth]="128" [resizeToWidth]="256"
@@ -194,5 +222,4 @@
         (cropperReady)="cropperReady($event)" (loadImageFailed)="loadImageFailed()"
         style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 0 !important; z-index: 1;">
     </image-cropper>
-    <!-- <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" /> -->
 </div>

@@ -23,7 +23,7 @@
                     }
                 </mat-form-field>
                 <br>
-                <label>{{usernameRef.value.length}}/{{usernameRef.maxLength}}</label>
+                <label>{{usernameRef.value.trim().length}}/{{usernameRef.maxLength}}</label>
                 <br>
                 <br>
                 <a routerLink="/login">{{this.translator.labels.alreadyRegistered[this.translator.getLanguage()]}}</a>
@@ -136,7 +136,7 @@
                     <input matInput #schoolRef maxlength="40">
                 </mat-form-field>
                 <br>
-                <label>{{schoolRef.value.length}}/{{schoolRef.maxLength}}</label>
+                <label>{{schoolRef.value.trim().length}}/{{schoolRef.maxLength}}</label>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: min(256px, 100%);">
@@ -144,7 +144,7 @@
                     <input matInput #subjectRef maxlength="40">
                 </mat-form-field>
                 <br>
-                <label>{{subjectRef.value.length}}/{{subjectRef.maxLength}}</label>
+                <label>{{subjectRef.value.trim().length}}/{{subjectRef.maxLength}}</label>
                 <br>
                 <br>
                 <mat-form-field appearance="outline" style="width: min(256px, 100%);">
@@ -154,7 +154,7 @@
                         #bioRef></textarea>
                 </mat-form-field>
                 <br>
-                <label>{{bioRef.value.length}}/{{bioRef.maxLength}}</label>
+                <label>{{bioRef.value.trim().length}}/{{bioRef.maxLength}}</label>
             </form>
             <br>
             <br>
