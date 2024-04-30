@@ -211,4 +211,19 @@ export class CnouLegAPIService {
     formData.append("markdown", markdown);
     return this.http.post(url, formData);
   }
+
+  updateNote(title: string, subject: string, school: string, tags: string[], description: string, markdown: string, noteId: string) {
+    const url = this.apiUrl + "/api/notes";
+    let formData = new FormData();
+    for(let i = 0; i < tags.length; i++) {
+      formData.append('tags', tags[i]);
+    }
+    formData.append("title", title);
+    formData.append("subject", subject);
+    formData.append("school", school);
+    formData.append("description", description);
+    formData.append("markdown", markdown);
+    formData.append("note_id", noteId);
+    return this.http.put(url, formData);
+  }
 }

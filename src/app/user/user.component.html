@@ -183,6 +183,21 @@
                         {{note.data_last_modified|
                         date:"dd/MM/YYYY"}}</mat-card-subtitle>
                 </mat-card-header>
+                <div style="z-index: 10; position: absolute; right: 8px; top: 8px;">
+                    <button mat-icon-button [matMenuTriggerFor]="noteMenu" *ngIf="isCurrentUser" (click)="$event.preventDefault()">
+                        <mat-icon class="material-symbols-rounded">more_vert</mat-icon>
+                    </button>
+                    <mat-menu #noteMenu>
+                        <button mat-menu-item routerLink="/editor/{{note._id}}">
+                            <mat-icon class="material-symbols-rounded">edit</mat-icon>
+                            <span>{{translator.labels.edit[translator.getLanguage()]}}</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon class="material-symbols-rounded">delete</mat-icon>
+                            <span>{{translator.labels.delete[translator.getLanguage()]}}</span>
+                        </button>
+                    </mat-menu>
+                </div>
                 <mat-card-content [routerLink]="'/note/' + note._id" [class]="'_id' + note._id">
                     <mat-chip-set class="tags">
                         <mat-chip class="tag">

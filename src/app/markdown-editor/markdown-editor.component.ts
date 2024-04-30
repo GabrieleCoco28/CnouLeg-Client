@@ -9,11 +9,12 @@ import { MarkdownLinkDialogComponent } from '../markdown-link-dialog/markdown-li
 import { MatDialog } from '@angular/material/dialog';
 import { validateImage } from 'image-validator';
 import { CnouLegAPIService } from '../cnou-leg-api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccessDialogComponent } from '../access-dialog/access-dialog.component';
 import { FormControl, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { merge } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-markdown-editor',
@@ -69,12 +70,16 @@ export class MarkdownEditorComponent {
   public loadedVideos: File[] = [];
   public loadedDocuments: File[] = [];
 
+  public parameters: any;
+
   constructor(
     public translator: TranslatorService,
     public linkDialog: MatDialog,
     public cnoulegAPIService: CnouLegAPIService,
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private spinner: NgxSpinnerService,
+    public route: ActivatedRoute,
   ) {
     merge(this.titleControl.statusChanges, this.titleControl.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -87,9 +92,41 @@ export class MarkdownEditorComponent {
     merge(this.markdownControl.statusChanges, this.markdownControl.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateMarkdownErrorMessage());
+
+    setTimeout(() => {
+      this.route.params.subscribe((params) => {
+        this.parameters = params;
+        if(params['id']) {
+          cnoulegAPIService.getArticleByID(params['id']).subscribe({
+            next: (note) => {
+              this.cnoulegAPIService.auth().subscribe((v) => {
+                if(note.author_id === v.id) {
+                  this.titleRef.nativeElement.value = note.title;
+                  this.titleControl.setValue(note.title);
+                  this.subjectValue = note.subject;
+                  this.schoolValue = note.class;
+                  this.descriptionRef.nativeElement.value = note.description;
+                  this.descriptionControl.setValue(note.description);
+                  this.descriptionRef.nativeElement.dispatchEvent(new Event('change'))
+                  this.markdownRef.nativeElement.value = note.markdown;
+                  this.markdownControl.setValue(note.markdown);
+                  this.markdownRef.nativeElement.dispatchEvent(new Event('change'))
+                  for(let i = 0; i < note.tags.length; i++) {
+                    this.tags.push(note.tags[i]);
+                  }
+                }else {
+                  router.navigateByUrl("/editor");
+                }
+              })
+            }
+          })
+        }
+      })
+    })
   }
 
   public add(event: MatChipInputEvent): void {
+    if(this.tags.length >= 5) return;
     const value = (event.value || '').trim();
     if (value && !this.tags.includes(value)) {
       this.tags.push(value);
@@ -487,17 +524,18 @@ export class MarkdownEditorComponent {
 
   uploadNote() {
 
+    
     this.titleRef.nativeElement.focus();
     this.titleRef.nativeElement.blur();
     this.descriptionRef.nativeElement.focus();
     this.descriptionRef.nativeElement.blur();
     this.markdownRef.nativeElement.focus();
     this.markdownRef.nativeElement.blur();
-
+    
     this.updateTitleErrorMessage();
     this.updateDescriptionErrorMessage();
     this.updateMarkdownErrorMessage();
-
+    
     if (
       this.markdownRef.nativeElement.value.trim().length < 100 ||
       this.descriptionRef.nativeElement.value.trim().length <= 0 ||
@@ -508,37 +546,63 @@ export class MarkdownEditorComponent {
       this.dialog.open(AccessDialogComponent);
       return;
     }
-    this.cnoulegAPIService.auth().subscribe({
-      next: () => {
-        let images = [];
-        for (let i = 0; i < this.loadedImages.length; i++) {
-          images.push(this.loadedImages[i].file);
+    this.spinner.show();
+    if(this.parameters['id']) {
+      this.cnoulegAPIService.auth().subscribe({
+        next: () => {
+          this.cnoulegAPIService
+            .updateNote(
+              this.titleRef.nativeElement.value.trim(),
+              this.subjectValue,
+              this.schoolValue,
+              this.tags,
+              this.descriptionRef.nativeElement.value.trim(),
+              this.markdownRef.nativeElement.value.trim(),
+              this.parameters['id']
+            )
+            .subscribe(() => {
+              this.spinner.hide();
+              this.router.navigateByUrl('/note/' + this.parameters['id']);
+            });
+        },
+        error: () => {
+          this.dialog.open(AccessDialogComponent);
         }
-        this.cnoulegAPIService
-          .uploadNote(
-            images,
-            this.loadedVideos,
-            this.loadedDocuments,
-            this.titleRef.nativeElement.value.trim(),
-            this.subjectValue,
-            this.schoolValue,
-            this.tags,
-            this.descriptionRef.nativeElement.value.trim(),
-            this.markdownRef.nativeElement.value.trim()
-          )
-          .subscribe({
-            next: () => {
-              this.router.navigateByUrl('/');
-            },
-            error: (e) => {
-              console.error(e);
-            },
-          });
-      },
-      error: () => {
-        this.dialog.open(AccessDialogComponent);
-      }
-    });
+      });
+    } else {
+      this.cnoulegAPIService.auth().subscribe({
+        next: () => {
+          let images = [];
+          for (let i = 0; i < this.loadedImages.length; i++) {
+            images.push(this.loadedImages[i].file);
+          }
+          this.cnoulegAPIService
+            .uploadNote(
+              images,
+              this.loadedVideos,
+              this.loadedDocuments,
+              this.titleRef.nativeElement.value.trim(),
+              this.subjectValue,
+              this.schoolValue,
+              this.tags,
+              this.descriptionRef.nativeElement.value.trim(),
+              this.markdownRef.nativeElement.value.trim()
+            )
+            .subscribe({
+              next: () => {
+                this.spinner.hide();
+                this.router.navigateByUrl('/');
+              },
+              error: (e) => {
+                console.error(e);
+              },
+            });
+        },
+        error: () => {
+          this.dialog.open(AccessDialogComponent);
+        }
+      });
+    }
   }
 
   updateTitleErrorMessage() {

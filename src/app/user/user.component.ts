@@ -204,9 +204,7 @@ export class UserComponent {
         this.userInfo!.subject,
         this.currentAvatarUrl === this.defaultAvatarUrl
       )
-      .subscribe((v) => {
-        console.log(v);
-      });
+      .subscribe(() => {});
     this.toggleEdit();
   }
 

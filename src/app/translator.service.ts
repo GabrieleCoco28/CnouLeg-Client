@@ -419,7 +419,7 @@ export class TranslatorService {
       en: 'Quotation'
     },
     inline_code: {
-      it: 'Codie in linea',
+      it: 'Codice in linea',
       en: 'Inline code'
     },
     code_block: {
@@ -437,6 +437,18 @@ export class TranslatorService {
     notes: {
       it: 'Note',
       en: 'Notes'
+    },
+    edit: {
+      it: 'Modifica',
+      en: 'Edit'
+    },
+    delete: {
+      it: 'Elimina',
+      en: 'Delete'
+    },
+    update: {
+      it: 'Aggiorna',
+      en: 'Update'
     }
   };
   constructor() {}
