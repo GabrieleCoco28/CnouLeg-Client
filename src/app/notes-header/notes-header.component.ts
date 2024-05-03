@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { CnouLegAPIService } from '../cnou-leg-api.service';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { CnouLegAPIService, Note } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,6 +11,9 @@ import { SnackBarCopiedToClipboardComponent } from '../snack-bar-copied-to-clipb
   styleUrl: './notes-header.component.scss',
 })
 export class NotesHeaderComponent {
+  @Input() data!: Note;
+  public isCurrentUser = false;
+
   @ViewChild('themeIcon', { read: ElementRef })
   themeIcon!: ElementRef<HTMLElement>;
   @ViewChild('avatar', { read: ElementRef }) avatar!: ElementRef<HTMLElement>;
@@ -21,7 +24,14 @@ export class NotesHeaderComponent {
     public translator: TranslatorService,
     public router: Router,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+  }
+  
+  ngOnChanges() {
+    if(this.data) {
+      this.isCurrentUser = this.data.author_id === this.cnoulegAPIService.getUserIdFromJWT();
+    }
+  }
 
   toggleTheme() {
     if (document.body.className.includes('light-theme')) {

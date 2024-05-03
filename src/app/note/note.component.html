@@ -1,6 +1,6 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
 <div style="padding: 0 1em 0 1em; display: none;" class="noteElementRoot">
-    <app-notes-header></app-notes-header>
+    <app-notes-header [data]="noteInfo" ></app-notes-header>
     <div id="title">
         <h1>{{noteInfo.title}}</h1>
         <div style="display: grid; grid-template-columns: 48px 1fr;">

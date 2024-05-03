@@ -8,6 +8,9 @@
         (click)="toggleEdit()">
         <mat-icon class="material-symbols-rounded">edit</mat-icon>
     </button>
+    <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && !isEditMode" routerLink="/editor">
+        <mat-icon class="material-symbols-rounded">edit_note</mat-icon>
+    </button>
     <button mat-icon-button style="vertical-align: middle;" *ngIf="isCurrentUser && isEditMode"
         (click)="revertChanges()">
         <mat-icon class="material-symbols-rounded">close</mat-icon>
@@ -192,7 +195,7 @@
                             <mat-icon class="material-symbols-rounded">edit</mat-icon>
                             <span>{{translator.labels.edit[translator.getLanguage()]}}</span>
                         </button>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="deleteNote(note._id)">
                             <mat-icon class="material-symbols-rounded">delete</mat-icon>
                             <span>{{translator.labels.delete[translator.getLanguage()]}}</span>
                         </button>

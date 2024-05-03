@@ -214,6 +214,17 @@ export class UserComponent {
     this.toggleEdit();
   }
 
+  deleteNote(id: string) {
+    this.cnoulegAPIService.deleteNote(id).subscribe((v) => {
+      for(let i = 0; i < this.noteInfo.length; i++) {
+        if(this.noteInfo[i]._id === id) {
+          this.noteInfo.splice(i, 1);
+          break;
+        }
+      }
+    })
+  }
+
   back() {
     history.back();
   }

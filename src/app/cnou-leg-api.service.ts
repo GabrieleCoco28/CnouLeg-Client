@@ -226,4 +226,9 @@ export class CnouLegAPIService {
     formData.append("note_id", noteId);
     return this.http.put(url, formData);
   }
+
+  deleteNote(id: string) {
+    const url = this.apiUrl + "/api/notes";
+    return this.http.delete(url, {body: {note_id: id}});
+  }
 }

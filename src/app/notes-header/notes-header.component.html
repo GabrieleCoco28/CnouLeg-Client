@@ -3,6 +3,9 @@
         <mat-icon class="material-symbols-rounded">arrow_back</mat-icon>
     </button>
     <span class="spacer"></span>
+    <button mat-icon-button class="share-button" routerLink="/editor/{{data._id}}" *ngIf="isCurrentUser">
+        <mat-icon class="material-symbols-rounded">edit</mat-icon>
+    </button>
     <button mat-icon-button class="share-button" (click)="copyUrlToClipboard()">
         <mat-icon class="material-symbols-rounded">share</mat-icon>
     </button>
