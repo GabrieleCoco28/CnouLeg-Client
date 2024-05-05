@@ -45,7 +45,7 @@ export class NoteComponent implements OnInit {
 
   public comments: Comment[] = [];
 
-  public starsVoted = 0;
+  public rating = 0;
 
   public parameters: any;
 
@@ -98,6 +98,22 @@ export class NoteComponent implements OnInit {
                 history.back();
               }
             });
+
+            cnoulegAPIService.getRating(this.noteInfo._id).subscribe({
+              next: (v) => {
+                if(v) {
+                  this.rating = v.rating;
+                  this.setFilledStars();
+                } else {
+                  this.rating = 0;
+                  this.setFilledStars();
+                }
+              },
+              error: () => {
+                this.rating = 0;
+                this.setFilledStars();
+              }
+            })
           },
           error: (e) => {
             this.router.navigateByUrl('/noteNotFound');
@@ -192,12 +208,23 @@ export class NoteComponent implements OnInit {
       ).className =
         'material-symbols-rounded star_' +
         i +
-        (i <= (n ? n : this.starsVoted) ? ' filled' : '');
+        (i <= (n ? n : this.rating) ? ' filled' : '');
     }
   }
 
   setGrade(n: number) {
-    this.starsVoted = n;
+    this.cnoulegAPIService.auth().subscribe({
+      next: () => {
+        this.rating = n === this.rating ? 0 : n;
+        this.cnoulegAPIService.setRating(this.noteInfo._id, this.rating).subscribe((v) => {
+          this.noteInfo.avg_rating = v.rating;
+          this.noteInfo.no_of_ratings = v.numberOfRatings;
+        });
+      },
+      error: () => {
+        this.dialog.open(AccessDialogComponent);
+      }
+    })
   }
 
   auth() {

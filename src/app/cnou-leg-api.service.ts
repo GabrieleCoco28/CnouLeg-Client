@@ -74,6 +74,13 @@ export interface RegistrationData {
   profile_pic_url: string
 }
 
+export interface Rating {
+  _id: string,
+  note_id: string,
+  user_id: string,
+  rating: number
+}
+
 export interface JWT {
   token: string
 }
@@ -230,5 +237,15 @@ export class CnouLegAPIService {
   deleteNote(id: string) {
     const url = this.apiUrl + "/api/notes";
     return this.http.delete(url, {body: {note_id: id}});
+  }
+
+  getRating(note_id: string) {
+    const url = this.apiUrl + "/api/rate?note_id=" + note_id;
+    return this.http.get<Rating>(url);
+  }
+
+  setRating(note_id: string, rating: number) {
+    const url = this.apiUrl + "/api/rate";
+    return this.http.post<any>(url, {note_id, rating});
   }
 }

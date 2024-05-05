@@ -84,7 +84,7 @@
             (mouseleave)="setFilledStars()"><mat-icon class="material-symbols-rounded star_5">star</mat-icon></button>
 
         <h1><mat-icon class="material-symbols-rounded filled star-icon"
-                style="scale: 1.5; margin-right: 8px;">star</mat-icon>{{noteInfo.avg_rating}}</h1>
+                style="scale: 1.5; margin-right: 8px;">star</mat-icon>{{noteInfo.avg_rating | number: '1.1-1'}}</h1>
 
         <div id="users">
             <p><mat-icon class="material-symbols-rounded"

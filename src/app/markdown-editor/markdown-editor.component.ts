@@ -333,7 +333,7 @@ export class MarkdownEditorComponent {
   }
 
   insertInLineStarts(chars: string) {
-    let positions = [];
+    let positions: number[] = [];
     for (let i = this.mdSelection.end - 1; i >= this.mdSelection.start; i--) {
       if (this.markdownRef.nativeElement.value.charAt(i) === '\n') {
         positions.push(i + 1);
@@ -363,6 +363,17 @@ export class MarkdownEditorComponent {
 
     setTimeout(() => {
       this.markdownRef.nativeElement.focus();
+      for(let i = positions[0] + (chars.length * positions.length); i < this.markdownRef.nativeElement.value.length; i++) {
+        if(this.markdownRef.nativeElement.value.charAt(i) === '\n' || i === this.markdownRef.nativeElement.value.length - 1) {
+          const typeOfChar = (i === this.markdownRef.nativeElement.value.length - 1 ? 1 : 0)
+          this.mdSelection.start = i + typeOfChar;
+          this.mdSelection.end = i + typeOfChar;
+          this.cursorPosition = i + typeOfChar;
+          this.markdownRef.nativeElement.selectionStart = this.mdSelection.start;
+          this.markdownRef.nativeElement.selectionEnd = this.mdSelection.end;
+          break;
+        }
+      }
     });
   }
 
@@ -638,5 +649,9 @@ export class MarkdownEditorComponent {
       this.markdownControl.setErrors({notEnough: null})
       this.markdownControl.updateValueAndValidity();
     }
+  }
+
+  log() {
+    console.log(this.mdSelection)
   }
 }

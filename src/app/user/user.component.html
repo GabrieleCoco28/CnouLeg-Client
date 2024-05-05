@@ -79,7 +79,7 @@
             <mat-card-content>
                 <mat-form-field appearance="outline" style="width: 100%;">
                     <mat-label>Bio</mat-label>
-                    <textarea matInput rows="5" maxlength="300" style="resize: none;" [value]="userInfo?.bio"
+                    <textarea matInput rows="5" maxlength="500" style="resize: none;" [value]="userInfo?.bio"
                         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
                         #bioRef></textarea>
                 </mat-form-field>
