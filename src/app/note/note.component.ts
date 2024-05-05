@@ -219,6 +219,7 @@ export class NoteComponent implements OnInit {
         this.cnoulegAPIService.setRating(this.noteInfo._id, this.rating).subscribe((v) => {
           this.noteInfo.avg_rating = v.rating;
           this.noteInfo.no_of_ratings = v.numberOfRatings;
+          this.setFilledStars(this.rating);
         });
       },
       error: () => {
