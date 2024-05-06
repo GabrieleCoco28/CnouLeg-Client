@@ -166,7 +166,6 @@ export class RegisterComponent {
       school: this.schoolRef.nativeElement.value.trim(),
       bio: this.bioRef.nativeElement.value.trim(),
       subject: this.subjectRef.nativeElement.value.trim(),
-      profile_pic_url: '',
     };
     this.cnoulegAPIService.sendRegistrationData(data).subscribe(() => {
       this.router.navigateByUrl('/registrationDone');

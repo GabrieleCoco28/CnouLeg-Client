@@ -71,8 +71,7 @@ export interface RegistrationData {
   role: string,
   school: string,
   bio: string,
-  subject: string,
-  profile_pic_url: string
+  subject: string
 }
 
 export interface Rating {
