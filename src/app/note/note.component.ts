@@ -177,7 +177,7 @@ export class NoteComponent implements OnInit {
       return;
     }
     const input = this.el.nativeElement.querySelector(
-      '.comment'
+      '.commentContent'
     ) as HTMLInputElement;
     if (input.value.trim().length > 0) {
       this.cnoulegAPIService

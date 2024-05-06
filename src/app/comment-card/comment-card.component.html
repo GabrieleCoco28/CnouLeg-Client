@@ -10,9 +10,9 @@
         </p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
-        <p style="width: 32px; text-align: center;">{{data.likes| numberSuffix}}</p>
-        <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
+        <button mat-icon-button (click)="setCommentLike(1)"><mat-icon class="material-symbols-rounded {{(data.user_like && data.user_like > 0 ? 'filled' : '')}}">thumb_up</mat-icon></button>
+        <p style="width: 32px; text-align: center;" #likeLabel>{{data.likes| numberSuffix}}</p>
+        <button mat-icon-button (click)="setCommentLike(-1)"><mat-icon class="material-symbols-rounded {{(data.user_like && data.user_like < 0 ? 'filled' : '')}}">thumb_down</mat-icon></button>
         <button mat-button color="primary"
             (click)="toggleAnswerPanel($event)">{{translator.labels.answer[translator.getLanguage()]}}</button>
     </mat-card-actions>
@@ -49,7 +49,7 @@
                     translator.labels.answerSingular[translator.getLanguage()]}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-card class="subcomment-card" *ngFor="let subcomment of subcommentsInfo"
+            <mat-card class="subcomment-card" *ngFor="let subcomment of subcommentsInfo; index as i"
                 style="box-shadow: none !important; border-left: 1px solid darkgray; border-radius: 0; padding-left: 1em;">
                 <mat-card-header>
                     <div mat-card-avatar class="comment-avatar _{{subcomment.user_id}}" [routerLink]="'/user/' + subcomment.user_id"></div>
@@ -62,9 +62,9 @@
                     </p>
                 </mat-card-content>
                 <mat-card-actions>
-                    <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_up</mat-icon></button>
+                    <button mat-icon-button (click)="setSubcommentLike(1, i)"><mat-icon class="material-symbols-rounded {{(subcomment.user_like && subcomment.user_like > 0 ? 'filled' : '')}}">thumb_up</mat-icon></button>
                     <p style="width: 32px; text-align: center;">{{subcomment.likes| numberSuffix}}</p>
-                    <button mat-icon-button><mat-icon class="material-symbols-rounded">thumb_down</mat-icon></button>
+                    <button mat-icon-button (click)="setSubcommentLike(-1, i)"><mat-icon class="material-symbols-rounded {{(subcomment.user_like && subcomment.user_like < 0 ? 'filled' : '')}}">thumb_down</mat-icon></button>
                 </mat-card-actions>
             </mat-card>
         </mat-expansion-panel>

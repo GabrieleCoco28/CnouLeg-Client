@@ -58,6 +58,14 @@ export class MarkdownEditorComponent {
     'json',
     'markup',
     'typescript',
+    'python',
+    'bash',
+    'dart',
+    'go',
+    'kotlin',
+    'regex',
+    'sql',
+    'swift'
   ].sort();
 
   public announcer = inject(LiveAnnouncer);

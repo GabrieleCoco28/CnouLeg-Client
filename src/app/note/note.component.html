@@ -97,7 +97,7 @@
             <div mat-card-avatar class="user-comment-avatar"></div>
             <mat-form-field style="width: 100%;" appearance="outline">
                 <mat-label>{{translator.labels.leaveAComment[translator.getLanguage()]}}</mat-label>
-                <textarea matInput class="comment" style="resize: none;" maxlength="500" #commentContent
+                <textarea matInput class="commentContent" style="resize: none;" maxlength="500" #commentContent
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             </mat-form-field>
         </mat-card-header>

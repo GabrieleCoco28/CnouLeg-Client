@@ -33,7 +33,8 @@ export interface Comment {
   likes: number,
   date: string,
   has_children: boolean,
-  author_name?: string
+  user_like?: number
+  author_name?: string,
 }
 
 export interface Comments {
@@ -247,5 +248,10 @@ export class CnouLegAPIService {
   setRating(note_id: string, rating: number) {
     const url = this.apiUrl + "/api/rate";
     return this.http.post<any>(url, {note_id, rating});
+  }
+
+  setLike(comment_id: string, value: number) {
+    const url = this.apiUrl + "/api/like";
+    return this.http.post<any>(url, {comment_id, value});
   }
 }

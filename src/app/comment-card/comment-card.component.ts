@@ -23,6 +23,7 @@ import { AccessDialogComponent } from '../access-dialog/access-dialog.component'
 })
 export class CommentCardComponent implements OnInit {
   @Input() data!: Comment;
+  @ViewChild("likeLabel") likeLabel!: ElementRef<HTMLElement>;
   public subcommentsIdsLoaded: string[] = [];
   public subcommentsInfo: Comment[] = [{} as Comment];
   panelOpenStateAnswer = false;
@@ -171,6 +172,60 @@ export class CommentCardComponent implements OnInit {
       (
         this.el.nativeElement.querySelector('.subcomment_avatar') as HTMLElement
       ).style.backgroundImage = `url(../../assets/default.svg)`;
+    }
+  }
+
+  setCommentLike(value: number) {
+    if(this.data.user_like) {
+      this.cnoulegAPIService.setLike(this.data._id, (value === this.data.user_like ? 0 : value)).subscribe({
+        next: () => {
+          if(value === this.data.user_like)
+            this.data.likes = this.data.likes - Math.sign(this.data.user_like);
+          else
+            this.data.likes = this.data.likes - Math.sign(this.data.user_like as number) + Math.sign(value);
+          this.data.user_like = Math.sign((value === this.data.user_like ? 0 : value));
+        },
+        error: () => {
+          this.dialog.open(AccessDialogComponent);
+        }
+      })
+    } else {
+      this.cnoulegAPIService.setLike(this.data._id, value).subscribe({
+        next: () => {
+          this.data.likes = this.data.likes + Math.sign(value);
+          this.data.user_like = Math.sign(value);
+        },
+        error: () => {
+          this.dialog.open(AccessDialogComponent);
+        }
+      })
+    }
+  }
+
+  setSubcommentLike(value: number, index: number) {
+    if(this.subcommentsInfo[index].user_like) {
+      this.cnoulegAPIService.setLike(this.subcommentsInfo[index]._id, (value === this.subcommentsInfo[index].user_like ? 0 : value)).subscribe({
+        next: () => {
+          if(value === this.subcommentsInfo[index].user_like)
+            this.subcommentsInfo[index].likes = this.subcommentsInfo[index].likes - Math.sign(this.subcommentsInfo[index].user_like as number);
+          else
+            this.subcommentsInfo[index].likes = this.subcommentsInfo[index].likes - Math.sign(this.subcommentsInfo[index].user_like as number) + Math.sign(value);
+          this.subcommentsInfo[index].user_like = Math.sign((value === this.subcommentsInfo[index].user_like ? 0 : value));
+        },
+        error: () => {
+          this.dialog.open(AccessDialogComponent);
+        }
+      })
+    } else {
+      this.cnoulegAPIService.setLike(this.subcommentsInfo[index]._id, value).subscribe({
+        next: () => {
+          this.subcommentsInfo[index].likes = this.subcommentsInfo[index].likes + Math.sign(value);
+          this.subcommentsInfo[index].user_like = Math.sign(value);
+        },
+        error: () => {
+          this.dialog.open(AccessDialogComponent);
+        }
+      })
     }
   }
 }
