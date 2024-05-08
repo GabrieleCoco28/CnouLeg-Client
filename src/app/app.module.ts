@@ -33,7 +33,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -57,6 +57,7 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -79,6 +80,7 @@ import { UserNotFoundComponent } from './user-not-found/user-not-found.component
 import { SnackBarCopiedToClipboardComponent } from './snack-bar-copied-to-clipboard/snack-bar-copied-to-clipboard.component';
 import { MarkdownEditorComponent } from './markdown-editor/markdown-editor.component';
 import { MarkdownLinkDialogComponent } from './markdown-link-dialog/markdown-link-dialog.component';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,8 @@ import { MarkdownLinkDialogComponent } from './markdown-link-dialog/markdown-lin
     UserNotFoundComponent,
     SnackBarCopiedToClipboardComponent,
     MarkdownEditorComponent,
-    MarkdownLinkDialogComponent
+    MarkdownLinkDialogComponent,
+    FilterDialogComponent
   ],
   providers: [
     provideMarkdown(),
@@ -118,6 +121,10 @@ import { MarkdownLinkDialogComponent } from './markdown-link-dialog/markdown-lin
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptorService,
       multi: true,
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { subscriptSizing: 'dynamic' },
     },
   ],
   bootstrap: [AppComponent],
@@ -159,7 +166,8 @@ import { MarkdownLinkDialogComponent } from './markdown-link-dialog/markdown-lin
     MatDialogTitle,
     MatMenuModule,
     ImageCropperModule,
-    FormsModule 
+    FormsModule,
+    MatButtonToggleModule
   ],
 })
 export class AppModule {}

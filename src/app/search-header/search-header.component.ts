@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
   styleUrl: './search-header.component.scss'
 })
 export class SearchHeaderComponent {
-  @ViewChild('themeIcon', {read: ElementRef}) themeIcon!: ElementRef<HTMLElement>;
-  @ViewChild('avatar', {read: ElementRef}) avatar!: ElementRef<HTMLElement>;
-  @ViewChild('buttons', {read: ElementRef}) buttons!: ElementRef<HTMLElement>;
-  constructor(public translator: TranslatorService, public cnoulegAPIService: CnouLegAPIService, public router: Router){}
+  @ViewChild('themeIcon') themeIcon!: ElementRef<HTMLElement>;
+  @ViewChild('avatar') avatar!: ElementRef<HTMLElement>;
+  @ViewChild('buttons') buttons!: ElementRef<HTMLElement>;
+  constructor(public translator: TranslatorService, public cnoulegAPIService: CnouLegAPIService, public router: Router){
+    setTimeout(() => this.auth());
+  }
   toggleTheme() {
     if (document.body.className.includes('light-theme')) {
       document.body.className = 'mat-typography dark-theme';
@@ -27,10 +29,6 @@ export class SearchHeaderComponent {
 
   getTheme() {
     return document.body.className.includes('dark-theme') ? "dark_mode" : "light_mode";
-  }
-
-  ngAfterViewInit() {
-    this.auth();
   }
 
   auth() {

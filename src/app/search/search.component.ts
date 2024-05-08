@@ -1,8 +1,10 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CnouLegAPIService, Note, User, Users } from '../cnou-leg-api.service';
 import { TranslatorService } from '../translator.service';
 import { StaticVariables } from '../static-variables';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { FilterDialogComponent, FilterDialogData } from '../filter-dialog/filter-dialog.component';
 
 @Component({
   selector: 'app-search',
@@ -10,20 +12,50 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
+  @ViewChild("search") searchBar!: ElementRef<HTMLInputElement>;
+  public searchBarValue = "";
   public noteInfo: Note[] = [{} as Note];
   public idsLoaded: string[] = [];
+  public filters: FilterDialogData = {rating: 0, tags: []};
   constructor(
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
     public translator: TranslatorService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    public dialog: MatDialog
   ) {
-    cnoulegAPIService.getArticles().subscribe((response) => {
+    this.loadNotes("", 0);
+  }
+
+  ngAfterViewInit() {
+    this.spinner.show();
+  }
+  saveElementID(id: string) {
+    StaticVariables.elementID = id;
+  }
+  openFilterDialog() {
+    const dialogRef = this.dialog.open(FilterDialogComponent, {data: {rating: this.filters.rating, tags: this.filters.tags}});
+    dialogRef.afterClosed().subscribe((v: FilterDialogData) => {
+      if(!v) return;
+      this.filters = v;
+      this.noteInfo = [];
+      this.loadNotes(this.searchBarValue, this.filters.rating);
+    })
+  }
+
+  setSearchValue() {
+    this.searchBarValue = this.searchBar.nativeElement.value.trim();
+    this.noteInfo = []
+    this.loadNotes(this.searchBarValue, this.filters.rating);
+  }
+
+  loadNotes(text: string, rating: number) {
+    this.cnoulegAPIService.getArticles(text, rating).subscribe((response) => {
       this.noteInfo = response.notes;
       this.noteInfo.map((v) => {
         this.idsLoaded.push(v.author_id);
       });
-      cnoulegAPIService
+      this.cnoulegAPIService
         .getUsersById(this.idsLoaded)
         .subscribe((response: Users) => {
           this.noteInfo.map((v) => {
@@ -39,27 +71,20 @@ export class SearchComponent {
               if(v.profile_pic_url.trim().length > 0) {
                 e.setAttribute(
                   'style',
-                  `background-image: url(${cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
+                  `background-image: url(${this.cnoulegAPIService.apiUrl}/profile_pics/${v.profile_pic_url})`
                 );
               }
             });
           });
-          el.nativeElement.querySelector('.search-root').style.display =
+          this.el.nativeElement.querySelector('.search-root').style.display =
             'block';
           this.spinner.hide();
           if (StaticVariables.elementID != '') {
-            el.nativeElement
+            this.el.nativeElement
               .querySelector('._id' + StaticVariables.elementID)
               .scrollIntoView({ block: 'center' });
           }
         });
     });
-  }
-
-  ngAfterViewInit() {
-    this.spinner.show();
-  }
-  saveElementID(id: string) {
-    StaticVariables.elementID = id;
   }
 }

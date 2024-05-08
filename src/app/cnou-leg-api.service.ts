@@ -106,8 +106,8 @@ export class CnouLegAPIService {
   public apiUrl = 'https://cochome.ddns.net';
   constructor(private http: HttpClient) {}
 
-  public getArticles(): Observable<Notes> {
-    const url = this.apiUrl + '/api/notes';
+  public getArticles(text: string, rating: number): Observable<Notes> {
+    const url = this.apiUrl + '/api/notes?text=' + text + "&rating=" + rating;
     return this.http.get<Notes>(url);
   }
 

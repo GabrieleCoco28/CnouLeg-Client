@@ -37,9 +37,10 @@
         </mat-select>
     </mat-form-field>
     <br>
+    <br>
     <mat-form-field appearance="outline" style="width: 100%">
         <mat-label>Tags</mat-label>
-        <mat-chip-grid #chipGrid aria-label="Enter fruits">
+        <mat-chip-grid #chipGrid>
             <mat-chip-row>
                 <mat-icon class="material-symbols-rounded" matChipAvatar
                     style="scale: 1.2;">{{translator.getSubjectIcon(subjectRef.value)}}</mat-icon>
@@ -62,6 +63,7 @@
                 (matChipInputTokenEnd)="add($event)" />
         </mat-chip-grid>
     </mat-form-field>
+    <br>
     <br>
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>{{translator.labels.description[translator.getLanguage()]}}</mat-label>
@@ -148,7 +150,7 @@
             <mat-form-field appearance="outline" style="width: 100%;">
                 <textarea matInput style="resize: none;" rows="10" 
                     (pointerup)="selectionChange($event)" (pointercancel)="selectionChange($event)" (pointerup)="selectionChange($event);"
-                    (click)="selectionChange($event); setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)" (touchend)="setCursorPosition($event); log()"
+                    (click)="selectionChange($event); setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)" (touchend)="setCursorPosition($event);"
                     (blur)="checkMinMarkdownChars(); updateMarkdownErrorMessage()" [formControl]="markdownControl" required
                     oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"' 
                     onchange='this.style.height = ""; this.style.height = this.scrollHeight + "px"'

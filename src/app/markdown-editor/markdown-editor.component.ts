@@ -408,7 +408,7 @@ export class MarkdownEditorComponent {
       }
       this.markdownRef.nativeElement.value =
         this.markdownRef.nativeElement.value.substring(0, pos) +
-        '\n![' +
+        '\n\n![' +
         this.text +
         '](' +
         this.link +
@@ -418,9 +418,9 @@ export class MarkdownEditorComponent {
         this.markdownRef.nativeElement.focus();
       });
       this.markdownRef.nativeElement.selectionStart =
-        pos + this.text.length + this.link.length + 5;
+        pos + this.text.length + this.link.length + 6;
       this.markdownRef.nativeElement.selectionEnd =
-        pos + this.text.length + this.link.length + 5;
+        pos + this.text.length + this.link.length + 6;
       this.mdSelection.start = this.markdownRef.nativeElement.selectionStart;
       this.mdSelection.end = this.markdownRef.nativeElement.selectionEnd;
       this.cursorPosition = this.markdownRef.nativeElement.selectionStart;
@@ -657,9 +657,5 @@ export class MarkdownEditorComponent {
       this.markdownControl.setErrors({notEnough: null})
       this.markdownControl.updateValueAndValidity();
     }
-  }
-
-  log() {
-    console.log(this.mdSelection)
   }
 }

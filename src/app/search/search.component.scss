@@ -12,3 +12,38 @@ mat-card {
 :host ::ng-deep .mat-mdc-chip-graphic {
     padding-right: 0 !important;
 }
+
+.wrapper {
+    width: 100%;
+    max-width: 31.25rem;
+    margin: auto;
+}
+
+.searchBar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#searchQueryInput {
+    width: 100%;
+    height: 2.7rem;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-radius: 1.625rem;
+    padding: 0 3.5rem 0 1.5rem;
+    font-size: 1rem;
+}
+
+#searchQuerySubmit {
+    width: 3.5rem;
+    height: 2.8rem;
+    margin-left: -2.5rem;
+    border-radius: 0 1.625rem 1.625rem 0;
+}
+
+#searchQuerySubmit:hover {
+    cursor: pointer;
+}

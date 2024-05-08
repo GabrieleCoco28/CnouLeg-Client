@@ -1,3 +1,4 @@
+import { E } from '@angular/cdk/keycodes';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -449,6 +450,30 @@ export class TranslatorService {
     update: {
       it: 'Aggiorna',
       en: 'Update'
+    },
+    search: {
+      it: 'Cerca',
+      en: 'Search'
+    },
+    users: {
+      it: 'Utenti',
+      en: 'Users'
+    },
+    rating: {
+      it: 'Valutazione',
+      en: 'Rating'
+    },
+    apply: {
+      it: 'Applica',
+      en: 'Apply'
+    },
+    type: {
+      it: "Tipo",
+      en: "Type"
+    },
+    clear: {
+      it: 'Pulisci',
+      en: 'Clear'
     }
   };
   constructor() {}

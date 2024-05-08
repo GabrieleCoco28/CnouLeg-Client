@@ -71,6 +71,17 @@ body.light-theme {
       0 1px 6px 0 rgba(0, 0, 0, 0.2) !important;
   }
 
+  #searchQueryInput {
+    border: 1px solid black;
+    color: #1a1b1f;
+  }
+  
+  #searchQuerySubmit {
+    border: 1px solid black;
+    color: #1a1b1f;
+    background-color: #e7e7e7;
+  }
+
   .content-icon {
     background-color: #eeedf1;
     transition: box-shadow 0.3s;
@@ -131,6 +142,17 @@ body.dark-theme {
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 1),
       0 1px 4px 0 rgba(0, 0, 0, 1),
       0 1px 6px 0 rgba(0, 0, 0, 1) !important;
+  }
+
+  #searchQueryInput {
+    border: 1px solid gray;
+    color: gainsboro;
+  }
+  
+  #searchQuerySubmit {
+    border: 1px solid gray;
+    color: gainsboro;
+    background-color: #3d3d3d;
   }
 
   .content-icon {

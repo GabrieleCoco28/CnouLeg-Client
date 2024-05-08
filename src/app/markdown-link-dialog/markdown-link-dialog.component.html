@@ -6,6 +6,7 @@
       <input matInput [(ngModel)]="data.text">
     </mat-form-field>
     <br>
+    <br>
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Link</mat-label>
       <input matInput  [(ngModel)]="data.link">
@@ -14,5 +15,5 @@
 </div>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">{{translator.labels.cancel[translator.getLanguage()]}}</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>{{translator.labels.insert[translator.getLanguage()]}}</button>
+  <button mat-flat-button [mat-dialog-close]="data" cdkFocusInitial>{{translator.labels.insert[translator.getLanguage()]}}</button>
 </mat-dialog-actions>

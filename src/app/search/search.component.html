@@ -1,20 +1,41 @@
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.2)" size="large" color="#fff" type="ball-atom" [fullScreen]="true"></ngx-spinner>
 <div style="display: none;padding: 0 1em 0 1em;" #root class="search-root">
     <app-search-header></app-search-header>
+
+    <div class="wrapper">
+        <div class="searchBar">
+            <input id="searchQueryInput" type="text" name="searchQueryInput" #search
+                [placeholder]="translator.labels.search[translator.getLanguage()]"
+                (focus)="search.placeholder = ''"
+                (blur)="search.placeholder = translator.labels.search[translator.getLanguage()]"
+            />
+            <button id="searchQuerySubmit" type="submit" name="searchQuerySubmit" (click)="setSearchValue()">
+                <mat-icon class="material-symbols-rounded">search</mat-icon>
+            </button>
+            <button mat-icon-button style="margin-left: 8px;" (click)="openFilterDialog()">
+                <mat-icon class="material-symbols-rounded">tune</mat-icon>
+            </button>
+        </div>
+    </div>
+
     <div *ngFor="let note of noteInfo">
         <mat-card class="hover">
             <mat-card-header [routerLink]="'note/' + note._id">
                 <mat-card-title>{{note.title}}</mat-card-title>
-                <div mat-card-avatar [class]="'comment-avatar _' + note.author_id" [routerLink]="'/user/' + note.author_id"></div>
-                <mat-card-subtitle style="opacity: 90%;" [routerLink]="'/user/' + note.author_id">{{translator.labels.by[translator.getLanguage()]}} {{note.author_name}} •
+                <div mat-card-avatar [class]="'comment-avatar _' + note.author_id"
+                    [routerLink]="'/user/' + note.author_id"></div>
+                <mat-card-subtitle style="opacity: 90%;"
+                    [routerLink]="'/user/' + note.author_id">{{translator.labels.by[translator.getLanguage()]}}
+                    {{note.author_name}} •
                     {{note.data_last_modified|
                     date:"dd/MM/YYYY"}}</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content [routerLink]="'note/' + note._id" [class]="'_id' + note._id" (click)="saveElementID(note._id)">
+            <mat-card-content [routerLink]="'note/' + note._id" [class]="'_id' + note._id"
+                (click)="saveElementID(note._id)">
                 <mat-chip-set class="tags">
                     <mat-chip class="tag">
                         <mat-icon class="material-symbols-rounded filled star-icon" matChipAvatar>star</mat-icon>
-                            {{note.avg_rating | number: '1.1-1'}}
+                        {{note.avg_rating | number: '1.1-1'}}
                     </mat-chip>
                     <mat-chip class="tag">{{translator.translateSubject(note.subject)}}</mat-chip>
                     <mat-chip class="tag">{{translator.translateClass(note.class)}}</mat-chip>

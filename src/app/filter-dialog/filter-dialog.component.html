@@ -1,0 +1,53 @@
+<div style="text-align: center;">
+    <mat-dialog-content style="width: 100%;">
+        <table>
+            <tr>
+                <td>{{translator.labels.rating[translator.getLanguage()]}}</td>
+                <td>
+                    <button mat-stroked-button style="margin: 4px;" (click)="setRatingFilter(1)" *ngIf="data.rating !== 1">1</button>
+                    <button mat-flat-button style="margin: 4px;" (click)="setRatingFilter(1)" *ngIf="data.rating === 1">1</button>
+                    
+                    <button mat-stroked-button style="margin: 4px;" (click)="setRatingFilter(2)" *ngIf="data.rating !== 2">2</button>
+                    <button mat-flat-button style="margin: 4px;" (click)="setRatingFilter(2)" *ngIf="data.rating === 2">2</button>
+
+                    <button mat-stroked-button style="margin: 4px;" (click)="setRatingFilter(3)" *ngIf="data.rating !== 3">3</button>
+                    <button mat-flat-button style="margin: 4px;" (click)="setRatingFilter(3)" *ngIf="data.rating === 3">3</button>
+
+                    <button mat-stroked-button style="margin: 4px;" (click)="setRatingFilter(4)" *ngIf="data.rating !== 4">4</button>
+                    <button mat-flat-button style="margin: 4px;" (click)="setRatingFilter(4)" *ngIf="data.rating === 4">4</button>
+
+                    <button mat-stroked-button style="margin: 4px;" (click)="setRatingFilter(5)" *ngIf=" data.rating !== 5">5</button>
+                    <button mat-flat-button style="margin: 4px;" (click)="setRatingFilter(5)" *ngIf="data.rating === 5">5</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Tags</td>
+                <td>
+                    <mat-form-field appearance="outline" style="width: 100%;">
+                        <mat-label>Tags</mat-label>
+                        <mat-chip-grid #chipGrid>
+                            @for (tag of tags; track tag) {
+                            <mat-chip-row (removed)="remove(tag)" [editable]="true" (edited)="edit(tag, $event)"
+                                [aria-description]="'press enter to edit ' + tag">
+                                {{tag}}
+                                <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                                    <mat-icon class='material-symbols-rounded'>cancel</mat-icon>
+                                </button>
+                            </mat-chip-row>
+                            }
+                            <input placeholder="{{translator.labels.addTag[translator.getLanguage()]}}" [matChipInputFor]="chipGrid" maxlength="25"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)" />
+                        </mat-chip-grid>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+    </mat-dialog-content>
+</div>
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">{{translator.labels.cancel[translator.getLanguage()]}}</button>
+    <button mat-button (click)="resetFilters()">{{translator.labels.clear[translator.getLanguage()]}}</button>
+    <button mat-flat-button [mat-dialog-close]="data"
+        cdkFocusInitial>{{translator.labels.apply[translator.getLanguage()]}}</button>
+</mat-dialog-actions>
