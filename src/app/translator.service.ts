@@ -76,6 +76,11 @@ export class TranslatorService {
       en: 'Geography',
       icon: 'globe',
     },
+    art: {
+      it: 'Arte',
+      en: 'Art',
+      icon: 'brush',
+    },
     other: {
       it: 'Altro',
       en: 'Other',
