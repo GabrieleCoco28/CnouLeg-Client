@@ -27,7 +27,7 @@
                         <mat-label>Tags</mat-label>
                         <mat-chip-grid #chipGrid>
                             @for (tag of tags; track tag) {
-                            <mat-chip-row (removed)="remove(tag)" [editable]="true" (edited)="edit(tag, $event)"
+                            <mat-chip-row (removed)="remove(tag)" (edited)="edit(tag, $event)"
                                 [aria-description]="'press enter to edit ' + tag">
                                 {{tag}}
                                 <button matChipRemove [attr.aria-label]="'remove ' + tag">

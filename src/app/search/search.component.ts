@@ -24,7 +24,7 @@ export class SearchComponent {
     private spinner: NgxSpinnerService,
     public dialog: MatDialog
   ) {
-    this.loadNotes("", 0);
+    this.loadNotes("", 0, []);
   }
 
   ngAfterViewInit() {
@@ -39,18 +39,18 @@ export class SearchComponent {
       if(!v) return;
       this.filters = v;
       this.noteInfo = [];
-      this.loadNotes(this.searchBarValue, this.filters.rating);
+      this.loadNotes(this.searchBarValue, this.filters.rating, this.filters.tags);
     })
   }
 
   setSearchValue() {
     this.searchBarValue = this.searchBar.nativeElement.value.trim();
     this.noteInfo = []
-    this.loadNotes(this.searchBarValue, this.filters.rating);
+    this.loadNotes(this.searchBarValue, this.filters.rating, this.filters.tags);
   }
 
-  loadNotes(text: string, rating: number) {
-    this.cnoulegAPIService.getArticles(text, rating).subscribe((response) => {
+  loadNotes(text: string, rating: number, tags: string[]) {
+    this.cnoulegAPIService.getArticles(text, rating, tags).subscribe((response) => {
       this.noteInfo = response.notes;
       this.noteInfo.map((v) => {
         this.idsLoaded.push(v.author_id);
