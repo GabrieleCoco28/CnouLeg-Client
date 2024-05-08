@@ -81,6 +81,21 @@ export class TranslatorService {
       en: 'Art',
       icon: 'brush',
     },
+    music: {
+      it: 'Musica',
+      en: 'Music',
+      icon: 'music_note',
+    },
+    philosophy: {
+      it: 'Filosofia',
+      en: 'Philosophy',
+      icon: 'cognition',
+    },
+    pe: {
+      it: 'Educazione fisica',
+      en: 'Physical Education',
+      icon: 'steps'
+    },
     other: {
       it: 'Altro',
       en: 'Other',
