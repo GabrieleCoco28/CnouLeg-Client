@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslatorService } from '../translator.service';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ENTER, COMMA, TAB } from '@angular/cdk/keycodes';
 
 export interface FilterDialogData {
   rating: number,
@@ -21,7 +21,7 @@ export interface FilterDialogData {
 export class FilterDialogComponent {
   public tags: string[] = [];
   public announcer = inject(LiveAnnouncer);
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
   public addOnBlur = true;
   public schoolValue = 'all';
   public subjectValue = 'all';

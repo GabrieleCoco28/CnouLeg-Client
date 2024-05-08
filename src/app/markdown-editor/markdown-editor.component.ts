@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { TranslatorService } from '../translator.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { COMMA, ENTER, L } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, L, TAB } from '@angular/cdk/keycodes';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { MermaidAPI } from 'ngx-markdown';
 import { CopyButtonComponent } from '../copy-button/copy-button.component';
@@ -39,7 +39,7 @@ export class MarkdownEditorComponent {
   public subjectValue = 'other';
 
   readonly copyComponent = CopyButtonComponent;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  readonly separatorKeysCodes = [ENTER, COMMA, TAB] as const;
   public addOnBlur = true;
   public tags: string[] = [];
   public mdSelection = { start: 0, end: 0 };
