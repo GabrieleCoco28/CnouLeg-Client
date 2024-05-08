@@ -101,8 +101,8 @@
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             </mat-form-field>
         </mat-card-header>
-        <div class="comment-button">
-            <label style="margin-right: 8px;">{{commentContent.value.length}}/{{commentContent.maxLength}}</label>
+        <div class="comment-button" style="margin-top: 8px;">
+            <label style="margin-right: 8px; vertical-align: middle;">{{commentContent.value.length}}/{{commentContent.maxLength}}</label>
             <button mat-stroked-button color="primary"
                 (click)="comment($event)">{{translator.labels.comment[translator.getLanguage()]}}</button>
         </div>

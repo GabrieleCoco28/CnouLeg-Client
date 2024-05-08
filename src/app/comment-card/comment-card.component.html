@@ -29,8 +29,8 @@
                     </mat-form-field>
                     <br>
                 </mat-card-header>
-                <div class="comment-button">
-                    <label style="margin-right: 8px;">{{subcommentContent.value.length}}/{{subcommentContent.maxLength}}</label>
+                <div class="comment-button" style="margin-top: 8px;">
+                    <label style="margin-right: 8px; vertical-align: middle;">{{subcommentContent.value.length}}/{{subcommentContent.maxLength}}</label>
                     <button mat-stroked-button color="primary"
                         (click)="answer($event)">{{translator.labels.answer[translator.getLanguage()]}}</button>
                     <button mat-stroked-button color="warn" (click)="toggleAnswerPanel($event)"
