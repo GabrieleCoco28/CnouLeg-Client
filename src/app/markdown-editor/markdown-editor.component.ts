@@ -172,6 +172,7 @@ export class MarkdownEditorComponent {
     this.mdSelection.start = (e.target as HTMLTextAreaElement).selectionStart;
     this.mdSelection.end = (e.target as HTMLTextAreaElement).selectionEnd;
     this.cursorPosition = (e.target as HTMLTextAreaElement).selectionStart;
+    console.log(this.mdSelection)
   }
 
   setCursorPosition(e: Event) {

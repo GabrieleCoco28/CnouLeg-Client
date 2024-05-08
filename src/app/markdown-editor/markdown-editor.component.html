@@ -151,7 +151,7 @@
                 <textarea matInput style="resize: none;" rows="10" 
                     (pointerup)="selectionChange($event)" (pointercancel)="selectionChange($event)" (mouseup)="selectionChange($event)"
                     (click)="selectionChange($event); setCursorPosition($event)" (keyup)="setCursorPosition($event); selectionChange($event)" (touchend)="setCursorPosition($event);"
-                    (blur)="checkMinMarkdownChars(); updateMarkdownErrorMessage()" [formControl]="markdownControl" required
+                    (blur)="checkMinMarkdownChars(); updateMarkdownErrorMessage(); selectionChange($event)" [formControl]="markdownControl" required
                     oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"' 
                     onchange='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
                     #markdownRef></textarea>
