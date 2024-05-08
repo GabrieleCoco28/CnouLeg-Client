@@ -106,11 +106,13 @@ export class CnouLegAPIService {
   public apiUrl = 'https://cochome.ddns.net';
   constructor(private http: HttpClient) {}
 
-  public getArticles(text: string, rating: number, tags: string[]): Observable<Notes> {
+  public getArticles(text: string, rating: number, tags: string[], subject: string, school: string): Observable<Notes> {
     let url = this.apiUrl + '/api/notes?text=' + text + "&rating=" + rating + "&";
     tags.map((v) => {
       url += "tags[]=" + v + "&";
     });
+    url += "subject=" + subject + "&";
+    url += "school=" + school;
     return this.http.get<Notes>(url);
   }
 

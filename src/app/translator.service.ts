@@ -474,6 +474,10 @@ export class TranslatorService {
     clear: {
       it: 'Pulisci',
       en: 'Clear'
+    },
+    all: {
+      it: 'Qualsiasi',
+      en: 'All'
     }
   };
   constructor() {}

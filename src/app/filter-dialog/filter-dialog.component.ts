@@ -8,7 +8,9 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 
 export interface FilterDialogData {
   rating: number,
-  tags: string[]
+  tags: string[],
+  subject: string,
+  school: string
 }
 
 @Component({
@@ -21,12 +23,16 @@ export class FilterDialogComponent {
   public announcer = inject(LiveAnnouncer);
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
+  public schoolValue = 'all';
+  public subjectValue = 'all';
   constructor(
     public dialogRef: MatDialogRef<SearchComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FilterDialogData,
     public translator: TranslatorService
   ) {
-    this.tags = data.tags
+    this.tags = data.tags;
+    this.subjectValue = data.subject;
+    this.schoolValue = data.school;
   }
 
   onNoClick(): void {
@@ -78,5 +84,21 @@ export class FilterDialogComponent {
     this.setRatingFilter(0);
     this.tags = [];
     this.data.tags = [];
+    this.setSubject("all");
+    this.setSchool("all");
+  }
+
+  public keys(object: Object) {
+    return Object.keys(object);
+  }
+
+  setSchool(school: string) {
+    this.schoolValue = school;
+    this.data.school = school;
+  }
+
+  setSubject(subject: string) {
+    this.subjectValue = subject;
+    this.data.subject = subject;
   }
 }

@@ -42,6 +42,40 @@
                     </mat-form-field>
                 </td>
             </tr>
+            <tr>
+                <td>{{translator.labels.subject[translator.getLanguage()]}}</td>
+                <td>
+                    <mat-form-field appearance="outline" style="width: min(228px, 100%); margin-right: 8px;">
+                        <mat-label>{{this.translator.labels.subject[this.translator.getLanguage()]}}</mat-label>
+                        <span matPrefix style="margin-right: 4px; margin-left: 8px;"><mat-icon
+                                class='material-symbols-rounded'>{{subjectValue === 'all' ? 'more_horiz' : translator.getSubjectIcon(subjectValue)}}</mat-icon></span>
+                        <mat-select #subjectRef value="{{subjectValue}}" (valueChange)="setSubject($event)">
+                            <mat-option *ngFor="let sub of keys(this.translator.subjects)" value="{{sub}}">
+                                <mat-icon class='material-symbols-rounded'>{{translator.getSubjectIcon(sub)}}</mat-icon>
+                                {{this.translator.translateSubject(sub)}}
+                            </mat-option>
+                            <mat-option value="all">
+                                <mat-icon class='material-symbols-rounded'>more_horiz</mat-icon>
+                                {{this.translator.labels.all[translator.getLanguage()]}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>{{translator.labels.school[translator.getLanguage()]}}</td>
+                <td>
+                    <mat-form-field appearance="outline" style="width: min(228px, 100%);">
+                        <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
+                        <mat-select #schooltRef value="{{schoolValue}}" (valueChange)="setSchool($event)">
+                            <mat-option *ngFor="let sub of keys(this.translator.schools)" value="{{sub}}">
+                                {{this.translator.translateClass(sub)}}
+                            </mat-option>
+                            <mat-option value="all">{{this.translator.labels.all[translator.getLanguage()]}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </tr>
         </table>
     </mat-dialog-content>
 </div>

@@ -16,7 +16,7 @@ export class SearchComponent {
   public searchBarValue = "";
   public noteInfo: Note[] = [{} as Note];
   public idsLoaded: string[] = [];
-  public filters: FilterDialogData = {rating: 0, tags: []};
+  public filters: FilterDialogData = {rating: 0, tags: [], school: "all", subject: "all"};
   constructor(
     private cnoulegAPIService: CnouLegAPIService,
     private el: ElementRef,
@@ -24,33 +24,37 @@ export class SearchComponent {
     private spinner: NgxSpinnerService,
     public dialog: MatDialog
   ) {
-    this.loadNotes("", 0, []);
-  }
-
-  ngAfterViewInit() {
-    this.spinner.show();
+    setTimeout(() => {
+      this.loadNotes("", 0, [], "all", "all");
+      this.searchBar.nativeElement.onkeydown = (e) => {
+        if(e.key === 'Enter') {
+          this.setSearchValue();
+        }
+      }
+    })
   }
   saveElementID(id: string) {
     StaticVariables.elementID = id;
   }
   openFilterDialog() {
-    const dialogRef = this.dialog.open(FilterDialogComponent, {data: {rating: this.filters.rating, tags: this.filters.tags}});
+    const dialogRef = this.dialog.open(FilterDialogComponent, {data: {rating: this.filters.rating, tags: this.filters.tags, subject: this.filters.subject, school: this.filters.school}});
     dialogRef.afterClosed().subscribe((v: FilterDialogData) => {
       if(!v) return;
       this.filters = v;
       this.noteInfo = [];
-      this.loadNotes(this.searchBarValue, this.filters.rating, this.filters.tags);
+      this.loadNotes(this.searchBarValue, this.filters.rating, this.filters.tags, this.filters.subject, this.filters.school);
     })
   }
 
   setSearchValue() {
     this.searchBarValue = this.searchBar.nativeElement.value.trim();
     this.noteInfo = []
-    this.loadNotes(this.searchBarValue, this.filters.rating, this.filters.tags);
+    this.loadNotes(this.searchBarValue, this.filters.rating, this.filters.tags, this.filters.subject, this.filters.school);
   }
 
-  loadNotes(text: string, rating: number, tags: string[]) {
-    this.cnoulegAPIService.getArticles(text, rating, tags).subscribe((response) => {
+  loadNotes(text: string, rating: number, tags: string[], subject: string, school: string) {
+    this.spinner.show();
+    this.cnoulegAPIService.getArticles(text, rating, tags, subject, school).subscribe((response) => {
       this.noteInfo = response.notes;
       this.noteInfo.map((v) => {
         this.idsLoaded.push(v.author_id);
