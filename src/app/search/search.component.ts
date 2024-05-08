@@ -29,6 +29,7 @@ export class SearchComponent {
       this.searchBar.nativeElement.onkeydown = (e) => {
         if(e.key === 'Enter') {
           this.setSearchValue();
+          this.searchBar.nativeElement.blur();
         }
       }
     })
