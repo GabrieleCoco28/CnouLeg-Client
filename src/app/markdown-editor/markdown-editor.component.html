@@ -17,7 +17,7 @@
     <label>{{titleRef.value.trim().length}}/{{titleRef.maxLength}}</label>
     <br>
     <br>
-    <mat-form-field appearance="outline" style="width: min(228px, 100%); margin-right: 8px;">
+    <mat-form-field appearance="outline" style="width: min(228px, 100%);">
         <mat-label>{{this.translator.labels.subject[this.translator.getLanguage()]}}</mat-label>
         <span matPrefix style="margin-right: 4px; margin-left: 8px;"><mat-icon
                 class='material-symbols-rounded'>{{translator.getSubjectIcon(subjectValue)}}</mat-icon></span>
@@ -28,6 +28,8 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <br>
+    <br>
     <mat-form-field appearance="outline" style="width: min(228px, 100%);">
         <mat-label>{{this.translator.labels.school[this.translator.getLanguage()]}}</mat-label>
         <mat-select #schooltRef value="{{schoolValue}}" (valueChange)="setSchool($event)">

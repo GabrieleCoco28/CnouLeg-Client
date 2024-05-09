@@ -65,6 +65,7 @@ export class NoteComponent implements OnInit {
         cnoulegAPIService.getArticleByID(params['id']).subscribe({
           next: (response) => {
             this.noteInfo = response;
+            StaticVariables.elementID = this.noteInfo._id;
             el.nativeElement.setAttribute('tabindex', 0);
             el.nativeElement.focus();
             this.noteInfo.contents.map((v) => {
