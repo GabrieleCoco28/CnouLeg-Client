@@ -205,7 +205,7 @@
                     <mat-chip-set class="tags">
                         <mat-chip class="tag">
                             <mat-icon class="material-symbols-rounded filled star-icon" matChipAvatar>star</mat-icon>
-                                {{note.avg_rating}}
+                                {{note.avg_rating | number: '1.1-1'}}
                         </mat-chip>
                         <mat-chip class="tag">{{translator.translateSubject(note.subject)}}</mat-chip>
                         <mat-chip class="tag">{{translator.translateClass(note.class)}}</mat-chip>
